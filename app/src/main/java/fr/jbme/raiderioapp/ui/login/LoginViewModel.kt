@@ -70,6 +70,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     // A placeholder region validation check
     private fun isRegionValid(region: String): Boolean {
-        return true
+        return region.matches(Regex("[A-Z]{2}"))
     }
 }
