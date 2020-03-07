@@ -7,4 +7,8 @@ data class LoggedInUser(
     val realmName: String,
     val characterName: String,
     val region: String
-)
+) {
+    override fun toString(): String {
+        return "LoggedInUser(realmName='$realmName', characterName='$characterName', region='$region')"
+    }
+}

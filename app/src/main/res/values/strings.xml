@@ -21,7 +21,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome"</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="invalid_realm_name">This realm doesn\'t exist</string>
+    <string name="invalid_realm_name">Wrong realm name</string>
     <string name="invalid_character_name">Wrong character name</string>
-    <string name="invalid_region">This region doesn\'t exist</string>
+    <string name="invalid_region">Wrong region</string>
 </resources>

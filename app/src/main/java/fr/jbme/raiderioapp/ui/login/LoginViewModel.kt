@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.LoginRepository
-import fr.jbme.raiderioapp.data.Result
 import fr.jbme.raiderioapp.data.model.LoggedInUser
+import fr.jbme.raiderioapp.data.model.character.CharacterResponse
+import fr.jbme.raiderioapp.network.LoginRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -18,20 +21,29 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun login(realmName: String, characterName: String, region: String) {
         // can be launched in a separate asynchronous job
-        val result = loginRepository.login(realmName, characterName, region)
+        loginRepository.login(
+            realmName,
+            characterName,
+            region,
+            object : Callback<CharacterResponse> {
+                override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
+                    _loginResult.value =
+                        LoginResult(error = t.message)
+                }
 
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(
-                    success = LoggedInUser(
-                        result.data.realmName,
-                        result.data.characterName,
-                        result.data.region
-                    )
-                )
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }
+                override fun onResponse(
+                    call: Call<CharacterResponse>,
+                    response: Response<CharacterResponse>
+                ) {
+                    val body = response.body()!!
+                    _loginResult.value =
+                        LoginResult(success = LoggedInUser(body.realm, body.name, body.region))
+                }
+            })
+    }
+
+    fun logout() {
+        loginRepository.logout()
     }
 
     fun loginDataChanged(realmName: String, characterName: String, region: String) {
@@ -40,23 +52,23 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         } else if (!isCharacterNameValid(characterName)) {
             _loginForm.value = LoginFormState(characterNameError = R.string.invalid_character_name)
         } else if (!isRegionValid(region)) {
-            _loginForm.value = LoginFormState(characterNameError = R.string.invalid_region)
+            _loginForm.value = LoginFormState(regionIsSelected = true)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
     }
 
-    // A placeholder username validation check
+    // A placeholder realm name validation check
     private fun isRealmNameValid(realmName: String): Boolean {
-        return true
+        return realmName.matches(Regex("[a-zA-Z]+"))
     }
 
-    // A placeholder password validation check
+    // A placeholder character name validation check
     private fun isCharacterNameValid(characterName: String): Boolean {
-        return true
+        return characterName.matches(Regex("[a-zA-Z]+"))
     }
 
-    // A placeholder username validation check
+    // A placeholder region validation check
     private fun isRegionValid(region: String): Boolean {
         return true
     }

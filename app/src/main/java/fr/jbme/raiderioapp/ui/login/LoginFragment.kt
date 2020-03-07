@@ -8,20 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.annotation.StringRes
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import fr.jbme.raiderioapp.MainActivity
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.contants.CHARACTER_NAME_KEY
-import fr.jbme.raiderioapp.data.contants.REALM_NAME_KEY
-import fr.jbme.raiderioapp.data.contants.REGION_KEY
 import fr.jbme.raiderioapp.data.model.LoggedInUser
+import java.util.*
+
 
 class LoginFragment : Fragment() {
 
@@ -42,7 +37,7 @@ class LoginFragment : Fragment() {
 
         val realmNameEditText = view.findViewById<EditText>(R.id.realmName)
         val characterNameEditText = view.findViewById<EditText>(R.id.characterName)
-        val regionSelectionButton = view.findViewById<Button>(R.id.regionSelection)
+        val regionSelectionSpinner = view.findViewById<Spinner>(R.id.regionSelection)
         val loginButton = view.findViewById<Button>(R.id.login)
         val loadingProgressBar = view.findViewById<ProgressBar>(R.id.loading)
 
@@ -85,19 +80,27 @@ class LoginFragment : Fragment() {
                 loginViewModel.loginDataChanged(
                     realmNameEditText.text.toString(),
                     characterNameEditText.text.toString(),
-                    regionSelectionButton.text.toString()
+                    regionSelectionSpinner.selectedItem.toString()
                 )
             }
         }
+
         realmNameEditText.addTextChangedListener(afterTextChangedListener)
         characterNameEditText.addTextChangedListener(afterTextChangedListener)
-        regionSelectionButton.addTextChangedListener(afterTextChangedListener)
+        regionSelectionSpinner.onItemSelectedListener.run {
+            loginViewModel.loginDataChanged(
+                realmNameEditText.text.toString(),
+                characterNameEditText.text.toString(),
+                regionSelectionSpinner.selectedItem.toString()
+            )
+        }
         characterNameEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
+                loadingProgressBar.visibility = View.VISIBLE
                 loginViewModel.login(
                     realmNameEditText.text.toString(),
                     characterNameEditText.text.toString(),
-                    regionSelectionButton.text.toString()
+                    regionSelectionSpinner.selectedItem.toString()
                 )
             }
             false
@@ -108,26 +111,27 @@ class LoginFragment : Fragment() {
             loginViewModel.login(
                 realmNameEditText.text.toString(),
                 characterNameEditText.text.toString(),
-                regionSelectionButton.text.toString()
+                regionSelectionSpinner.selectedItem.toString()
             )
         }
     }
 
     private fun updateUiWithUser(model: LoggedInUser, view: View) {
-        val welcome = getString(R.string.welcome) + " " + model.characterName + " !"
+        val welcome =
+            getString(R.string.welcome) + " " +
+                    model.characterName + " - " +
+                    model.realmName +
+                    model.region.toUpperCase(Locale.ROOT)
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
         // Go to MainActivity with data
-        Intent(view.context, MainActivity::class.java).apply {
-            putExtra(REALM_NAME_KEY, model.realmName)
-            putExtra(CHARACTER_NAME_KEY, model.characterName)
-            putExtra(REGION_KEY, model.region)
-        }.also {
-            startActivity(it, null)
+        Intent(view.context, MainActivity::class.java).run {
+            startActivity(this, null)
         }
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
+
+    private fun showLoginFailed(errorString: String) {
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
     }

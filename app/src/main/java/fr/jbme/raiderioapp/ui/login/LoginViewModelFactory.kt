@@ -2,8 +2,8 @@ package fr.jbme.raiderioapp.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import fr.jbme.raiderioapp.data.LoginDataSource
-import fr.jbme.raiderioapp.data.LoginRepository
+import fr.jbme.raiderioapp.network.LoginDataSource
+import fr.jbme.raiderioapp.network.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
