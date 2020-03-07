@@ -13,9 +13,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import fr.jbme.raiderioapp.data.contants.CHARACTER_NAME_KEY
-import fr.jbme.raiderioapp.data.contants.REALM_NAME_KEY
-import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
 
