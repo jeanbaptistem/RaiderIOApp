@@ -123,13 +123,14 @@ class MainActivity : AppCompatActivity() {
                     Picasso.get().load(character.thumbnailUrl).resize(180, 180)
                         .into(object : Target {
                             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                                navHeaderThumbnail.setImageDrawable(placeHolderDrawable)
+                                navHeaderThumbnail.setImageDrawable(getDrawable(R.mipmap.ic_launcher))
                             }
 
                             override fun onBitmapFailed(
                                 e: java.lang.Exception?,
                                 errorDrawable: Drawable?
                             ) {
+                                navHeaderThumbnail.setImageDrawable(getDrawable(R.mipmap.ic_launcher))
                             }
 
                             override fun onBitmapLoaded(
@@ -147,31 +148,32 @@ class MainActivity : AppCompatActivity() {
                         })
 
                     val bgUrl = when (character._class) {
-                        "Shaman" -> SHAMAN
-                        "Death Knight" -> DK
-                        "Demon Hunter" -> DH
-                        "Druid" -> DRUID
-                        "Hunter" -> HUNTER
-                        "Mage" -> MAGE
-                        "Monk" -> MONK
-                        "Paladin" -> PALADIN
-                        "Priest" -> PRIEST
-                        "Rogue" -> ROGUE
-                        "Warlock" -> WARLOCK
-                        "Warrior" -> WARRIOR
-                        else -> DEFAULT
+                        "Shaman" -> SHAMAN_BG
+                        "Death Knight" -> DK_BG
+                        "Demon Hunter" -> DH_BG
+                        "Druid" -> DRUID_BG
+                        "Hunter" -> HUNTER_BG
+                        "Mage" -> MAGE_BG
+                        "Monk" -> MONK_BG
+                        "Paladin" -> PALADIN_BG
+                        "Priest" -> PRIEST_BG
+                        "Rogue" -> ROGUE_BG
+                        "Warlock" -> WARLOCK_BG
+                        "Warrior" -> WARRIOR_BG
+                        else -> DEFAULT_BG
                     }
                     Picasso.get().load(bgUrl)
                         .resize(headerLayout.measuredWidth, headerLayout.measuredHeight)
                         .centerCrop(Gravity.START).into(object : Target {
                             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                                headerLayout.background = placeHolderDrawable
+                                headerLayout.background = getDrawable(R.drawable.side_nav_bar)
                             }
 
                             override fun onBitmapFailed(
                                 e: java.lang.Exception?,
                                 errorDrawable: Drawable?
                             ) {
+                                headerLayout.background = getDrawable(R.drawable.side_nav_bar)
                             }
 
                             override fun onBitmapLoaded(
