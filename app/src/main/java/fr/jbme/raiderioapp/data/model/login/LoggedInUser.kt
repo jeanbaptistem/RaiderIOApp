@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.data.model
+package fr.jbme.raiderioapp.data.model.login
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

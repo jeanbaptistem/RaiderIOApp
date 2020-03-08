@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.data.model
+package fr.jbme.raiderioapp.data.model.login
 
 /**
  * A generic class that holds a value with its loading status.

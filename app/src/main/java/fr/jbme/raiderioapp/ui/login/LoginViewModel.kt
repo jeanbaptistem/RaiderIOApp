@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.model.LoggedInUser
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
-import fr.jbme.raiderioapp.network.LoginRepository
+import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.network.login.LoginRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+
+    val getLoginRepository: LoginRepository
+        get() = loginRepository
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -37,7 +40,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 ) {
                     val body = response.body()!!
                     _loginResult.value =
-                        LoginResult(success = LoggedInUser(body.realm, body.name, body.region))
+                        LoginResult(
+                            success = LoggedInUser(
+                                body.realm,
+                                body.name,
+                                body.region
+                            )
+                        )
                 }
             })
     }

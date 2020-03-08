@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.network
+package fr.jbme.raiderioapp.network.utils
 
 import fr.jbme.raiderioapp.data.model.APIError
 import org.json.JSONObject

@@ -1,7 +1,15 @@
-package fr.jbme.raiderioapp.network
+package fr.jbme.raiderioapp.network.login
 
-import fr.jbme.raiderioapp.data.model.LoggedInUser
+import android.content.Context
+import android.content.SharedPreferences
+import fr.jbme.raiderioapp.RaiderIOApp
+import fr.jbme.raiderioapp.data.contants.CHARACTER_NAME_KEY
+import fr.jbme.raiderioapp.data.contants.REALM_NAME_KEY
+import fr.jbme.raiderioapp.data.contants.REGION_KEY
+import fr.jbme.raiderioapp.data.contants.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
+import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,19 +21,24 @@ import retrofit2.Response
 
 class LoginRepository(val dataSource: LoginDataSource) {
 
-    // in-memory cache of the loggedInUser object
+    private var sharedPref: SharedPreferences? = null
+
     private var user: LoggedInUser? = null
 
-    val isLoggedIn: Boolean
+    private val isLoggedIn: Boolean
         get() = user != null
 
     init {
+        sharedPref =
+            RaiderIOApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
         user = null
     }
 
     fun logout() {
-        user = null
-        dataSource.logout()
+        if (isLoggedIn) {
+            logOutUser()
+            dataSource.logout()
+        }
     }
 
     fun login(
@@ -59,7 +72,10 @@ class LoginRepository(val dataSource: LoginDataSource) {
                     )
                     callback.onResponse(call, response)
                 } else {
-                    val errorResponse = NetworkErrorUtils.parseError(response)
+                    val errorResponse =
+                        NetworkErrorUtils.parseError(
+                            response
+                        )
                     callback.onFailure(call, Exception(errorResponse.message))
                 }
             }
@@ -68,6 +84,21 @@ class LoginRepository(val dataSource: LoginDataSource) {
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
-        // TODO: add user to session
+        with(sharedPref?.edit()) {
+            this?.putString(REALM_NAME_KEY, user!!.realmName)
+            this?.putString(CHARACTER_NAME_KEY, user!!.characterName)
+            this?.putString(REGION_KEY, user!!.region)
+            this?.commit()
+        }
+    }
+
+    private fun logOutUser() {
+        this.user = null
+        with(sharedPref?.edit()) {
+            this?.remove(REALM_NAME_KEY)
+            this?.remove(CHARACTER_NAME_KEY)
+            this?.remove(REGION_KEY)
+            this?.commit()
+        }
     }
 }

@@ -1,6 +1,6 @@
 package fr.jbme.raiderioapp.ui.login
 
-import fr.jbme.raiderioapp.data.model.LoggedInUser
+import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 
 /**
  * Authentication result : success (user details) or error message.
