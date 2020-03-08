@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RaiderIoApp</string>
+    <string name="app_name">Raider.io Mobile</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -24,4 +24,5 @@
     <string name="invalid_realm_name">Wrong realm name</string>
     <string name="invalid_character_name">Wrong character name</string>
     <string name="invalid_region">Wrong region</string>
+    <string name="raider_io_login_title">Raider.io login title</string>
 </resources>

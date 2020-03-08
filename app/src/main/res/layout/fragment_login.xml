@@ -16,15 +16,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="24dp"
 
+        android:layout_marginEnd="24dp"
+        android:background="@android:drawable/edit_text"
+        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTintMode="multiply"
         android:hint="@string/prompt_realm_name"
         android:inputType="textPersonName"
         android:selectAllOnFocus="true"
+        android:textColor="@android:color/primary_text_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.417" />
 
     <EditText
         android:id="@+id/characterName"
@@ -34,30 +39,41 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
 
+        android:background="@android:drawable/edit_text"
+        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTintMode="multiply"
         android:hint="@string/prompt_character_name"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:selectAllOnFocus="true"
+        android:textColor="@android:color/primary_text_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/realmName" />
 
     <Button
         android:id="@+id/login"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="32dp"
+        android:background="@android:drawable/btn_default"
+        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTintMode="multiply"
         android:enabled="false"
         android:text="@string/action_log_in"
+        android:textAllCaps="true"
+        android:textColor="@android:color/primary_text_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/characterName"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintTop_toBottomOf="@+id/regionSelection"
+        app:layout_constraintVertical_bias="0.118" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -66,21 +82,40 @@
         android:layout_gravity="center"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:progressTint="@color/colorPrimary"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/login"
+        app:layout_constraintBottom_toTopOf="@+id/realmName"
         app:layout_constraintEnd_toEndOf="@+id/characterName"
         app:layout_constraintStart_toStartOf="@+id/characterName"
-        app:layout_constraintTop_toBottomOf="@+id/characterName" />
+        app:layout_constraintTop_toBottomOf="@+id/loginTitle" />
 
     <Spinner
         android:id="@+id/regionSelection"
+        style="@style/Widget.AppCompat.Spinner.DropDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTintMode="multiply"
         android:entries="@array/regionOptions"
         android:spinnerMode="dropdown"
         android:text="@string/region_selection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/characterName" />
+
+    <ImageView
+        android:id="@+id/loginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:contentDescription="@string/raider_io_login_title"
+        android:src="@drawable/ic_logo_white"
+        app:layout_constraintBottom_toTopOf="@+id/realmName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logo_white"
+        tools:srcCompat="@drawable/ic_logo_white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
