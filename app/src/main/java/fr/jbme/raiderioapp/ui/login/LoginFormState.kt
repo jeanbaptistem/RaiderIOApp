@@ -6,6 +6,5 @@ package fr.jbme.raiderioapp.ui.login
 data class LoginFormState(
     val realmNameError: Int? = null,
     val characterNameError: Int? = null,
-    val regionIsSelected: Boolean = false,
     val isDataValid: Boolean = false
 )

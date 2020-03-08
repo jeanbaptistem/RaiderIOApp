@@ -46,13 +46,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         loginRepository.logout()
     }
 
-    fun loginDataChanged(realmName: String, characterName: String, region: String) {
-        if (!isRealmNameValid(realmName)) {
+    fun loginDataChanged(realmName: String, characterName: String) {
+        if (!isRealmNameValid(realmName) && realmName != "") {
             _loginForm.value = LoginFormState(realmNameError = R.string.invalid_realm_name)
-        } else if (!isCharacterNameValid(characterName)) {
+        } else if (!isCharacterNameValid(characterName) && characterName != "") {
             _loginForm.value = LoginFormState(characterNameError = R.string.invalid_character_name)
-        } else if (!isRegionValid(region)) {
-            _loginForm.value = LoginFormState(regionIsSelected = true)
+        } else if (realmName == "" || characterName == "") {
+            _loginForm.value = LoginFormState(isDataValid = false)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
@@ -66,10 +66,5 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     // A placeholder character name validation check
     private fun isCharacterNameValid(characterName: String): Boolean {
         return characterName.matches(Regex("[a-zA-Z]+"))
-    }
-
-    // A placeholder region validation check
-    private fun isRegionValid(region: String): Boolean {
-        return region.matches(Regex("[A-Z]{2}"))
     }
 }
