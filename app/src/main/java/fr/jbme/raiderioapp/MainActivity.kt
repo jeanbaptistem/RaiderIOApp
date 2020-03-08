@@ -119,33 +119,15 @@ class MainActivity : AppCompatActivity() {
                             Locale.ROOT
                         )
                     )
-
-                    Picasso.get().load(character.thumbnailUrl).resize(180, 180)
-                        .into(object : Target {
-                            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                                navHeaderThumbnail.setImageDrawable(getDrawable(R.mipmap.ic_launcher))
-                            }
-
-                            override fun onBitmapFailed(
-                                e: java.lang.Exception?,
-                                errorDrawable: Drawable?
-                            ) {
-                                navHeaderThumbnail.setImageDrawable(getDrawable(R.mipmap.ic_launcher))
-                            }
-
-                            override fun onBitmapLoaded(
-                                bitmap: Bitmap?,
-                                from: Picasso.LoadedFrom?
-                            ) {
-                                navHeaderThumbnail.setImageDrawable(
-                                    BitmapDrawable(
-                                        baseContext.resources,
-                                        bitmap
-                                    )
-                                )
-                            }
-
-                        })
+                    // Fixme: There is not always a loaded image in the view or background
+                    // 1rst login: only placeholder
+                    // 2nd login: sometimes images are loaded
+                    Picasso.get().setIndicatorsEnabled(RaiderIOApp.DEBUG)
+                    Picasso.get().load(character.thumbnailUrl)
+                        .resize(180, 180)
+                        .placeholder(getDrawable(R.mipmap.ic_launcher)!!)
+                        .error(getDrawable(R.mipmap.ic_launcher)!!)
+                        .into(navHeaderThumbnail)
 
                     val bgUrl = when (character._class) {
                         "Shaman" -> SHAMAN_BG
@@ -162,18 +144,23 @@ class MainActivity : AppCompatActivity() {
                         "Warrior" -> WARRIOR_BG
                         else -> DEFAULT_BG
                     }
+                    //Fixme: same here
+                    Picasso.get().setIndicatorsEnabled(RaiderIOApp.DEBUG)
                     Picasso.get().load(bgUrl)
                         .resize(headerLayout.measuredWidth, headerLayout.measuredHeight)
-                        .centerCrop(Gravity.START).into(object : Target {
+                        .centerCrop(Gravity.START)
+                        .placeholder(getDrawable(R.drawable.side_nav_bar)!!)
+                        .error(getDrawable(R.drawable.side_nav_bar)!!)
+                        .into(object : Target {
                             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                                headerLayout.background = getDrawable(R.drawable.side_nav_bar)
+                                headerLayout.background = placeHolderDrawable
                             }
 
                             override fun onBitmapFailed(
                                 e: java.lang.Exception?,
                                 errorDrawable: Drawable?
                             ) {
-                                headerLayout.background = getDrawable(R.drawable.side_nav_bar)
+                                headerLayout.background = errorDrawable
                             }
 
                             override fun onBitmapLoaded(

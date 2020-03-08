@@ -10,6 +10,8 @@ class RaiderIOApp : Application() {
 
         val context: Context?
             get() = instance?.applicationContext
+
+        const val DEBUG = true
     }
 
     override fun onCreate() {
