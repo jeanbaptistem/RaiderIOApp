@@ -1,6 +1,8 @@
 package fr.jbme.raiderioapp.ui.login
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +16,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import fr.jbme.raiderioapp.MainActivity
 import fr.jbme.raiderioapp.R
+import fr.jbme.raiderioapp.data.contants.CHARACTER_NAME_KEY
+import fr.jbme.raiderioapp.data.contants.REALM_NAME_KEY
+import fr.jbme.raiderioapp.data.contants.REGION_KEY
+import fr.jbme.raiderioapp.data.contants.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import java.util.*
 
@@ -21,12 +27,14 @@ import java.util.*
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
+    private var sharedPref: SharedPreferences? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        sharedPref = context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -40,6 +48,23 @@ class LoginFragment : Fragment() {
         val regionSelectionSpinner = view.findViewById<Spinner>(R.id.regionSelection)
         val loginButton = view.findViewById<Button>(R.id.login)
         val loadingProgressBar = view.findViewById<ProgressBar>(R.id.loading)
+
+        sharedPref?.let {
+            realmNameEditText.setText(it.getString(REALM_NAME_KEY, ""))
+            characterNameEditText.setText(it.getString(CHARACTER_NAME_KEY, ""))
+            val spinnerRegionOptions = resources.getStringArray(R.array.regionOptions)
+            regionSelectionSpinner.setSelection(
+                spinnerRegionOptions.indexOf(
+                    it.getString(REGION_KEY, "eu")?.toUpperCase(
+                        Locale.ROOT
+                    )
+                )
+            )
+            loginViewModel.loginDataChanged(
+                realmNameEditText.text.toString(),
+                characterNameEditText.text.toString()
+            )
+        }
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->

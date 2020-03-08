@@ -35,10 +35,8 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
     fun logout() {
-        if (isLoggedIn) {
-            logOutUser()
-            dataSource.logout()
-        }
+        logOutUser()
+        dataSource.logout()
     }
 
     fun login(
