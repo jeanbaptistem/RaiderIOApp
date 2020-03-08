@@ -4,8 +4,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Strings related to navigation header -->
-    <string name="nav_header_title">PH character Name</string>
-    <string name="nav_header_subtitle">PH realm name and region</string>
     <string name="nav_header_desc">Character thumbnail</string>
 
     <string name="action_settings">Settings</string>

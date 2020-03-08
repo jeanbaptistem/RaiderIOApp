@@ -66,7 +66,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     // A placeholder realm name validation check
     private fun isRealmNameValid(realmName: String): Boolean {
-        return realmName.matches(Regex("[a-zA-Z]+"))
+        return realmName.replace('-', ' ').matches(Regex("[a-zA-Z ]+"))
     }
 
     // A placeholder character name validation check
