@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/menu_navigation"
     app:startDestination="@id/nav_armory">
 
     <fragment
@@ -22,4 +22,13 @@
         android:name="fr.jbme.raiderioapp.ui.raid.RaidFragment"
         android:label="@string/menu_raid"
         tools:layout="@layout/fragment_raid" />
+    <action
+        android:id="@+id/action_global_nav_armory"
+        app:destination="@id/nav_armory" />
+    <action
+        android:id="@+id/action_global_nav_dungeon"
+        app:destination="@id/nav_dungeon" />
+    <action
+        android:id="@+id/action_global_nav_raid"
+        app:destination="@id/nav_raid" />
 </navigation>

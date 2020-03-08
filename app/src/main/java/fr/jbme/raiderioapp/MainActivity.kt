@@ -32,6 +32,7 @@ import fr.jbme.raiderioapp.data.contants.*
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.network.RaiderIOService
 import fr.jbme.raiderioapp.network.RetrofitInstance
+import fr.jbme.raiderioapp.network.utils.APIException
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import fr.jbme.raiderioapp.ui.login.LoginViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
@@ -72,11 +73,11 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
         navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_armory, R.id.nav_dungeon, R.id.nav_raid
@@ -88,17 +89,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
+        //TODO: use a viewModel here
         val headerView = navView.getHeaderView(0)
         val headerLayout = headerView.navHeaderLayout
         val navHeaderTitle: TextView = headerView.findViewById(R.id.navHeaderTitle)
         val navHeaderDescription: TextView = headerView.findViewById(R.id.navHeaderDescription)
         val navHeaderThumbnail: ImageView = headerView.findViewById(R.id.navHeaderThumbnail)
 
-        val characterName: String = sharedPref.getString(CHARACTER_NAME_KEY, "")!!
-        val realmName: String = sharedPref.getString(REALM_NAME_KEY, "")!!
+        val name: String = sharedPref.getString(CHARACTER_NAME_KEY, "")!!
+        val realm: String = sharedPref.getString(REALM_NAME_KEY, "")!!
         val region: String = sharedPref.getString(REGION_KEY, "")?.toUpperCase(Locale.ROOT)!!
 
-        val call = raiderIOService?.getCharacterInfo(region, realmName, characterName)
+        val call = raiderIOService?.getCharacterInfo(region, realm, name)
         call?.enqueue(object : Callback<CharacterResponse> {
             override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
                 loginViewModel.logout()
@@ -174,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     val errorResponse =
                         NetworkErrorUtils.parseError(response)
-                    onFailure(call, Exception(errorResponse.message))
+                    onFailure(call, APIException(errorResponse.statusCode, errorResponse.message))
                 }
             }
 
@@ -206,7 +208,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

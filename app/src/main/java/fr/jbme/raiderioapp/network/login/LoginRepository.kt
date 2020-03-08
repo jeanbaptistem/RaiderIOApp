@@ -9,6 +9,7 @@ import fr.jbme.raiderioapp.data.contants.REGION_KEY
 import fr.jbme.raiderioapp.data.contants.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.network.utils.APIException
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,7 +75,10 @@ class LoginRepository(val dataSource: LoginDataSource) {
                         NetworkErrorUtils.parseError(
                             response
                         )
-                    callback.onFailure(call, Exception(errorResponse.message))
+                    callback.onFailure(
+                        call,
+                        APIException(errorResponse.statusCode, errorResponse.message)
+                    )
                 }
             }
         })
