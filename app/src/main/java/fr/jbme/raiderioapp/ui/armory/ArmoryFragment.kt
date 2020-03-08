@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.ui.gallery
+package fr.jbme.raiderioapp.ui.armory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import fr.jbme.raiderioapp.R
 
-class GalleryFragment : Fragment() {
+class ArmoryFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private lateinit var armoryViewModel: ArmoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-            ViewModelProviders.of(this).get(GalleryViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+        armoryViewModel =
+            ViewModelProviders.of(this).get(ArmoryViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_armory, container, false)
+        val textView: TextView = root.findViewById(R.id.textArmory)
+        armoryViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

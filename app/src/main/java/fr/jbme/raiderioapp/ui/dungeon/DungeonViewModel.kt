@@ -1,13 +1,13 @@
-package fr.jbme.raiderioapp.ui.slideshow
+package fr.jbme.raiderioapp.ui.dungeon
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class DungeonViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "This is dungeon Fragment"
     }
     val text: LiveData<String> = _text
 }

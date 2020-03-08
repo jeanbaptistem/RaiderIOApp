@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.ui.home
+package fr.jbme.raiderioapp.ui.raid
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import fr.jbme.raiderioapp.R
 
-class HomeFragment : Fragment() {
+class RaidFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var raidViewModel: RaidViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        raidViewModel =
+            ViewModelProviders.of(this).get(RaidViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_raid, container, false)
+        val textView: TextView = root.findViewById(R.id.textRaid)
+        raidViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
