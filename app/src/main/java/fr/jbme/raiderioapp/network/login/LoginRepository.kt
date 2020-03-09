@@ -3,10 +3,10 @@ package fr.jbme.raiderioapp.network.login
 import android.content.Context
 import android.content.SharedPreferences
 import fr.jbme.raiderioapp.RaiderIOApp
-import fr.jbme.raiderioapp.data.contants.CHARACTER_NAME_KEY
-import fr.jbme.raiderioapp.data.contants.REALM_NAME_KEY
-import fr.jbme.raiderioapp.data.contants.REGION_KEY
-import fr.jbme.raiderioapp.data.contants.SHARED_PREF_KEY
+import fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY
+import fr.jbme.raiderioapp.data.REALM_NAME_KEY
+import fr.jbme.raiderioapp.data.REGION_KEY
+import fr.jbme.raiderioapp.data.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.network.utils.APIException

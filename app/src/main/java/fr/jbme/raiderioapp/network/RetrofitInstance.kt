@@ -1,6 +1,6 @@
 package fr.jbme.raiderioapp.network
 
-import fr.jbme.raiderioapp.data.contants.BASE_URL
+import fr.jbme.raiderioapp.data.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

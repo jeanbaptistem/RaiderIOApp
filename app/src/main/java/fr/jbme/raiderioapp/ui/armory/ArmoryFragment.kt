@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.contants.CHARACTER_NAME_KEY
-import fr.jbme.raiderioapp.data.contants.REALM_NAME_KEY
-import fr.jbme.raiderioapp.data.contants.REGION_KEY
-import fr.jbme.raiderioapp.data.contants.SHARED_PREF_KEY
+import fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY
+import fr.jbme.raiderioapp.data.REALM_NAME_KEY
+import fr.jbme.raiderioapp.data.REGION_KEY
+import fr.jbme.raiderioapp.data.SHARED_PREF_KEY
 
 class ArmoryFragment : Fragment() {
 

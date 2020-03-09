@@ -28,7 +28,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
-import fr.jbme.raiderioapp.data.contants.*
+import fr.jbme.raiderioapp.data.*
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.network.RaiderIOService
 import fr.jbme.raiderioapp.network.RetrofitInstance
