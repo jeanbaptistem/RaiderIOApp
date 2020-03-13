@@ -42,7 +42,7 @@ class ArmoryViewModel : ViewModel() {
                     _gearedCharacter.value = response.body()!!
                 } else {
                     val error = NetworkErrorUtils.parseError(response)
-                    onFailure(call, APIException(error.statusCode, error.message))
+                    onFailure(call, APIException(error.message))
                 }
             }
 

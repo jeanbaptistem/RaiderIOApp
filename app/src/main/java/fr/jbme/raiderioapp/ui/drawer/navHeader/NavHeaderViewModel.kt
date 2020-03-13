@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.ui.navHeader
+package fr.jbme.raiderioapp.ui.drawer.navHeader
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -35,7 +35,7 @@ class NavHeaderViewModel : ViewModel() {
                 } else {
                     val errorResponse =
                         NetworkErrorUtils.parseError(response)
-                    onFailure(call, APIException(errorResponse.statusCode, errorResponse.message))
+                    onFailure(call, APIException(errorResponse.message))
                 }
             }
         })

@@ -1,3 +1,3 @@
 package fr.jbme.raiderioapp.network.utils
 
-class APIException(code: Int?, message: String?) : Exception()
+class APIException(message: String?) : Exception()

@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
@@ -158,6 +159,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showLoginFailed(errorString: String) {
+        Log.d("LOGIN ERROR", errorString)
         Toast.makeText(this, errorString, Toast.LENGTH_LONG).show()
     }
 }

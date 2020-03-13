@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.ui.navHeader
+package fr.jbme.raiderioapp.ui.drawer.navHeader
 
 import android.content.Context
 import android.graphics.Bitmap

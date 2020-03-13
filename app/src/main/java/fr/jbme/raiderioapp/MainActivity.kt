@@ -29,10 +29,10 @@ import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.data.*
 import fr.jbme.raiderioapp.network.RaiderIOService
 import fr.jbme.raiderioapp.network.RetrofitInstance
+import fr.jbme.raiderioapp.ui.drawer.navHeader.CustomHeaderLayout
+import fr.jbme.raiderioapp.ui.drawer.navHeader.NavHeaderViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
-import fr.jbme.raiderioapp.ui.navHeader.CustomHeaderLayout
-import fr.jbme.raiderioapp.ui.navHeader.NavHeaderViewModel
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.util.*
 
