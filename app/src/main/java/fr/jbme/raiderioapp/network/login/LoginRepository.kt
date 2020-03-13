@@ -2,7 +2,7 @@ package fr.jbme.raiderioapp.network.login
 
 import android.content.Context
 import android.content.SharedPreferences
-import fr.jbme.raiderioapp.RaiderIOApp
+import fr.jbme.raiderioapp.RaiderIoApp
 import fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY
 import fr.jbme.raiderioapp.data.REALM_NAME_KEY
 import fr.jbme.raiderioapp.data.REGION_KEY
@@ -31,7 +31,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
 
     init {
         sharedPref =
-            RaiderIOApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
+            RaiderIoApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
         user = null
     }
 

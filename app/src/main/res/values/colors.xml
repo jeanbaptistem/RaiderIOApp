@@ -5,4 +5,5 @@
     <color name="colorAccent">#1A84EA</color>
     <color name="colorBoxShadow">#e02929</color>
     <color name="colorBackground">#ff303030</color>
+    <color name="colorWarn">#B00020</color>
 </resources>

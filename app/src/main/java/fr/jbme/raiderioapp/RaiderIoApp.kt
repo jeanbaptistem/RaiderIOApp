@@ -3,9 +3,9 @@ package fr.jbme.raiderioapp
 import android.app.Application
 import android.content.Context
 
-class RaiderIOApp : Application() {
+class RaiderIoApp : Application() {
     companion object {
-        var instance: RaiderIOApp? = null
+        var instance: RaiderIoApp? = null
             private set
 
         val context: Context?
