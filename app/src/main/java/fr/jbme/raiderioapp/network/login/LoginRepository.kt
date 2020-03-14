@@ -1,12 +1,5 @@
 package fr.jbme.raiderioapp.network.login
 
-import android.content.Context
-import android.content.SharedPreferences
-import fr.jbme.raiderioapp.RaiderIoApp
-import fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY
-import fr.jbme.raiderioapp.data.REALM_NAME_KEY
-import fr.jbme.raiderioapp.data.REGION_KEY
-import fr.jbme.raiderioapp.data.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
@@ -21,16 +14,13 @@ import retrofit2.Response
 
 class LoginRepository(val dataSource: LoginDataSource) {
 
-    private var sharedPref: SharedPreferences? = null
+    var user: LoggedInUser? = null
+        private set
 
-    private var user: LoggedInUser? = null
-
-    private val isLoggedIn: Boolean
+    val isLoggedIn: Boolean
         get() = user != null
 
     init {
-        sharedPref =
-            RaiderIoApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
         user = null
     }
 
@@ -80,21 +70,9 @@ class LoginRepository(val dataSource: LoginDataSource) {
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
-        with(sharedPref?.edit()) {
-            this?.putString(REALM_NAME_KEY, user!!.realmName)
-            this?.putString(CHARACTER_NAME_KEY, user!!.characterName)
-            this?.putString(REGION_KEY, user!!.region)
-            this?.commit()
-        }
     }
 
     private fun logOutUser() {
         this.user = null
-        with(sharedPref?.edit()) {
-            this?.remove(REALM_NAME_KEY)
-            this?.remove(CHARACTER_NAME_KEY)
-            this?.remove(REGION_KEY)
-            this?.commit()
-        }
     }
 }

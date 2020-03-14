@@ -2,16 +2,18 @@ package fr.jbme.raiderioapp
 
 import android.app.Application
 import android.content.Context
+import fr.jbme.raiderioapp.network.login.LoginDataSource
+import fr.jbme.raiderioapp.network.login.LoginRepository
 
 class RaiderIoApp : Application() {
     companion object {
-        var instance: RaiderIoApp? = null
+        lateinit var instance: RaiderIoApp
             private set
 
         val context: Context?
-            get() = instance?.applicationContext
+            get() = instance.applicationContext
 
-        const val DEBUG = true
+        val loginRepository: LoginRepository = LoginRepository(dataSource = LoginDataSource())
     }
 
     override fun onCreate() {
