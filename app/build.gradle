@@ -23,9 +23,19 @@ android {
         }
     }
 
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
-
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res',
+                            'src/main/res/layouts/armory',
+                            'src/main/res/layouts/dungeon',
+                            'src/main/res/layouts/login',
+                            'src/main/res/layouts/main',
+                            'src/main/res/layouts/raid'
+                    ]
+        }
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

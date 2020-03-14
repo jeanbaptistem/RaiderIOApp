@@ -29,14 +29,14 @@ class ArmoryFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_armory, container, false)
 
-        textView = root.findViewById(R.id.textArmory)
+        // textView = root.findViewById(R.id.textArmory)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         armoryViewModel.gearedCharacter.observe(viewLifecycleOwner, Observer {
-            textView.text = it._class
+            // textView.text = it._class
         })
     }
 }
