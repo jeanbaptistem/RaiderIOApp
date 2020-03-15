@@ -1,16 +1,16 @@
 package fr.jbme.raiderioapp.network
 
-import fr.jbme.raiderioapp.data.BASE_URL
+import fr.jbme.raiderioapp.data.BLIZZARD_BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitInstance {
+object RetrofitBlizzardInstance {
     private var retrofit: Retrofit? = null
     val retrofitInstance: Retrofit?
         get() {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(BLIZZARD_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }

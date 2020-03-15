@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.network
+package fr.jbme.raiderioapp.network.services
 
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import retrofit2.Call

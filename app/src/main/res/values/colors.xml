@@ -3,7 +3,14 @@
     <color name="colorPrimary">#E49F25</color>
     <color name="colorPrimaryDark">@color/colorPrimary</color>
     <color name="colorAccent">#1A84EA</color>
-    <color name="colorBoxShadow">#e02929</color>
-    <color name="colorBackground">#ff303030</color>
     <color name="colorWarn">#B00020</color>
+
+    <color name="itemQualityPoor">#9d9d9d</color>
+    <color name="itemQualityCommon">#ffffff</color>
+    <color name="itemQualityUncommon">#1eff00</color>
+    <color name="itemQualityRare">#0070dd</color>
+    <color name="itemQualityEpic">#a335ee</color>
+    <color name="itemQualityLegendary">#ff8000</color>
+    <color name="itemQualityArtifact">#e6cc80</color>
+    <color name="itemQualityHeirloom">#00ccff</color>
 </resources>

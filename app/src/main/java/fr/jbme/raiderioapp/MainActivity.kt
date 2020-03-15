@@ -1,8 +1,6 @@
 package fr.jbme.raiderioapp
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
@@ -15,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,8 +25,9 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.data.*
-import fr.jbme.raiderioapp.network.RaiderIOService
-import fr.jbme.raiderioapp.network.RetrofitInstance
+import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
+import fr.jbme.raiderioapp.network.services.RaiderIOService
 import fr.jbme.raiderioapp.ui.drawer.navHeader.CustomHeaderLayout
 import fr.jbme.raiderioapp.ui.drawer.navHeader.NavHeaderViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModel
@@ -38,8 +37,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var sharedPref: SharedPreferences
+    private val user: LoggedInUser = RaiderIOApp.loginRepository.user!!
     private var raiderIOService: RaiderIOService? = null
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -54,10 +52,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sharedPref = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
-        raiderIOService = RetrofitInstance.retrofitInstance?.create(RaiderIOService::class.java)
-        loginViewModel =
-            ViewModelProviders.of(this, LoginViewModelFactory()).get(LoginViewModel::class.java)
+        raiderIOService =
+            RetrofitRaiderIOInstance.retrofitInstance?.create(RaiderIOService::class.java)
+        loginViewModel = LoginViewModelFactory().create(LoginViewModel::class.java)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -96,19 +93,15 @@ class MainActivity : AppCompatActivity() {
         val navHeaderThumbnail: ImageView = navHeaderView.findViewById(R.id.navHeaderThumbnail)
 
         val navViewModel =
-            ViewModelProviders.of(this).get(NavHeaderViewModel::class.java)
+            ViewModelProvider.NewInstanceFactory().create(NavHeaderViewModel::class.java)
 
-        sharedPref.let {
-            val name: String = it.getString(CHARACTER_NAME_KEY, "")!!
-            val realm: String = it.getString(REALM_NAME_KEY, "")!!
-            val region: String = it.getString(REGION_KEY, "")?.toUpperCase(Locale.ROOT)!!
-            navViewModel.fetchData(region, realm, name)
-        }
+        navViewModel.fetchData(user.region, user.realmName, user.characterName)
+
 
         navViewModel.character.observe(this, Observer {
             navHeaderTitle.text = it.name
             navHeaderDescription.text = String.format(
-                "%s %s", it.realm, it.region.toUpperCase(
+                "%s %s", it.realm, it.region!!.toUpperCase(
                     Locale.ROOT
                 )
             )
@@ -133,8 +126,6 @@ class MainActivity : AppCompatActivity() {
                 "Warrior" -> WARRIOR_BG
                 else -> DEFAULT_BG
             }
-            // fixme: why crash on rotate?
-            // java.lang.RuntimeException: Unable to start activity ComponentInfo{fr.jbme.raiderioapp/fr.jbme.raiderioapp.MainActivity}: java.lang.IllegalStateException: findViewById(R.id.navHeaderLayout) must not be null
             val customHeaderLayout: CustomHeaderLayout = findViewById(R.id.navHeaderLayout)
             Picasso.get().load(bgUrl)
                 .resize(
@@ -148,7 +139,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }

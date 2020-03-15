@@ -5,20 +5,21 @@ import android.content.Context
 import fr.jbme.raiderioapp.network.login.LoginDataSource
 import fr.jbme.raiderioapp.network.login.LoginRepository
 
-class RaiderIoApp : Application() {
+class RaiderIOApp : Application() {
     companion object {
-        lateinit var instance: RaiderIoApp
+        lateinit var instance: RaiderIOApp
             private set
 
         val context: Context?
             get() = instance.applicationContext
 
-        val loginRepository: LoginRepository = LoginRepository(dataSource = LoginDataSource())
+        lateinit var loginRepository: LoginRepository
     }
 
     override fun onCreate() {
         super.onCreate()
         instance = this
+        loginRepository = LoginRepository(dataSource = LoginDataSource())
     }
 
 }

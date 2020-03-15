@@ -39,9 +39,9 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                     _loginResult.value =
                         LoginResult(
                             success = LoggedInUser(
-                                body.realm,
-                                body.name,
-                                body.region
+                                body.realm!!,
+                                body.name!!,
+                                body.region!!
                             )
                         )
                 }

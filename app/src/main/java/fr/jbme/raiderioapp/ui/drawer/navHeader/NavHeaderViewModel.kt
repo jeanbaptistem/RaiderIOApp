@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
-import fr.jbme.raiderioapp.network.RaiderIOService
-import fr.jbme.raiderioapp.network.RetrofitInstance
+import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
+import fr.jbme.raiderioapp.network.services.RaiderIOService
 import fr.jbme.raiderioapp.network.utils.APIException
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
@@ -14,7 +14,7 @@ import retrofit2.Response
 
 class NavHeaderViewModel : ViewModel() {
     private val raiderIOService =
-        RetrofitInstance.retrofitInstance?.create(RaiderIOService::class.java)
+        RetrofitRaiderIOInstance.retrofitInstance?.create(RaiderIOService::class.java)
 
     private val _character = MutableLiveData<CharacterResponse>()
     val character: LiveData<CharacterResponse> = _character

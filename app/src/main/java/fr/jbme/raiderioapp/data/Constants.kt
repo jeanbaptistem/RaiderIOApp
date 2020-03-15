@@ -6,7 +6,8 @@ const val REALM_NAME_KEY = "fr.jbme.raiderioapp.data.REALM_NAME_KEY"
 const val CHARACTER_NAME_KEY = "fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY"
 const val REGION_KEY = "fr.jbme.raiderioapp.data.REGION_KEY"
 
-const val BASE_URL = "https://raider.io/api/v1/"
+const val RAIDERIO_BASE_URL = "https://raider.io/api/v1/"
+const val BLIZZARD_BASE_URL = "https://eu.api.blizzard.com/"
 
 const val SHAMAN_BG =
     "https://cdnassets.raider.io/images/profile/masthead_backdrops/v2/classbanner_shaman1.jpg"

@@ -12,7 +12,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.textfield.TextInputLayout
 import fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY
 import fr.jbme.raiderioapp.data.REALM_NAME_KEY
@@ -37,9 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        loginViewModel =
-            ViewModelProviders.of(this, LoginViewModelFactory())
-                .get(LoginViewModel::class.java)
+        loginViewModel = LoginViewModelFactory().create(LoginViewModel::class.java)
 
         val realmNameLayout = findViewById<TextInputLayout>(R.id.realmNameLayout)
         val characterNameLayout = findViewById<TextInputLayout>(R.id.characterNameLayout)
