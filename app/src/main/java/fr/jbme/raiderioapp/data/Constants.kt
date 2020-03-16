@@ -1,5 +1,8 @@
 package fr.jbme.raiderioapp.data
 
+// Refreshed every 24h
+const val BLIZZARD_ACCESS_TOKEN = "USQ3HQcSkW8wzrTsaFBBcocDrMUq62qLaE"
+
 const val SHARED_PREF_KEY = "fr.jbme.raiderioapp.data.SHARED_PREF_KEY"
 
 const val REALM_NAME_KEY = "fr.jbme.raiderioapp.data.REALM_NAME_KEY"

@@ -1,8 +1,8 @@
 package fr.jbme.raiderioapp.network.login
 
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
-import fr.jbme.raiderioapp.network.RaiderIOService
-import fr.jbme.raiderioapp.network.RetrofitInstance
+import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
+import fr.jbme.raiderioapp.network.services.RaiderIOService
 import retrofit2.Callback
 
 /**
@@ -10,7 +10,7 @@ import retrofit2.Callback
  */
 class LoginDataSource {
     private var raiderIOService: RaiderIOService? =
-        RetrofitInstance.retrofitInstance?.create(
+        RetrofitRaiderIOInstance.retrofitInstance?.create(
             RaiderIOService::class.java
         )
 

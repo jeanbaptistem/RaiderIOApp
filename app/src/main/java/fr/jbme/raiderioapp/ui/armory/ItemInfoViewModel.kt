@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import fr.jbme.raiderioapp.data.BLIZZARD_ACCESS_TOKEN
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemMediaResponse
 import fr.jbme.raiderioapp.network.RetrofitBlizzardInstance
@@ -25,7 +26,7 @@ class ItemInfoViewModel : ViewModel() {
     fun fetchItemIconUrl(itemId: Int) {
         var call: Call<ItemMediaResponse>? = null
         try {
-            call = blizzardService?.getItemMediaInfo(itemId)
+            call = blizzardService?.getItemMediaInfo(itemId, BLIZZARD_ACCESS_TOKEN)
         } catch (e: Exception) {
             Log.i("BlizIconExcep", e.message!!)
         }
@@ -55,7 +56,7 @@ class ItemInfoViewModel : ViewModel() {
     fun fetchItemInfo(itemId: Int) {
         var call: Call<ItemInfoResponse>? = null
         try {
-            call = blizzardService?.getItemInfo(itemId)
+            call = blizzardService?.getItemInfo(itemId, BLIZZARD_ACCESS_TOKEN)
         } catch (e: Exception) {
             Log.i("BlizInfoExcep", e.message!!)
         }
