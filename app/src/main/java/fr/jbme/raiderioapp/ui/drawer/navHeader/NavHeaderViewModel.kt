@@ -34,7 +34,7 @@ class NavHeaderViewModel : ViewModel() {
                     _character.value = response.body()
                 } else {
                     val errorResponse =
-                        NetworkErrorUtils.parseError(response)
+                        NetworkErrorUtils.parseRIOError(response)
                     onFailure(
                         call,
                         APIError(

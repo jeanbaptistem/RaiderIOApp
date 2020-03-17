@@ -48,7 +48,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                                 )
                             )
                     } else {
-                        val error = NetworkErrorUtils.parseError(response)
+                        val error = NetworkErrorUtils.parseRIOError(response)
                         onFailure(
                             call,
                             APIError(

@@ -44,7 +44,7 @@ class ItemInfoViewModel : ViewModel() {
                     _iconUrl.value =
                         response.body()!!.assets.first { asset -> asset.key == "icon" }.value
                 } else {
-                    val errorResponse = NetworkErrorUtils.parseError(response)
+                    val errorResponse = NetworkErrorUtils.parseRIOError(response)
                     onFailure(
                         call,
                         APIError(
@@ -81,7 +81,7 @@ class ItemInfoViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _itemInfo.value = response.body()!!
                 } else {
-                    val errorResponse = NetworkErrorUtils.parseError(response)
+                    val errorResponse = NetworkErrorUtils.parseRIOError(response)
                     onFailure(
                         call,
                         APIError(

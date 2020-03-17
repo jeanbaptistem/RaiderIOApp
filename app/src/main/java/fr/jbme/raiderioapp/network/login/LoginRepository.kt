@@ -73,7 +73,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
                     callback.onResponse(call, response)
                 } else {
                     val errorResponse =
-                        NetworkErrorUtils.parseError(response)
+                        NetworkErrorUtils.parseRIOError(response)
                     callback.onFailure(
                         call,
                         APIError(
