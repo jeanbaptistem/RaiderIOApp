@@ -7,7 +7,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
+import fr.jbme.raiderioapp.data.ICON_DEFAULT_URL
 import fr.jbme.raiderioapp.data.model.character.GearItem
+import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
 
 class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,12 +48,11 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         )
     }
 
-    fun bindItem(itemInfo: ItemInfoResponse?, gearItem: GearItem?) {
+    fun bindItem(itemInfo: ItemInfoResponse?, gearItem: GearItem?, gems: List<BlizMediaResponse>?) {
         itemName.text = itemInfo?.name
         ilvlTextView.text = "Ilvl: " + gearItem?.itemLevel.toString()
-        socketLayoutList.forEach {
-            it.visibility = View.GONE
-        }
+        socketLayoutList.forEach { it.visibility = View.GONE }
+        socketImageViewList.forEach { it.visibility = View.GONE }
         when {
             gearItem?.isAzeriteArmor!! -> {
                 val color = itemView.resources.getColor(R.color.itemQualityArtifact)
@@ -59,12 +60,28 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     it.setCardBackgroundColor(color)
                     it.visibility = View.VISIBLE
                 }
+                gearItem.azeritePowers!!
+                    .filter { it.tier == 3 }
+                    .mapIndexed { index, azeritePower ->
+                        Picasso.get()
+                            .load(ICON_DEFAULT_URL + azeritePower.spell!!.icon + ".jpg")
+                            .into(socketImageViewList[index])
+                        socketImageViewList[index].visibility = View.VISIBLE
+                    }
             }
             gearItem.gems!!.isNotEmpty() -> {
                 val color = itemView.resources.getColor(R.color.itemQualityEpic)
-                socketLayoutList.subList(0, gearItem.gems!!.count()).forEach {
-                    it.setCardBackgroundColor(color)
-                    it.visibility = View.VISIBLE
+                gearItem.gems!!.mapIndexed { index, gemId ->
+                    with(socketLayoutList[index]) {
+                        setCardBackgroundColor(color)
+                        visibility = View.VISIBLE
+                    }
+                    with(socketImageViewList[index]) {
+                        gems?.first { gem -> gem.id == gemId }.let {
+                            Picasso.get().load(it?.assets?.first()?.value).into(this)
+                        }
+                        visibility = View.VISIBLE
+                    }
                 }
             }
         }

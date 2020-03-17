@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import fr.jbme.raiderioapp.data.*
+import fr.jbme.raiderioapp.data.BG_DEFAULT_URL
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.RaiderIOService
@@ -111,23 +111,8 @@ class MainActivity : AppCompatActivity() {
                 .error(getDrawable(R.mipmap.ic_launcher)!!)
                 .into(navHeaderThumbnail)
 
-            val bgUrl = when (it._class) {
-                "Shaman" -> SHAMAN_BG
-                "Death Knight" -> DK_BG
-                "Demon Hunter" -> DH_BG
-                "Druid" -> DRUID_BG
-                "Hunter" -> HUNTER_BG
-                "Mage" -> MAGE_BG
-                "Monk" -> MONK_BG
-                "Paladin" -> PALADIN_BG
-                "Priest" -> PRIEST_BG
-                "Rogue" -> ROGUE_BG
-                "Warlock" -> WARLOCK_BG
-                "Warrior" -> WARRIOR_BG
-                else -> DEFAULT_BG
-            }
             val customHeaderLayout: CustomHeaderLayout = findViewById(R.id.navHeaderLayout)
-            Picasso.get().load(bgUrl)
+            Picasso.get().load(BG_DEFAULT_URL + it.profileBanner + ".jpg")
                 .resize(
                     navHeaderView.measuredWidth,
                     resources.getDimension(R.dimen.nav_header_height).toInt()

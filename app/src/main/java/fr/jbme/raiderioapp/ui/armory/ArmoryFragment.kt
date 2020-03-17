@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.data.model.character.GearItem
+import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.data.model.itemInfo.ItemMediaResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.network.utils.LiveDataUtils
+import fr.jbme.raiderioapp.network.utils.Quadruple
 
 class ArmoryFragment : Fragment() {
 
@@ -27,7 +28,7 @@ class ArmoryFragment : Fragment() {
     private lateinit var armoryRecyclerView: RecyclerView
     private lateinit var armoryCardViewAdapter: ArmoryCardViewAdapter
 
-    private lateinit var zippedLiveData: LiveData<Triple<List<GearItem>, List<ItemInfoResponse>, List<ItemMediaResponse>>>
+    private lateinit var zippedLiveData: LiveData<Quadruple<List<GearItem>, List<ItemInfoResponse>, List<BlizMediaResponse>, List<BlizMediaResponse>>>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,16 +46,21 @@ class ArmoryFragment : Fragment() {
             try {
                 armoryViewModel.fetchItemInfo(it)
                 armoryViewModel.fetchItemMedia(it)
+                armoryViewModel.fetchGemsMedia(it)
             } catch (e: Exception) {
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
         })
 
-        zippedLiveData =
-            zipLiveData(armoryViewModel.gear, armoryViewModel.items, armoryViewModel.medias)
+        zippedLiveData = LiveDataUtils.zipQuadruple(
+            armoryViewModel.gear,
+            armoryViewModel.items,
+            armoryViewModel.medias,
+            armoryViewModel.gems
+        )
 
         armoryCardViewAdapter =
-            ArmoryCardViewAdapter(context, Triple(listOf(), mutableListOf(), mutableListOf()))
+            ArmoryCardViewAdapter(context, Quadruple(listOf(), listOf(), listOf(), listOf()))
 
         armoryRecyclerView = root.findViewById(R.id.armoryRecyclerView)
         armoryRecyclerView.run {
@@ -70,38 +76,5 @@ class ArmoryFragment : Fragment() {
             armoryCardViewAdapter.armoryItems = it
             armoryCardViewAdapter.notifyDataSetChanged()
         })
-    }
-
-    private fun <A, B, C> zipLiveData(
-        a: LiveData<A>,
-        b: LiveData<B>,
-        c: LiveData<C>
-    ): LiveData<Triple<A, B, C>> {
-        return MediatorLiveData<Triple<A, B, C>>().apply {
-            var lastA: A? = null
-            var lastB: B? = null
-            var lastC: C? = null
-
-            fun update() {
-                val localLastA = lastA
-                val localLastB = lastB
-                val localLastC = lastC
-                if (localLastA != null && localLastB != null && localLastC != null)
-                    this.value = Triple(localLastA, localLastB, localLastC)
-            }
-
-            addSource(a) {
-                lastA = it
-                update()
-            }
-            addSource(b) {
-                lastB = it
-                update()
-            }
-            addSource(c) {
-                lastC = it
-                update()
-            }
-        }
     }
 }
