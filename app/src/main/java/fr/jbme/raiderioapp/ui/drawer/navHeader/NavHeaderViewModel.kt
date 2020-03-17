@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.RaiderIOService
-import fr.jbme.raiderioapp.network.utils.APIException
+import fr.jbme.raiderioapp.network.utils.APIError
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +35,14 @@ class NavHeaderViewModel : ViewModel() {
                 } else {
                     val errorResponse =
                         NetworkErrorUtils.parseError(response)
-                    onFailure(call, APIException(errorResponse.message))
+                    onFailure(
+                        call,
+                        APIError(
+                            errorResponse.message,
+                            errorResponse.statusCode,
+                            errorResponse.error
+                        )
+                    )
                 }
             }
         })

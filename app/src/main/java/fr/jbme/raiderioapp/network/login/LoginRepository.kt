@@ -9,6 +9,7 @@ import fr.jbme.raiderioapp.data.REGION_KEY
 import fr.jbme.raiderioapp.data.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.network.utils.APIError
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +37,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
     fun logout() {
-        logOutUser()
+        logoutUser()
         dataSource.logout()
     }
 
@@ -73,7 +74,14 @@ class LoginRepository(val dataSource: LoginDataSource) {
                 } else {
                     val errorResponse =
                         NetworkErrorUtils.parseError(response)
-                    callback.onFailure(call, Exception(errorResponse.message))
+                    callback.onFailure(
+                        call,
+                        APIError(
+                            errorResponse.message,
+                            errorResponse.statusCode,
+                            errorResponse.error
+                        )
+                    )
                 }
             }
         })
@@ -89,7 +97,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
         }
     }
 
-    private fun logOutUser() {
+    private fun logoutUser() {
         this.user = null
     }
 }

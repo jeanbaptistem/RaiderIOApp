@@ -1,6 +1,5 @@
 package fr.jbme.raiderioapp.ui.armory
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,10 +8,11 @@ import fr.jbme.raiderioapp.data.model.character.Gear
 import fr.jbme.raiderioapp.data.model.character.GearItem
 import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.RaiderIOService
+import fr.jbme.raiderioapp.network.utils.APIError
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Callback as Callback1
 
 class ArmoryViewModel : ViewModel() {
 
@@ -24,16 +24,21 @@ class ArmoryViewModel : ViewModel() {
             RaiderIOService::class.java
         )
 
-    fun fetchCharacterData(region: String, realm: String, name: String) {
+    fun fetchCharacterData(
+        region: String,
+        realm: String,
+        name: String,
+        errorCallback: (e: APIError) -> Unit
+    ) {
         var call: Call<CharacterResponse>? = null
         try {
             call = raiderIOService?.getGearedCharacter(region, realm, name)
         } catch (e: Exception) {
-            Log.i("RaiderIOApiExcep", e.message!!)
+            errorCallback(APIError(e.message))
         }
-        call?.enqueue(object : Callback<CharacterResponse> {
+        call?.enqueue(object : Callback1<CharacterResponse> {
             override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
-                Log.i("RetrofitRIOExcep1", t.message!!)
+                errorCallback(APIError(t.message))
             }
 
             override fun onResponse(
@@ -44,7 +49,7 @@ class ArmoryViewModel : ViewModel() {
                     _gear.value = gearToGearItemList(response.body()!!.gear!!)
                 } else {
                     val error = NetworkErrorUtils.parseError(response)
-                    Log.i("RetrofitRIOExcept2", error.message!!)
+                    onFailure(call, APIError(error.message, error.statusCode, error.error))
                 }
             }
 

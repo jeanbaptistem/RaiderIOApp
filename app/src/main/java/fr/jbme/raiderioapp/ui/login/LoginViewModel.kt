@@ -7,6 +7,8 @@ import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.network.login.LoginRepository
+import fr.jbme.raiderioapp.network.utils.APIError
+import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,15 +37,28 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                     call: Call<CharacterResponse>,
                     response: Response<CharacterResponse>
                 ) {
-                    val body = response.body()!!
-                    _loginResult.value =
-                        LoginResult(
-                            success = LoggedInUser(
-                                body.realm!!,
-                                body.name!!,
-                                body.region!!
+                    if (response.isSuccessful) {
+                        val body = response.body()!!
+                        _loginResult.value =
+                            LoginResult(
+                                success = LoggedInUser(
+                                    body.realm!!,
+                                    body.name!!,
+                                    body.region!!
+                                )
+                            )
+                    } else {
+                        val error = NetworkErrorUtils.parseError(response)
+                        onFailure(
+                            call,
+                            APIError(
+                                error.message,
+                                error.statusCode,
+                                error.error
                             )
                         )
+                    }
+
                 }
             })
     }

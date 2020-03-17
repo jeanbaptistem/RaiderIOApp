@@ -1,15 +1,14 @@
 package fr.jbme.raiderioapp.network.utils
 
-import fr.jbme.raiderioapp.data.model.APIError
 import org.json.JSONObject
 import retrofit2.Response
 
 object NetworkErrorUtils {
     fun parseError(response: Response<*>): APIError {
-        val bodyObj: JSONObject?
-        var statusCode: Int?
-        var error: String?
-        var message: String?
+        val bodyObj: JSONObject
+        var statusCode: Int
+        var error: String
+        var message: String
         try {
             val errorBody: String? = response.errorBody()?.string()
             bodyObj = JSONObject(errorBody!!)
@@ -23,6 +22,10 @@ object NetworkErrorUtils {
             error = "Parsing error"
             message = "Unable to parse error body"
         }
-        return APIError(statusCode, error, message)
+        return APIError(
+            message,
+            statusCode,
+            error
+        )
     }
 }
