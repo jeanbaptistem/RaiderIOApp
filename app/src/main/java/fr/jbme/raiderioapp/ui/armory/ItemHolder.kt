@@ -1,5 +1,6 @@
 package fr.jbme.raiderioapp.ui.armory
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,6 +19,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val itemName: TextView = itemView.findViewById(R.id.itemNameTextView)
 
     private val ilvlTextView: TextView = itemView.findViewById(R.id.itemIlvlTextView)
+    private val postGemsTextView: TextView = itemView.findViewById(R.id.postGemsTextView)
 
     private val socketLayoutList = listOf<CardView>(
         itemView.findViewById(R.id.cardSocket_1),
@@ -48,13 +50,16 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         )
     }
 
+    @SuppressLint("SetTextI18n")
     fun bindItem(itemInfo: ItemInfoResponse?, gearItem: GearItem?, gems: List<BlizMediaResponse>?) {
         itemName.text = itemInfo?.name
         ilvlTextView.text = "Ilvl: " + gearItem?.itemLevel.toString()
         socketLayoutList.forEach { it.visibility = View.GONE }
         socketImageViewList.forEach { it.visibility = View.GONE }
+        postGemsTextView.visibility = View.GONE
         when {
             gearItem?.isAzeriteArmor!! -> {
+                // Display major azerite power
                 val color = itemView.resources.getColor(R.color.itemQualityArtifact)
                 socketLayoutList.subList(0, 2).forEach {
                     it.setCardBackgroundColor(color)
@@ -70,6 +75,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     }
             }
             gearItem.gems!!.isNotEmpty() -> {
+                // Display gems
                 val color = itemView.resources.getColor(R.color.itemQualityEpic)
                 gearItem.gems!!.mapIndexed { index, gemId ->
                     with(socketLayoutList[index]) {
@@ -83,6 +89,11 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                         visibility = View.VISIBLE
                     }
                 }
+            }
+            gearItem.corruption?.cloakRank != null -> {
+                // If cloak, then display lvl
+                postGemsTextView.text = "Lvl: " + gearItem.corruption?.cloakRank.toString()
+                postGemsTextView.visibility = View.VISIBLE
             }
         }
     }
