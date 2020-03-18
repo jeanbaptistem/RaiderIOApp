@@ -40,7 +40,7 @@ class ArmoryFragment : Fragment() {
         try {
             armoryViewModel.fetchCharacterData(user.region, user.realmName, user.characterName)
         } catch (e: Exception) {
-            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
         }
         armoryViewModel.gear.observe(viewLifecycleOwner, Observer {
             try {
@@ -48,7 +48,7 @@ class ArmoryFragment : Fragment() {
                 armoryViewModel.fetchItemMedia(it)
                 armoryViewModel.fetchGemsMedia(it)
             } catch (e: Exception) {
-                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
             }
         })
 

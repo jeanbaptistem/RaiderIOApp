@@ -20,4 +20,11 @@ interface RaiderIOService {
         @Query("realm") realmName: String,
         @Query("name") characterName: String
     ): Call<CharacterResponse>
+
+    @GET("characters/profile?fields=raid_progression")
+    fun getRaidCharacter(
+        @Query("region") region: String,
+        @Query("realm") realmName: String,
+        @Query("name") characterName: String
+    ): Call<CharacterResponse>
 }

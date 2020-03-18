@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.ui.drawer.navHeader
+package fr.jbme.raiderioapp.components
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso.LoadedFrom
 import com.squareup.picasso.Target
 
 
-class CustomHeaderLayout : LinearLayout, Target {
+class CustomLinearLayout : LinearLayout, Target {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(

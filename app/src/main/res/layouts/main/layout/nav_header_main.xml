@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fr.jbme.raiderioapp.ui.drawer.navHeader.CustomHeaderLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fr.jbme.raiderioapp.components.CustomLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navHeaderLayout"
@@ -44,4 +44,4 @@
         android:layout_height="wrap_content"
         tools:text="Ysondre EU" />
 
-</fr.jbme.raiderioapp.ui.drawer.navHeader.CustomHeaderLayout>
+</fr.jbme.raiderioapp.components.CustomLinearLayout>

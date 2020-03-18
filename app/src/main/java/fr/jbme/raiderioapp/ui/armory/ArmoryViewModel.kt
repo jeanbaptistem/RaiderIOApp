@@ -167,7 +167,7 @@ class ArmoryViewModel : ViewModel() {
 
     fun fetchGemsMedia(gearItemList: List<GearItem>) {
         val tempList = mutableListOf<BlizMediaResponse>()
-        gearItemList.forEach {
+        gearItemList.forEach { it ->
             if (it.gems!!.isNotEmpty()) {
                 it.gems!!.forEach {
                     blizzardService?.getItemMediaInfo(it, BLIZZARD_ACCESS_TOKEN)

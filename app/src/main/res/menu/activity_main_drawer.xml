@@ -9,12 +9,12 @@
             android:icon="@drawable/ic_menu_armory"
             android:title="@string/menu_armory" />
         <item
-            android:id="@+id/nav_dungeon"
-            android:icon="@drawable/ic_menu_dungeon"
-            android:title="@string/menu_dungeon" />
-        <item
             android:id="@+id/nav_raid"
             android:icon="@drawable/ic_menu_raid"
             android:title="@string/menu_raid" />
+        <item
+            android:id="@+id/nav_dungeon"
+            android:icon="@drawable/ic_menu_dungeon"
+            android:title="@string/menu_dungeon" />
     </group>
 </menu>

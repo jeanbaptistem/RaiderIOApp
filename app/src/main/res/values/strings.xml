@@ -25,6 +25,9 @@
     <string name="invalid_character_name">Wrong character name</string>
     <string name="invalid_region">Wrong region</string>
     <string name="raider_io_login_title">Raider.io login title</string>
+    <string name="normal">Normal</string>
+    <string name="heroic">Heroic</string>
+    <string name="mythic">Mythic</string>
 
     <!-- Strings related to armory -->
 
