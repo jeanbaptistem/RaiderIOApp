@@ -1,7 +1,7 @@
 package fr.jbme.raiderioapp.network.login
 
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
-import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
+import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.RaiderIOService
 import retrofit2.Callback
 

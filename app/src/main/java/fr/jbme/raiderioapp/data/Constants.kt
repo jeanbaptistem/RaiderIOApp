@@ -16,3 +16,4 @@ const val BG_DEFAULT_URL = "https://cdnassets.raider.io/images/profile/masthead_
 const val ICON_DEFAULT_URL = "https://wow.zamimg.com/images/wow/icons/large/"
 
 const val BG_RAID_URL = "https://cdnassets.raider.io/images/%s/headers/_zone.jpg"
+const val BOSS_ICON_URL = "https://cdnassets.raider.io/images/%s/bossicons/%s.jpg"

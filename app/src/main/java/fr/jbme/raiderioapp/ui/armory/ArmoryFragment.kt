@@ -17,8 +17,8 @@ import fr.jbme.raiderioapp.data.model.character.GearItem
 import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.data.model.utils.Quadruple
 import fr.jbme.raiderioapp.network.utils.LiveDataUtils
-import fr.jbme.raiderioapp.network.utils.Quadruple
 
 class ArmoryFragment : Fragment() {
 
@@ -60,7 +60,15 @@ class ArmoryFragment : Fragment() {
         )
 
         armoryCardViewAdapter =
-            ArmoryCardViewAdapter(context, Quadruple(listOf(), listOf(), listOf(), listOf()))
+            ArmoryCardViewAdapter(
+                context,
+                Quadruple(
+                    listOf(),
+                    listOf(),
+                    listOf(),
+                    listOf()
+                )
+            )
 
         armoryRecyclerView = root.findViewById(R.id.armoryRecyclerView)
         armoryRecyclerView.run {

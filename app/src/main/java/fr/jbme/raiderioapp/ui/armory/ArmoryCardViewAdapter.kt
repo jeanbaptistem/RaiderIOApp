@@ -9,7 +9,7 @@ import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.data.model.character.GearItem
 import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.network.utils.Quadruple
+import fr.jbme.raiderioapp.data.model.utils.Quadruple
 import kotlin.math.min
 
 

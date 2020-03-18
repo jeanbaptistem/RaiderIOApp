@@ -2,6 +2,7 @@ package fr.jbme.raiderioapp.network.services
 
 import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
+import fr.jbme.raiderioapp.data.model.raidInfo.RaidInfoResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,4 +21,11 @@ interface BlizzardService {
         @Path("itemId") itemId: Int,
         @Query("access_token") token: String
     ): Call<ItemInfoResponse>
+
+    @GET("/profile/wow/character/{realmSlug}/{characterName}/encounters/raids?namespace=profile-eu&locale=en_GB")
+    fun getRaidInfo(
+        @Path("realmSlug") realmSlug: String,
+        @Path("characterName") characterName: String,
+        @Query("access_token") token: String
+    ): Call<RaidInfoResponse>
 }

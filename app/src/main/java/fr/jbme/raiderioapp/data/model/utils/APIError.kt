@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.network.utils
+package fr.jbme.raiderioapp.data.model.utils
 
 class APIError(
     override var message: String?,

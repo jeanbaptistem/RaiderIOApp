@@ -10,7 +10,8 @@ import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.components.CustomConstraintLayout
 import fr.jbme.raiderioapp.data.BG_RAID_URL
 import fr.jbme.raiderioapp.data.model.character.Raid
-import java.util.*
+import fr.jbme.raiderioapp.data.model.raidInfo.Encounters
+import fr.jbme.raiderioapp.utils.SlugParser
 
 @SuppressLint("SetTextI18n")
 class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,6 +26,9 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val raidSummaryCardView: CardView = itemView.findViewById(R.id.raidSummaryCardView)
     private val raidSummaryTextView: TextView = itemView.findViewById(R.id.raidSummaryTextView)
+
+    private val bossRecyclerView: RecyclerView =
+        itemView.findViewById(R.id.raidProgressionBossRecyclerView)
 
 
     fun bind(raid: Raid) {
@@ -53,10 +57,16 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         raidMMTextView.text = raid.mythicBossesKilled.toString() + "/" + raid.totalBosses.toString()
     }
 
-    fun setBackground(raid: Raid) {
-        val bgUrl = BG_RAID_URL.format(raid.name?.replace(' ', '-')?.toLowerCase(Locale.ROOT))
+    fun setBackground(raid: Raid?) {
+        val bgUrl = BG_RAID_URL.format(SlugParser.parseToSlug(raid?.name))
         Picasso.get()
             .load(bgUrl)
             .into(cardViewConstraintLayout)
+    }
+
+    fun addBossRecyclerView(encounters: List<Encounters>?, raidName: String?) {
+        bossRecyclerView.run {
+            adapter = BossCardViewAdapter(itemView.context, encounters ?: listOf(), raidName)
+        }
     }
 }

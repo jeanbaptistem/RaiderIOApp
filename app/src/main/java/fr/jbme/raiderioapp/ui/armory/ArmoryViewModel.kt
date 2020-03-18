@@ -9,11 +9,11 @@ import fr.jbme.raiderioapp.data.model.character.Gear
 import fr.jbme.raiderioapp.data.model.character.GearItem
 import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.network.RetrofitBlizzardInstance
-import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
+import fr.jbme.raiderioapp.data.model.utils.APIError
+import fr.jbme.raiderioapp.network.factory.RetrofitBlizzardInstance
+import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.BlizzardService
 import fr.jbme.raiderioapp.network.services.RaiderIOService
-import fr.jbme.raiderioapp.network.utils.APIError
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,7 +65,14 @@ class ArmoryViewModel : ViewModel() {
                             _gear.value = gearToGearItemList(response.body()!!.gear!!)
                         } else {
                             val error = NetworkErrorUtils.parseRIOError(response)
-                            onFailure(call, APIError(error.message, error.statusCode, error.error))
+                            onFailure(
+                                call,
+                                APIError(
+                                    error.message,
+                                    error.statusCode,
+                                    error.error
+                                )
+                            )
                         }
                     }
                 })
@@ -173,7 +180,9 @@ class ArmoryViewModel : ViewModel() {
                     blizzardService?.getItemMediaInfo(it, BLIZZARD_ACCESS_TOKEN)
                         ?.enqueue(object : Callback<BlizMediaResponse> {
                             override fun onFailure(call: Call<BlizMediaResponse>, t: Throwable) {
-                                throw APIError(t.message)
+                                throw APIError(
+                                    t.message
+                                )
                             }
 
                             override fun onResponse(

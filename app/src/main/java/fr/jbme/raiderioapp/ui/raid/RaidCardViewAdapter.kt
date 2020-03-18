@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.data.model.character.Raid
+import fr.jbme.raiderioapp.data.model.raidInfo.Instances
 
 class RaidCardViewAdapter(
     val context: Context?,
-    var raidList: List<Raid>
+    var raidInstancesList: Pair<List<Raid>, List<Instances>>
 ) : RecyclerView.Adapter<RaidHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RaidHolder {
         val view: View =
@@ -20,12 +22,22 @@ class RaidCardViewAdapter(
     }
 
     override fun onBindViewHolder(holder: RaidHolder, position: Int) {
-        holder.bind(raidList[position])
-        holder.setBackground(raidList[position])
+        val raid = raidInstancesList.first[position]
+        val instancesList = raidInstancesList.second
+
+
+        holder.bind(raid)
+        holder.setBackground(raid)
+
+        val encounters =
+            instancesList.first { instances -> instances.instance.name == raid.name }
+                .modes.firstOrNull { modes -> modes.difficulty.type == "MYTHIC" }
+                ?.progress?.encounters
+        holder.addBossRecyclerView(encounters, raid.name)
     }
 
     override fun getItemCount(): Int {
-        return raidList.size
+        return raidInstancesList.first.size
     }
 
 }

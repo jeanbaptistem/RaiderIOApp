@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.components.CustomLinearLayout
 import fr.jbme.raiderioapp.data.BG_DEFAULT_URL
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
-import fr.jbme.raiderioapp.network.RetrofitRaiderIOInstance
+import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.RaiderIOService
 import fr.jbme.raiderioapp.ui.drawer.navHeader.NavHeaderViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModel

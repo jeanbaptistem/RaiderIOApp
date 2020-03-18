@@ -9,7 +9,7 @@ import fr.jbme.raiderioapp.data.REGION_KEY
 import fr.jbme.raiderioapp.data.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
-import fr.jbme.raiderioapp.network.utils.APIError
+import fr.jbme.raiderioapp.data.model.utils.APIError
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
 import retrofit2.Call
 import retrofit2.Callback
