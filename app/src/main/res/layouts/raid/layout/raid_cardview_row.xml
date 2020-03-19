@@ -17,133 +17,167 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/raidCardViewConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fr.jbme.raiderioapp.components.CustomConstraintLayout
-            android:id="@+id/raidCardViewLayout"
+        <FrameLayout
+            android:id="@+id/raidInfoFrameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/raidNameTextView"
-                android:layout_width="wrap_content"
+            <fr.jbme.raiderioapp.components.DynamicHeightImageView
+                android:id="@+id/dynamicImageView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/raidSummaryCardView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Nyalotha The Waking City" />
+                android:scaleType="centerCrop"
+                app:height_ratio="0.5"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-            <TableLayout
-                android:id="@+id/raidProgressionTableLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/raidNameTextView"
-                app:layout_constraintStart_toStartOf="@+id/raidNameTextView"
-                app:layout_constraintTop_toBottomOf="@+id/raidNameTextView">
-
-                <TableRow
-                    android:id="@+id/raidProgressionMMTableRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="@string/normal"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="@string/heroic"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="@string/mythic"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/raidProgressionHMTableRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/raidNMTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:textAlignment="center"
-                        tools:text="8/12" />
-
-                    <TextView
-                        android:id="@+id/raidHMTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:textAlignment="center"
-                        tools:text="12/12" />
-
-                    <TextView
-                        android:id="@+id/raidMMTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:textAlignment="center"
-                        tools:text="4/12" />
-                </TableRow>
-
-            </TableLayout>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/raidSummaryCardView"
-                style="@style/Widget.MaterialComponents.CardView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/raidInfoConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/raidSummaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
+                    android:id="@+id/raidNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="28sp"
                     android:textStyle="bold"
-                    tools:text="4/12 MM" />
-            </com.google.android.material.card.MaterialCardView>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.20"
+                    tools:text="Nyalotha The Waking City" />
 
-        </fr.jbme.raiderioapp.components.CustomConstraintLayout>
+                <TableLayout
+                    android:id="@+id/raidProgressionTableLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/raidSummaryCardView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/raidNameTextView">
+
+                    <TableRow
+                        android:id="@+id/raidProgressionMMTableRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/raidLFRHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/lfr"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/raidNMHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/normal"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/raidHMHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/heroic"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/raidMMHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/mythic"
+                            android:textAlignment="center"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/raidProgressionHMTableRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/raidLFRTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:textAlignment="center"
+                            tools:text="12/12" />
+
+                        <TextView
+                            android:id="@+id/raidNMTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:textAlignment="center"
+                            tools:text="8/12" />
+
+                        <TextView
+                            android:id="@+id/raidHMTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:textAlignment="center"
+                            tools:text="12/12" />
+
+                        <TextView
+                            android:id="@+id/raidMMTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:textAlignment="center"
+                            tools:text="4/12" />
+                    </TableRow>
+
+                </TableLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/raidSummaryCardView"
+                    style="@style/Widget.MaterialComponents.CardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/raidProgressionTableLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/raidProgressionTableLayout">
+
+                    <TextView
+                        android:id="@+id/raidSummaryTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        tools:text="4/12 MM" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
         <View
             android:id="@+id/divider"
@@ -152,18 +186,19 @@
             android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/raidCardViewLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/raidInfoFrameLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/raidProgressionBossRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/raidInfoFrameLayout"
             tools:listitem="@layout/raid_boss_item">
 
         </androidx.recyclerview.widget.RecyclerView>

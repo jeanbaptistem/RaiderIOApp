@@ -27,8 +27,7 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } else if (boss.contains("zaqul")) {
             boss = "zaqul"
         }
-        val url = BOSS_ICON_URL.format(raid, boss)
-        Picasso.get().load(url).error(R.color.colorWarn).into(raidBossImageView)
+        Picasso.get().load(BOSS_ICON_URL.format(raid, boss)).into(raidBossImageView)
     }
 
 }

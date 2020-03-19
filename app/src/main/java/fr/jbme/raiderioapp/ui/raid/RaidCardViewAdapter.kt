@@ -1,7 +1,6 @@
 package fr.jbme.raiderioapp.ui.raid
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,8 +22,6 @@ class RaidCardViewAdapter(
 
     override fun onBindViewHolder(holder: RaidHolder, position: Int) {
         val raid = raidList[position]
-        Log.i("raid", raid.toString())
-
         holder.bind(raid)
         val bosses =
             raid.difficulties.firstOrNull { difficulties -> difficulties.difficulty.enum == "MYTHIC" }?.bosses

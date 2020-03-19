@@ -7,17 +7,18 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.components.CustomConstraintLayout
+import fr.jbme.raiderioapp.components.DynamicHeightImageView
 import fr.jbme.raiderioapp.data.model.wow.character.Bosses
 import fr.jbme.raiderioapp.data.model.wow.character.Raids
 
 @SuppressLint("SetTextI18n")
 class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val cardViewConstraintLayout: CustomConstraintLayout =
-        itemView.findViewById(R.id.raidCardViewLayout)
+    private val dynamicImageView: DynamicHeightImageView =
+        itemView.findViewById(R.id.dynamicImageView)
 
     private val raidNameTextView: TextView = itemView.findViewById(R.id.raidNameTextView)
 
+    private val raidLFRTextView: TextView = itemView.findViewById(R.id.raidLFRTextView)
     private val raidNMTextView: TextView = itemView.findViewById(R.id.raidNMTextView)
     private val raidHMTextView: TextView = itemView.findViewById(R.id.raidHMTextView)
     private val raidMMTextView: TextView = itemView.findViewById(R.id.raidMMTextView)
@@ -33,22 +34,21 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         raidNameTextView.text = raid?.name
         raidSummaryTextView.text = "PH"
 
-        raidNMTextView.text =
-            raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == "NORMAL" }
-                ?.bosses?.filter { bosses -> bosses.killCount != 0 }
-                ?.size.toString()
-        raidHMTextView.text =
-            raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == "HEROIC" }
-                ?.bosses?.filter { bosses -> bosses.killCount != 0 }
-                ?.size.toString()
-        raidMMTextView.text =
-            raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == "MYTHIC" }
-                ?.bosses?.filter { bosses -> bosses.killCount != 0 }
-                ?.size.toString()
+        raidLFRTextView.text = displayBossCounter(raid, "LFR")
+        raidNMTextView.text = displayBossCounter(raid, "NORMAL")
+        raidHMTextView.text = displayBossCounter(raid, "HEROIC")
+        raidMMTextView.text = displayBossCounter(raid, "MYTHIC")
 
         Picasso.get()
             .load(raid?.icon?.url)
-            .into(cardViewConstraintLayout)
+            .into(dynamicImageView)
+    }
+
+    private fun displayBossCounter(raid: Raids?, difficulty: String?): String? {
+        val difficulties =
+            raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == difficulty }
+        return difficulties?.bosses?.filter { bosses -> bosses.killCount != 0 }?.size.toString() + "/" +
+                difficulties?.total.toString()
     }
 
     fun addBossRecyclerView(bosses: List<Bosses>, raidId: String) {

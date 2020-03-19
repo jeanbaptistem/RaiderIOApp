@@ -28,6 +28,7 @@
     <string name="normal">Normal</string>
     <string name="heroic">Heroic</string>
     <string name="mythic">Mythic</string>
+    <string name="lfr">LFR</string>
 
     <!-- Strings related to armory -->
 
