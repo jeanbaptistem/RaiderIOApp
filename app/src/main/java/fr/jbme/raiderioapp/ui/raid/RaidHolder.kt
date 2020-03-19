@@ -2,14 +2,14 @@ package fr.jbme.raiderioapp.ui.raid
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.components.DynamicHeightImageView
-import fr.jbme.raiderioapp.data.model.wow.character.Bosses
 import fr.jbme.raiderioapp.data.model.wow.character.Raids
+import fr.jbme.raiderioapp.utils.Whatever.repeat
 
 @SuppressLint("SetTextI18n")
 class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,16 +23,41 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val raidHMTextView: TextView = itemView.findViewById(R.id.raidHMTextView)
     private val raidMMTextView: TextView = itemView.findViewById(R.id.raidMMTextView)
 
-    private val raidSummaryCardView: CardView = itemView.findViewById(R.id.raidSummaryCardView)
-    private val raidSummaryTextView: TextView = itemView.findViewById(R.id.raidSummaryTextView)
+    private val raidToggleBossListButton: Button =
+        itemView.findViewById(R.id.raidToggleBossListButton)
 
     private val bossRecyclerView: RecyclerView =
         itemView.findViewById(R.id.raidProgressionBossRecyclerView)
+    private val bossCardViewAdapter: BossCardViewAdapter =
+        BossCardViewAdapter(itemView.context, listOf(), "")
+
+    private val difficultyListIterator =
+        sequenceOf("MYTHIC", "HEROIC", "NORMAL", "LFR").repeat().iterator()
 
 
     fun bind(raid: Raids?) {
+        bossRecyclerView.adapter = bossCardViewAdapter
+
         raidNameTextView.text = raid?.name
-        raidSummaryTextView.text = "PH"
+        raidToggleBossListButton.setOnClickListener {
+            val difficulty = difficultyListIterator.next()
+            bossCardViewAdapter.run {
+                bosses =
+                    raid?.difficulties?.firstOrNull { difficulties -> difficulties.difficulty.enum == difficulty }?.bosses
+                        ?: listOf()
+                raidId = raid?.id ?: ""
+                notifyDataSetChanged()
+            }
+            raidToggleBossListButton.text =
+                displayBossCounter(raid, difficulty) + when (difficulty) {
+                    "MYTHIC" -> " MM"
+                    "HEROIC" -> " HC"
+                    "NORMAL" -> " NM"
+                    "LFR" -> " LFR"
+                    else -> "%%"
+                }
+        }
+        raidToggleBossListButton.callOnClick()
 
         raidLFRTextView.text = displayBossCounter(raid, "LFR")
         raidNMTextView.text = displayBossCounter(raid, "NORMAL")
@@ -49,11 +74,5 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == difficulty }
         return difficulties?.bosses?.filter { bosses -> bosses.killCount != 0 }?.size.toString() + "/" +
                 difficulties?.total.toString()
-    }
-
-    fun addBossRecyclerView(bosses: List<Bosses>, raidId: String) {
-        bossRecyclerView.run {
-            adapter = BossCardViewAdapter(itemView.context, bosses, raidId)
-        }
     }
 }

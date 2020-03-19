@@ -2,7 +2,7 @@ package fr.jbme.raiderioapp.utils
 
 import java.util.*
 
-object SlugParser {
+object Whatever {
 
     fun parseToSlug(value: String?): String? {
         return value?.replace(' ', '-')
@@ -12,4 +12,7 @@ object SlugParser {
             ?.reduce { acc, s -> acc + s }
             ?.toLowerCase(Locale.ROOT)
     }
+
+    fun <T> Sequence<T>.repeat() = sequence { while (true) yieldAll(this@repeat) }
+
 }

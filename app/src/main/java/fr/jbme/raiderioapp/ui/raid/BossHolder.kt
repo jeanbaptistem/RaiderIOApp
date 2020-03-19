@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.data.BOSS_ICON_URL
 import fr.jbme.raiderioapp.data.model.wow.character.Bosses
-import fr.jbme.raiderioapp.utils.SlugParser
+import fr.jbme.raiderioapp.utils.Whatever
 
 @SuppressLint("SetTextI18n")
 class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -20,8 +20,8 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(bosses: Bosses?, raidId: String?) {
         raidBossKillCounterTextView.text = bosses?.killCount.toString() + " kill"
-        var boss = SlugParser.parseToSlug(bosses?.name)
-        val raid = SlugParser.parseToSlug(raidId)
+        var boss = Whatever.parseToSlug(bosses?.name)
+        val raid = Whatever.parseToSlug(raidId)
         if (boss?.contains("grong")!!) {
             boss = "grong"
         } else if (boss.contains("zaqul")) {

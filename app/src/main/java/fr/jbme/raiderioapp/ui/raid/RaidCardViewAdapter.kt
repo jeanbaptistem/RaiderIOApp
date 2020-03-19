@@ -21,11 +21,7 @@ class RaidCardViewAdapter(
     }
 
     override fun onBindViewHolder(holder: RaidHolder, position: Int) {
-        val raid = raidList[position]
-        holder.bind(raid)
-        val bosses =
-            raid.difficulties.firstOrNull { difficulties -> difficulties.difficulty.enum == "MYTHIC" }?.bosses
-        holder.addBossRecyclerView(bosses ?: listOf(), raid.id)
+        holder.bind(raidList[position])
     }
 
     override fun getItemCount(): Int {

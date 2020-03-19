@@ -1,7 +1,7 @@
 package fr.jbme.raiderioapp.ui.raid
 
+import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +9,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
-import fr.jbme.raiderioapp.utils.SlugParser
+import fr.jbme.raiderioapp.utils.Whatever
 
 class RaidFragment : Fragment() {
 
@@ -23,6 +24,8 @@ class RaidFragment : Fragment() {
 
     private lateinit var raidRecyclerView: RecyclerView
     private lateinit var raidCardViewAdapter: RaidCardViewAdapter
+    private lateinit var portraitlayoutmanager: LinearLayoutManager
+    private lateinit var landscapelayoutManager: GridLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,36 +34,49 @@ class RaidFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_raid, container, false)
         raidViewModel = ViewModelProvider.NewInstanceFactory().create(RaidViewModel::class.java)
-        val slugRegion = SlugParser.parseToSlug(user.region)
-        val slugRealm = SlugParser.parseToSlug(user.realmName)
-        val slugName = SlugParser.parseToSlug(user.characterName)
+        val slugRegion = Whatever.parseToSlug(user.region)
+        val slugRealm = Whatever.parseToSlug(user.realmName)
+        val slugName = Whatever.parseToSlug(user.characterName)
         try {
             raidViewModel.run {
                 fetchRaidData(slugRegion, slugRealm, slugName)
             }
-
         } catch (e: Exception) {
             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
         }
-
-
+        portraitlayoutmanager = LinearLayoutManager(context)
+        landscapelayoutManager = GridLayoutManager(context, 2)
         raidCardViewAdapter = RaidCardViewAdapter(context, listOf())
 
         raidRecyclerView = root.findViewById(R.id.raidRecyclerView)
         raidRecyclerView.run {
+            layoutManager = when (resources.configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> landscapelayoutManager
+                Configuration.ORIENTATION_PORTRAIT -> portraitlayoutmanager
+                else -> portraitlayoutmanager
+            }
             adapter = raidCardViewAdapter
-            layoutManager = LinearLayoutManager(context)
         }
-
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         raidViewModel.raid.observe(viewLifecycleOwner, Observer {
-            Log.i("RaidsList", it.toString())
             raidCardViewAdapter.raidList = it.asReversed()
             raidCardViewAdapter.notifyDataSetChanged()
         })
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        raidRecyclerView.run {
+            layoutManager = when (newConfig.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> landscapelayoutManager
+                Configuration.ORIENTATION_PORTRAIT -> portraitlayoutmanager
+                else -> portraitlayoutmanager
+            }
+            adapter = raidCardViewAdapter
+        }
     }
 }

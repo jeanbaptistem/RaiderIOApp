@@ -10,8 +10,8 @@ import fr.jbme.raiderioapp.data.model.wow.character.Bosses
 
 class BossCardViewAdapter(
     val context: Context?,
-    private var bosses: List<Bosses>,
-    private var raidId: String
+    var bosses: List<Bosses>,
+    var raidId: String
 ) : RecyclerView.Adapter<BossHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BossHolder {
