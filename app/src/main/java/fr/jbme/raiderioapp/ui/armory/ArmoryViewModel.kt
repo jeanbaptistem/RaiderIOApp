@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.data.BLIZZARD_ACCESS_TOKEN
-import fr.jbme.raiderioapp.data.model.character.CharacterResponse
 import fr.jbme.raiderioapp.data.model.character.Gear
 import fr.jbme.raiderioapp.data.model.character.GearItem
+import fr.jbme.raiderioapp.data.model.character.RIOCharacterResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
 import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
 import fr.jbme.raiderioapp.data.model.utils.APIError
@@ -52,14 +52,14 @@ class ArmoryViewModel : ViewModel() {
             raiderIOService
                 ?.getGearedCharacter(region, realm, name)
                 ?.enqueue(object :
-                    Callback<CharacterResponse> {
-                    override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
+                    Callback<RIOCharacterResponse> {
+                    override fun onFailure(call: Call<RIOCharacterResponse>, t: Throwable) {
                         throw  APIError(t.message)
                     }
 
                     override fun onResponse(
-                        call: Call<CharacterResponse>,
-                        response: Response<CharacterResponse>
+                        call: Call<RIOCharacterResponse>,
+                        response: Response<RIOCharacterResponse>
                     ) {
                         if (response.isSuccessful) {
                             _gear.value = gearToGearItemList(response.body()!!.gear!!)

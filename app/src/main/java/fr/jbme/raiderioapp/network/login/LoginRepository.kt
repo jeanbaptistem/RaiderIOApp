@@ -7,7 +7,7 @@ import fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY
 import fr.jbme.raiderioapp.data.REALM_NAME_KEY
 import fr.jbme.raiderioapp.data.REGION_KEY
 import fr.jbme.raiderioapp.data.SHARED_PREF_KEY
-import fr.jbme.raiderioapp.data.model.character.CharacterResponse
+import fr.jbme.raiderioapp.data.model.character.RIOCharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.data.model.utils.APIError
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
@@ -45,21 +45,21 @@ class LoginRepository(val dataSource: LoginDataSource) {
         realmName: String,
         characterName: String,
         region: String,
-        callback: Callback<CharacterResponse>
+        callback: Callback<RIOCharacterResponse>
     ) {
         // handle login
-        dataSource.login(realmName, characterName, region, object : Callback<CharacterResponse> {
+        dataSource.login(realmName, characterName, region, object : Callback<RIOCharacterResponse> {
 
             override fun onFailure(
-                call: Call<CharacterResponse>,
+                call: Call<RIOCharacterResponse>,
                 t: Throwable
             ) {
                 callback.onFailure(call, t)
             }
 
             override fun onResponse(
-                call: Call<CharacterResponse>,
-                response: Response<CharacterResponse>
+                call: Call<RIOCharacterResponse>,
+                response: Response<RIOCharacterResponse>
             ) {
                 if (response.isSuccessful) {
                     val character = response.body()!!

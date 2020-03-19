@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class MythicPlusBestRun(
-    @SerializedName("dungeon")
+    @SerializedName("characterDungeon")
     @Expose
     var dungeon: String? = null,
 

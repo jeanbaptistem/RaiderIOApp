@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.components.CustomConstraintLayout
-import fr.jbme.raiderioapp.data.BG_RAID_URL
-import fr.jbme.raiderioapp.data.model.character.Raid
-import fr.jbme.raiderioapp.data.model.raidInfo.Encounters
-import fr.jbme.raiderioapp.utils.SlugParser
+import fr.jbme.raiderioapp.data.model.wow.character.Bosses
+import fr.jbme.raiderioapp.data.model.wow.character.Raids
 
 @SuppressLint("SetTextI18n")
 class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,42 +29,31 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById(R.id.raidProgressionBossRecyclerView)
 
 
-    fun bind(raid: Raid) {
-        raidNameTextView.text = raid.name
-        raidSummaryTextView.text = raid.summary
-        when {
-            raid.summary?.contains("M")!! -> raidSummaryCardView.setCardBackgroundColor(
-                itemView.resources.getColor(
-                    R.color.itemQualityLegendary
-                )
-            )
-            raid.summary?.contains("H")!! -> raidSummaryCardView.setCardBackgroundColor(
-                itemView.resources.getColor(
-                    R.color.itemQualityEpic
-                )
-            )
-            raid.summary?.contains("N")!! -> raidSummaryCardView.setCardBackgroundColor(
-                itemView.resources.getColor(
-                    R.color.itemQualityRare
-                )
-            )
-            else -> raidSummaryCardView.visibility = View.INVISIBLE
-        }
-        raidNMTextView.text = raid.normalBossesKilled.toString() + "/" + raid.totalBosses.toString()
-        raidHMTextView.text = raid.heroicBossesKilled.toString() + "/" + raid.totalBosses.toString()
-        raidMMTextView.text = raid.mythicBossesKilled.toString() + "/" + raid.totalBosses.toString()
-    }
+    fun bind(raid: Raids?) {
+        raidNameTextView.text = raid?.name
+        raidSummaryTextView.text = "PH"
 
-    fun setBackground(raid: Raid?) {
-        val bgUrl = BG_RAID_URL.format(SlugParser.parseToSlug(raid?.name))
+        raidNMTextView.text =
+            raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == "NORMAL" }
+                ?.bosses?.filter { bosses -> bosses.killCount != 0 }
+                ?.size.toString()
+        raidHMTextView.text =
+            raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == "HEROIC" }
+                ?.bosses?.filter { bosses -> bosses.killCount != 0 }
+                ?.size.toString()
+        raidMMTextView.text =
+            raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == "MYTHIC" }
+                ?.bosses?.filter { bosses -> bosses.killCount != 0 }
+                ?.size.toString()
+
         Picasso.get()
-            .load(bgUrl)
+            .load(raid?.icon?.url)
             .into(cardViewConstraintLayout)
     }
 
-    fun addBossRecyclerView(encounters: List<Encounters>?, raidName: String?) {
+    fun addBossRecyclerView(bosses: List<Bosses>, raidId: String) {
         bossRecyclerView.run {
-            adapter = BossCardViewAdapter(itemView.context, encounters ?: listOf(), raidName)
+            adapter = BossCardViewAdapter(itemView.context, bosses, raidId)
         }
     }
 }

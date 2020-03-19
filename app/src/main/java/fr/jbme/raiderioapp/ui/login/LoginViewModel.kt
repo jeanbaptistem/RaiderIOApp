@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.model.character.CharacterResponse
+import fr.jbme.raiderioapp.data.model.character.RIOCharacterResponse
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.data.model.utils.APIError
 import fr.jbme.raiderioapp.network.login.LoginRepository
@@ -22,20 +22,19 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(realmName: String, characterName: String, region: String) {
-        // can be launched in a separate asynchronous job
         loginRepository.login(
             realmName,
             characterName,
             region,
-            object : Callback<CharacterResponse> {
-                override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
+            object : Callback<RIOCharacterResponse> {
+                override fun onFailure(call: Call<RIOCharacterResponse>, t: Throwable) {
                     _loginResult.value =
                         LoginResult(error = t.message)
                 }
 
                 override fun onResponse(
-                    call: Call<CharacterResponse>,
-                    response: Response<CharacterResponse>
+                    call: Call<RIOCharacterResponse>,
+                    response: Response<RIOCharacterResponse>
                 ) {
                     if (response.isSuccessful) {
                         val body = response.body()!!
@@ -84,7 +83,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         return realmName.replace('-', ' ').matches(Regex("[a-zA-Z ]+"))
     }
 
-    // A placeholder character name validation check
+    // A placeholder RIOCharacter name validation check
     private fun isCharacterNameValid(characterName: String): Boolean {
         return characterName.matches(Regex("[a-zA-Z]+"))
     }

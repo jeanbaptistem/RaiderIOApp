@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.data.BOSS_ICON_URL
-import fr.jbme.raiderioapp.data.model.raidInfo.Encounters
+import fr.jbme.raiderioapp.data.model.wow.character.Bosses
 import fr.jbme.raiderioapp.utils.SlugParser
 
 @SuppressLint("SetTextI18n")
@@ -18,12 +18,17 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById(R.id.raidBossKillCounterTextView)
 
 
-    fun bind(encounters: Encounters, raidName: String?) {
-        raidBossKillCounterTextView.text = encounters.completed_count.toString() + " kill"
-        val boss = SlugParser.parseToSlug(encounters.encounter.name)
-        val raid = SlugParser.parseToSlug(raidName)
+    fun bind(bosses: Bosses?, raidId: String?) {
+        raidBossKillCounterTextView.text = bosses?.killCount.toString() + " kill"
+        var boss = SlugParser.parseToSlug(bosses?.name)
+        val raid = SlugParser.parseToSlug(raidId)
+        if (boss?.contains("grong")!!) {
+            boss = "grong"
+        } else if (boss.contains("zaqul")) {
+            boss = "zaqul"
+        }
         val url = BOSS_ICON_URL.format(raid, boss)
-        Picasso.get().load(url).into(raidBossImageView)
+        Picasso.get().load(url).error(R.color.colorWarn).into(raidBossImageView)
     }
 
 }
