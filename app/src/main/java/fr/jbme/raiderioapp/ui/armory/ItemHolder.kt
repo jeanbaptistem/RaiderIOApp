@@ -60,7 +60,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         when {
             gearItem?.isAzeriteArmor!! -> {
                 // Display major azerite power
-                val color = itemView.resources.getColor(R.color.itemQualityArtifact)
+                val color = itemView.context.getColor(R.color.itemQualityArtifact)
                 socketLayoutList.subList(0, 2).forEach {
                     it.setCardBackgroundColor(color)
                     it.visibility = View.VISIBLE
@@ -76,7 +76,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
             gearItem.gems!!.isNotEmpty() -> {
                 // Display gems
-                val color = itemView.resources.getColor(R.color.itemQualityEpic)
+                val color = itemView.context.getColor(R.color.itemQualityEpic)
                 gearItem.gems!!.mapIndexed { index, gemId ->
                     with(socketLayoutList[index]) {
                         setCardBackgroundColor(color)

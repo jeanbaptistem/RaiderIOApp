@@ -26,17 +26,14 @@ import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.components.CustomLinearLayout
 import fr.jbme.raiderioapp.data.BG_DEFAULT_URL
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
-import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
-import fr.jbme.raiderioapp.network.services.RaiderIOService
-import fr.jbme.raiderioapp.ui.drawer.navHeader.NavHeaderViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
+import fr.jbme.raiderioapp.ui.navigation.navHeader.NavHeaderViewModel
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private val user: LoggedInUser = RaiderIOApp.loginRepository.user!!
-    private var raiderIOService: RaiderIOService? = null
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var loginViewModel: LoginViewModel
@@ -46,16 +43,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navHeaderView: View
     private lateinit var navController: NavController
 
+    private lateinit var toolbar: Toolbar
+    private lateinit var customToolbar: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        raiderIOService =
-            RetrofitRaiderIOInstance.retrofitInstance?.create(RaiderIOService::class.java)
         loginViewModel = LoginViewModelFactory().create(LoginViewModel::class.java)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
 
         drawerLayout = findViewById(R.id.drawer_layout)
 

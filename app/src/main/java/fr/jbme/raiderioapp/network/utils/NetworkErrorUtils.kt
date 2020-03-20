@@ -34,11 +34,9 @@ object NetworkErrorUtils {
         var error: String
         var message: String
         try {
-            val errorBody: String? = response.errorBody()?.string()
-            val bodyObj = JSONObject(errorBody!!)
-            statusCode = bodyObj.getInt("code")
-            error = bodyObj.getString("type")
-            message = bodyObj.getString("detail")
+            statusCode = response.code()
+            error = "BlizApiError"
+            message = "An error has appeared with blizzard API"
 
         } catch (e: Exception) {
             e.printStackTrace()

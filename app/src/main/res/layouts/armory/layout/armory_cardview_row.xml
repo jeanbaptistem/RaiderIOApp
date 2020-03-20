@@ -8,8 +8,9 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="4dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="8dp"
+    app:cardMaxElevation="8dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/itemThumbnailCardView"
+            style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginStart="8dp"
@@ -39,8 +41,8 @@
                 android:id="@+id/itemThumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@color/colorPrimary" />
-        </androidx.cardview.widget.CardView>
+                tools:srcCompat="@tools:sample/avatars" />
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/itemNameTextView"
@@ -49,13 +51,17 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:breakStrategy="high_quality"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollIndicators="none"
             android:textAlignment="viewStart"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/itemThumbnailCardView"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="PH item long name" />
+            tools:text="PH item very very long name" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/itemDescriptionLayout"
@@ -70,8 +76,9 @@
             app:layout_constraintStart_toEndOf="@+id/itemThumbnailCardView"
             app:layout_constraintTop_toBottomOf="@+id/itemNameTextView">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSocket_1"
+                style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 app:cardBackgroundColor="@color/colorPrimary"
@@ -84,11 +91,13 @@
                     android:id="@+id/imageViewSocket_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:elevation="2dp" />
-            </androidx.cardview.widget.CardView>
+                    android:elevation="2dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSocket_2"
+                style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="8dp"
@@ -100,11 +109,13 @@
                 <ImageView
                     android:id="@+id/imageViewSocket_2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="match_parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSocket_3"
+                style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="8dp"
@@ -116,8 +127,9 @@
                 <ImageView
                     android:id="@+id/imageViewSocket_3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="match_parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/itemIlvlTextView"

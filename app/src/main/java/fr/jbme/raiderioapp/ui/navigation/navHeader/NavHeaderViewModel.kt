@@ -1,10 +1,9 @@
-package fr.jbme.raiderioapp.ui.drawer.navHeader
+package fr.jbme.raiderioapp.ui.navigation.navHeader
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.data.model.character.RIOCharacterResponse
-import fr.jbme.raiderioapp.data.model.utils.APIError
 import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.RaiderIOService
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
@@ -23,29 +22,21 @@ class NavHeaderViewModel : ViewModel() {
         val call = raiderIOService?.getCharacterInfo(region, realm, name)
         call?.enqueue(object : Callback<RIOCharacterResponse> {
             override fun onFailure(call: Call<RIOCharacterResponse>, t: Throwable) {
-                //TODO : handle error
+                throw t
             }
 
             override fun onResponse(
                 call: Call<RIOCharacterResponse>,
-                responseRIO: Response<RIOCharacterResponse>
+                response: Response<RIOCharacterResponse>
             ) {
-                if (responseRIO.isSuccessful) {
-                    _character.value = responseRIO.body()
+                if (response.isSuccessful) {
+                    _character.value = response.body()
                 } else {
-                    val errorResponse =
-                        NetworkErrorUtils.parseRIOError(responseRIO)
-                    onFailure(
-                        call,
-                        APIError(
-                            errorResponse.message,
-                            errorResponse.statusCode,
-                            errorResponse.error
-                        )
-                    )
+                    val error =
+                        NetworkErrorUtils.parseRIOError(response)
+                    onFailure(call, error)
                 }
             }
         })
     }
-
 }
