@@ -37,15 +37,15 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         Picasso.get().load(iconThumbnailUrl).into(itemThumbnail)
         itemThumbnailCardView.setCardBackgroundColor(
             when (gearItem?.itemQuality) {
-                0 -> itemView.resources.getColor(R.color.itemQualityPoor)
-                1 -> itemView.resources.getColor(R.color.itemQualityCommon)
-                2 -> itemView.resources.getColor(R.color.itemQualityUncommon)
-                3 -> itemView.resources.getColor(R.color.itemQualityRare)
-                4 -> itemView.resources.getColor(R.color.itemQualityEpic)
-                5 -> itemView.resources.getColor(R.color.itemQualityLegendary)
-                6 -> itemView.resources.getColor(R.color.itemQualityArtifact)
-                7 -> itemView.resources.getColor(R.color.itemQualityHeirloom)
-                else -> itemView.resources.getColor(R.color.colorPrimary)
+                0 -> itemView.context.getColor(R.color.itemQualityPoor)
+                1 -> itemView.context.getColor(R.color.itemQualityCommon)
+                2 -> itemView.context.getColor(R.color.itemQualityUncommon)
+                3 -> itemView.context.getColor(R.color.itemQualityRare)
+                4 -> itemView.context.getColor(R.color.itemQualityEpic)
+                5 -> itemView.context.getColor(R.color.itemQualityLegendary)
+                6 -> itemView.context.getColor(R.color.itemQualityArtifact)
+                7 -> itemView.context.getColor(R.color.itemQualityHeirloom)
+                else -> itemView.context.getColor(R.color.colorPrimary)
             }
         )
     }

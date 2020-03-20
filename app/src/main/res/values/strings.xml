@@ -25,15 +25,18 @@
     <string name="invalid_character_name">Wrong character name</string>
     <string name="invalid_region">Wrong region</string>
     <string name="raider_io_login_title">Raider.io login title</string>
-    <string name="normal">Normal</string>
-    <string name="heroic">Heroic</string>
-    <string name="mythic">Mythic</string>
-    <string name="lfr">LFR</string>
 
     <!-- Strings related to armory -->
 
     <!-- Strings related to characterDungeon -->
 
     <!-- Strings related to raid -->
-
+    <string name="normal_long">Normal</string>
+    <string name="heroic_long">Heroic</string>
+    <string name="mythic_long">Mythic</string>
+    <string name="lfr_long">LFR</string>
+    <string name="normal_short">NM</string>
+    <string name="heroic_short">HM</string>
+    <string name="mythic_short">MM</string>
+    <string name="lfr_short">LFR</string>
 </resources>

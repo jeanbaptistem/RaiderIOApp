@@ -1,6 +1,7 @@
 package fr.jbme.raiderioapp.ui.raid
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -17,6 +18,12 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById(R.id.dynamicImageView)
 
     private val raidNameTextView: TextView = itemView.findViewById(R.id.raidNameTextView)
+
+    private val raidLFRHeaderTextView: TextView = itemView.findViewById(R.id.raidLFRHeader)
+    private val raidNMHeaderTextView: TextView = itemView.findViewById(R.id.raidNMHeader)
+    private val raidHMHeaderTextView: TextView = itemView.findViewById(R.id.raidHMHeader)
+    private val raidMMHeaderTextView: TextView = itemView.findViewById(R.id.raidMMHeader)
+
 
     private val raidLFRTextView: TextView = itemView.findViewById(R.id.raidLFRTextView)
     private val raidNMTextView: TextView = itemView.findViewById(R.id.raidNMTextView)
@@ -39,6 +46,7 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         bossRecyclerView.adapter = bossCardViewAdapter
 
         raidNameTextView.text = raid?.name
+
         raidToggleBossListButton.setOnClickListener {
             val difficulty = difficultyListIterator.next()
             bossCardViewAdapter.run {
@@ -48,6 +56,7 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 raidId = raid?.id ?: ""
                 notifyDataSetChanged()
             }
+
             raidToggleBossListButton.text =
                 displayBossCounter(raid, difficulty) + when (difficulty) {
                     "MYTHIC" -> " MM"
@@ -56,8 +65,33 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     "LFR" -> " LFR"
                     else -> "%%"
                 }
+            raidToggleBossListButton.setBackgroundColor(
+                when (difficulty) {
+                    "MYTHIC" -> itemView.context.getColor(R.color.itemQualityLegendary)
+                    "HEROIC" -> itemView.context.getColor(R.color.itemQualityEpic)
+                    "NORMAL" -> itemView.context.getColor(R.color.itemQualityRare)
+                    "LFR" -> itemView.context.getColor(R.color.itemQualityUncommon)
+                    else -> itemView.context.getColor(R.color.itemQualityPoor)
+                }
+            )
+
         }
         raidToggleBossListButton.callOnClick()
+
+        when (itemView.resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> {
+                raidLFRHeaderTextView.text = itemView.context.getString(R.string.lfr_long)
+                raidNMHeaderTextView.text = itemView.context.getString(R.string.normal_long)
+                raidHMHeaderTextView.text = itemView.context.getString(R.string.heroic_long)
+                raidMMHeaderTextView.text = itemView.context.getString(R.string.mythic_long)
+            }
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                raidLFRHeaderTextView.text = itemView.context.getString(R.string.lfr_short)
+                raidNMHeaderTextView.text = itemView.context.getString(R.string.normal_short)
+                raidHMHeaderTextView.text = itemView.context.getString(R.string.heroic_short)
+                raidMMHeaderTextView.text = itemView.context.getString(R.string.mythic_short)
+            }
+        }
 
         raidLFRTextView.text = displayBossCounter(raid, "LFR")
         raidNMTextView.text = displayBossCounter(raid, "NORMAL")

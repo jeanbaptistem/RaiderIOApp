@@ -65,14 +65,7 @@ class ArmoryViewModel : ViewModel() {
                             _gear.value = gearToGearItemList(response.body()!!.gear!!)
                         } else {
                             val error = NetworkErrorUtils.parseRIOError(response)
-                            onFailure(
-                                call,
-                                APIError(
-                                    error.message,
-                                    error.statusCode,
-                                    error.error
-                                )
-                            )
+                            throw error
                         }
                     }
                 })
@@ -121,15 +114,8 @@ class ArmoryViewModel : ViewModel() {
                             tempList.add(response.body()!!)
                             _items.value = tempList.toList()
                         } else {
-                            val errorResponse = NetworkErrorUtils.parseBlizError(response)
-                            onFailure(
-                                call,
-                                APIError(
-                                    errorResponse.message,
-                                    response.code(),
-                                    errorResponse.error
-                                )
-                            )
+                            val error = NetworkErrorUtils.parseBlizError(response)
+                            throw error
                         }
                     }
                 })
@@ -156,15 +142,8 @@ class ArmoryViewModel : ViewModel() {
                             _medias.value = tempList.toList()
 
                         } else {
-                            val errorResponse = NetworkErrorUtils.parseBlizError(response)
-                            onFailure(
-                                call,
-                                APIError(
-                                    errorResponse.message,
-                                    errorResponse.statusCode,
-                                    errorResponse.error
-                                )
-                            )
+                            val error = NetworkErrorUtils.parseBlizError(response)
+                            throw error
                         }
                     }
 
@@ -180,9 +159,7 @@ class ArmoryViewModel : ViewModel() {
                     blizzardService?.getItemMediaInfo(it, BLIZZARD_ACCESS_TOKEN)
                         ?.enqueue(object : Callback<BlizMediaResponse> {
                             override fun onFailure(call: Call<BlizMediaResponse>, t: Throwable) {
-                                throw APIError(
-                                    t.message
-                                )
+                                throw APIError(t.message)
                             }
 
                             override fun onResponse(
@@ -193,19 +170,14 @@ class ArmoryViewModel : ViewModel() {
                                     tempList.add(response.body()!!)
                                     _gems.value = tempList.toList()
                                 } else {
-                                    val errorResponse = NetworkErrorUtils.parseBlizError(response)
-                                    onFailure(
-                                        call,
-                                        APIError(
-                                            errorResponse.message,
-                                            errorResponse.statusCode,
-                                            errorResponse.error
-                                        )
-                                    )
+                                    val error = NetworkErrorUtils.parseBlizError(response)
+                                    throw error
                                 }
                             }
                         })
                 }
+            } else {
+                _gems.value = listOf()
             }
         }
     }

@@ -24,8 +24,8 @@ class RaidFragment : Fragment() {
 
     private lateinit var raidRecyclerView: RecyclerView
     private lateinit var raidCardViewAdapter: RaidCardViewAdapter
-    private lateinit var portraitlayoutmanager: LinearLayoutManager
-    private lateinit var landscapelayoutManager: GridLayoutManager
+    private lateinit var portraitLayoutManager: LinearLayoutManager
+    private lateinit var landscapeLayoutManager: GridLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,16 +44,16 @@ class RaidFragment : Fragment() {
         } catch (e: Exception) {
             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
         }
-        portraitlayoutmanager = LinearLayoutManager(context)
-        landscapelayoutManager = GridLayoutManager(context, 2)
+        portraitLayoutManager = LinearLayoutManager(context)
+        landscapeLayoutManager = GridLayoutManager(context, 2)
         raidCardViewAdapter = RaidCardViewAdapter(context, listOf())
 
         raidRecyclerView = root.findViewById(R.id.raidRecyclerView)
         raidRecyclerView.run {
             layoutManager = when (resources.configuration.orientation) {
-                Configuration.ORIENTATION_LANDSCAPE -> landscapelayoutManager
-                Configuration.ORIENTATION_PORTRAIT -> portraitlayoutmanager
-                else -> portraitlayoutmanager
+                Configuration.ORIENTATION_LANDSCAPE -> landscapeLayoutManager
+                Configuration.ORIENTATION_PORTRAIT -> portraitLayoutManager
+                else -> portraitLayoutManager
             }
             adapter = raidCardViewAdapter
         }
@@ -72,9 +72,9 @@ class RaidFragment : Fragment() {
         super.onConfigurationChanged(newConfig)
         raidRecyclerView.run {
             layoutManager = when (newConfig.orientation) {
-                Configuration.ORIENTATION_LANDSCAPE -> landscapelayoutManager
-                Configuration.ORIENTATION_PORTRAIT -> portraitlayoutmanager
-                else -> portraitlayoutmanager
+                Configuration.ORIENTATION_LANDSCAPE -> landscapeLayoutManager
+                Configuration.ORIENTATION_PORTRAIT -> portraitLayoutManager
+                else -> portraitLayoutManager
             }
             adapter = raidCardViewAdapter
         }
