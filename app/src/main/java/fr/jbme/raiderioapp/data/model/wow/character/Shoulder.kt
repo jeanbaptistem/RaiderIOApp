@@ -20,7 +20,7 @@ data class Shoulder(
     @SerializedName("media") val media: Media,
     @SerializedName("modified_appearance_id") val modified_appearance_id: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("name_description") val name_description: Name_description,
+    @SerializedName("name_description") val name_description: NameDescription,
     @SerializedName("quality") val quality: Quality,
     @SerializedName("quantity") val quantity: Int,
     @SerializedName("requirements") val requirements: Requirements,

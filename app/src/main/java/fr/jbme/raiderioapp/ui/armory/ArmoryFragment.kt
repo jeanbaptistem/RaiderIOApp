@@ -20,6 +20,7 @@ import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.data.model.utils.Quadruple
 import fr.jbme.raiderioapp.network.utils.LiveDataUtils
 
+
 class ArmoryFragment : Fragment() {
 
     private val user: LoggedInUser = RaiderIOApp.loginRepository.user!!
@@ -36,6 +37,7 @@ class ArmoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_armory, container, false)
+
         armoryViewModel = ViewModelProvider.NewInstanceFactory().create(ArmoryViewModel::class.java)
         try {
             armoryViewModel.fetchCharacterData(user.region, user.realmName, user.characterName)

@@ -30,5 +30,6 @@ data class Character(
     @SerializedName("title") val title: String,
     @SerializedName("url") val url: String,
     @SerializedName("achievementUrl") val achievementUrl: String,
-    @SerializedName("prefix") val prefix: String
+    @SerializedName("prefix") val prefix: String?,
+    @SerializedName("suffix") val suffix: String?
 )

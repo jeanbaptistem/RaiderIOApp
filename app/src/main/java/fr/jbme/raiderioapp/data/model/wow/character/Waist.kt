@@ -22,7 +22,7 @@ data class Waist(
     @SerializedName("quality") val quality: Quality,
     @SerializedName("quantity") val quantity: Int,
     @SerializedName("requirements") val requirements: Requirements,
-    @SerializedName("sell_price") val sell_price: Sell_price,
+    @SerializedName("sell_price") val sell_price: SellPrice,
     @SerializedName("slot") val slot: Slot,
     @SerializedName("spells") val spells: List<Spells>,
     @SerializedName("stats") val stats: List<GearStats>,

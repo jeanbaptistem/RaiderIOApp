@@ -8,6 +8,8 @@
     <color name="colorText">#b3ffffff</color>
     <color name="colorBackground">#2a2a2a</color>
 
+    <color name="cardBackgroundFaded">#642A2A2A</color>
+
     <color name="itemQualityPoor">#9d9d9d</color>
     <color name="itemQualityCommon">#ffffff</color>
     <color name="itemQualityUncommon">#1eff00</color>
@@ -16,4 +18,18 @@
     <color name="itemQualityLegendary">#ff8000</color>
     <color name="itemQualityArtifact">#e6cc80</color>
     <color name="itemQualityHeirloom">#00ccff</color>
+
+    <color name="DEATHKNIGHT">#c41e3b</color>
+    <color name="DEMONHUNTER">#a330c9</color>
+    <color name="DRUID">#ff7c0a</color>
+    <color name="HUNTER">#aad372</color>
+    <color name="MAGE">#68ccef</color>
+    <color name="MONK">#00ffba</color>
+    <color name="PALADIN">#f48cba</color>
+    <color name="PRIEST">#f0ebe0</color>
+    <color name="ROGUE">#fff468</color>
+    <color name="SHAMAN">#2359ff</color>
+    <color name="WARLOCK">#9382c9</color>
+    <color name="WARRIOR">#c69b6d</color>
+
 </resources>

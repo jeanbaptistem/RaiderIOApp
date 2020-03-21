@@ -46,6 +46,7 @@ class RaidFragment : Fragment() {
         }
         portraitLayoutManager = LinearLayoutManager(context)
         landscapeLayoutManager = GridLayoutManager(context, 2)
+
         raidCardViewAdapter = RaidCardViewAdapter(context, listOf())
 
         raidRecyclerView = root.findViewById(R.id.raidRecyclerView)

@@ -21,7 +21,6 @@ import fr.jbme.raiderioapp.ui.login.LoginViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
 import java.util.*
 
-
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel

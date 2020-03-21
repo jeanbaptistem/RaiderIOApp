@@ -22,7 +22,7 @@ data class Trinket(
     @SerializedName("quality") val quality: Quality,
     @SerializedName("quantity") val quantity: Int,
     @SerializedName("requirements") val requirements: Requirements,
-    @SerializedName("sell_price") val sell_price: Sell_price,
+    @SerializedName("sell_price") val sell_price: SellPrice,
     @SerializedName("slot") val slot: Slot,
     @SerializedName("sockets") val sockets: List<Sockets>,
     @SerializedName("stats") val stats: List<GearStats>,
