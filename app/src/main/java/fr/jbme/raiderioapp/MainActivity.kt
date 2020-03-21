@@ -2,7 +2,6 @@ package fr.jbme.raiderioapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -17,11 +16,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.components.CustomLinearLayout
-import fr.jbme.raiderioapp.data.BG_DEFAULT_URL
-import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.model.BG_DEFAULT_URL
+import fr.jbme.raiderioapp.model.login.LoggedInUser
 import fr.jbme.raiderioapp.ui.login.LoginViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
 import fr.jbme.raiderioapp.ui.navigation.navHeader.NavHeaderViewModel
@@ -97,7 +95,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         toolbarViewModel.character.observe(this, Observer {
-            Log.i("character", it.toString())
             Picasso.get()
                 .load(it.character.render.url)
                 .resize(
@@ -141,7 +138,6 @@ class MainActivity : AppCompatActivity() {
 
         navViewModel.fetchData(user.region, user.realmName, user.characterName)
 
-
         navViewModel.character.observe(this, Observer {
             navHeaderTitle.text = it.name
             navHeaderDescription.text = String.format(
@@ -162,8 +158,7 @@ class MainActivity : AppCompatActivity() {
                     resources.getDimension(R.dimen.nav_header_height).toInt()
                 )
                 .centerCrop(Gravity.START)
-                .placeholder(getDrawable(R.drawable.side_nav_bar)!!)
-                .error(getDrawable(R.drawable.side_nav_bar)!!).into(customLinearLayout)
+                .into(customLinearLayout)
         })
     }
 
@@ -181,13 +176,8 @@ class MainActivity : AppCompatActivity() {
                 this.startActivity(intent)
             }
             R.id.action_settings -> {
-                Snackbar.make(
-                        findViewById(R.id.nav_host_fragment),
-                        "Setting action click",
-                        Snackbar.LENGTH_LONG
-                    )
-                    .setAction("Action", null)
-                    .show()
+                val intent = Intent(this, SettingsActivity::class.java)
+                this.startActivity(intent)
             }
             else -> return super.onOptionsItemSelected(item)
         }

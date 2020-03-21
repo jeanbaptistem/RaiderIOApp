@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:divider="?attr/dividerHorizontal"
+        android:title="Global">
+
+        <ListPreference
+            android:defaultValue="true"
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_values"
+            android:icon="@android:drawable/ic_menu_mapmode"
+            android:key="language"
+            android:title="Language" />
+    </PreferenceCategory>
+</PreferenceScreen>

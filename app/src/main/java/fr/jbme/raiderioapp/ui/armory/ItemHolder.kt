@@ -8,10 +8,10 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.ICON_DEFAULT_URL
-import fr.jbme.raiderioapp.data.model.character.GearItem
-import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
-import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
+import fr.jbme.raiderioapp.model.ICON_DEFAULT_URL
+import fr.jbme.raiderioapp.model.RIOCharacter.GearItem
+import fr.jbme.raiderioapp.model.itemInfo.BlizMediaResponse
+import fr.jbme.raiderioapp.model.itemInfo.ItemInfoResponse
 
 class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val itemThumbnail: ImageView = itemView.findViewById(R.id.itemThumbnail)

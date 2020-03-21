@@ -1,6 +1,6 @@
 package fr.jbme.raiderioapp.network.utils
 
-import fr.jbme.raiderioapp.data.model.utils.APIError
+import fr.jbme.raiderioapp.utils.APIError
 import org.json.JSONObject
 import retrofit2.Response
 

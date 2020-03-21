@@ -2,7 +2,7 @@ package fr.jbme.raiderioapp.network.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import fr.jbme.raiderioapp.data.model.utils.Quadruple
+import fr.jbme.raiderioapp.utils.Quadruple
 
 object LiveDataUtils {
     fun <A, B, C, D> zipQuadruple(

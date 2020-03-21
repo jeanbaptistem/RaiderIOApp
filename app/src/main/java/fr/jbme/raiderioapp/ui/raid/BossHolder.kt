@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.BOSS_ICON_URL
-import fr.jbme.raiderioapp.data.model.wow.character.Bosses
+import fr.jbme.raiderioapp.model.BOSS_ICON_URL
+import fr.jbme.raiderioapp.model.BlizzCharacter.Bosses
 import fr.jbme.raiderioapp.utils.Whatever
 
 @SuppressLint("SetTextI18n")

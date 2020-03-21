@@ -3,12 +3,12 @@ package fr.jbme.raiderioapp.ui.raid
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.data.model.utils.APIError
-import fr.jbme.raiderioapp.data.model.wow.character.BlizCharacterResponse
-import fr.jbme.raiderioapp.data.model.wow.character.Raids
+import fr.jbme.raiderioapp.model.BlizzCharacter.BlizCharacterResponse
+import fr.jbme.raiderioapp.model.BlizzCharacter.Raids
 import fr.jbme.raiderioapp.network.factory.RetrofitBlizzardWebInstance
 import fr.jbme.raiderioapp.network.services.BlizzardWebService
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
+import fr.jbme.raiderioapp.utils.APIError
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

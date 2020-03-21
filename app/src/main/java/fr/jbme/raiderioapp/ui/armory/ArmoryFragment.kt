@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.RaiderIOApp
-import fr.jbme.raiderioapp.data.model.character.GearItem
-import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
-import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.data.model.login.LoggedInUser
-import fr.jbme.raiderioapp.data.model.utils.Quadruple
+import fr.jbme.raiderioapp.model.RIOCharacter.GearItem
+import fr.jbme.raiderioapp.model.itemInfo.BlizMediaResponse
+import fr.jbme.raiderioapp.model.itemInfo.ItemInfoResponse
+import fr.jbme.raiderioapp.model.login.LoggedInUser
 import fr.jbme.raiderioapp.network.utils.LiveDataUtils
+import fr.jbme.raiderioapp.utils.Quadruple
 
 
 class ArmoryFragment : Fragment() {

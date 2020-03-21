@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.model.character.GearItem
-import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
-import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.data.model.utils.Quadruple
+import fr.jbme.raiderioapp.model.RIOCharacter.GearItem
+import fr.jbme.raiderioapp.model.itemInfo.BlizMediaResponse
+import fr.jbme.raiderioapp.model.itemInfo.ItemInfoResponse
+import fr.jbme.raiderioapp.utils.Quadruple
 import kotlin.math.min
 
 

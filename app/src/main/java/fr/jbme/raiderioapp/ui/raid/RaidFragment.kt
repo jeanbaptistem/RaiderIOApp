@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.RaiderIOApp
-import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.model.login.LoggedInUser
 import fr.jbme.raiderioapp.utils.Whatever
 
 class RaidFragment : Fragment() {

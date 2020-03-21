@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="regionOptions">
+    <array name="region_options">
         <item>EU</item>
         <item>US</item>
         <item>KR</item>
         <item>TW</item>
     </array>
+    <!-- Preference -->
+    <array name="language_entries">
+        <item>French</item>
+        <item>English</item>
+    </array>
+    <array name="language_values">
+        <item>fr_FR</item>
+        <item>en_GB</item>
+    </array>
+
 </resources>

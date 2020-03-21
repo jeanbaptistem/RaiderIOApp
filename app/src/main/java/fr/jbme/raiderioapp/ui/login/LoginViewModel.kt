@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.model.character.RIOCharacterResponse
-import fr.jbme.raiderioapp.data.model.login.LoggedInUser
-import fr.jbme.raiderioapp.data.model.utils.APIError
+import fr.jbme.raiderioapp.model.RIOCharacter.RIOCharacterResponse
+import fr.jbme.raiderioapp.model.login.LoggedInUser
 import fr.jbme.raiderioapp.network.login.LoginRepository
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
+import fr.jbme.raiderioapp.utils.APIError
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

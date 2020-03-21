@@ -12,11 +12,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputLayout
-import fr.jbme.raiderioapp.data.CHARACTER_NAME_KEY
-import fr.jbme.raiderioapp.data.REALM_NAME_KEY
-import fr.jbme.raiderioapp.data.REGION_KEY
-import fr.jbme.raiderioapp.data.SHARED_PREF_KEY
-import fr.jbme.raiderioapp.data.model.login.LoggedInUser
+import fr.jbme.raiderioapp.model.CHARACTER_NAME_KEY
+import fr.jbme.raiderioapp.model.REALM_NAME_KEY
+import fr.jbme.raiderioapp.model.REGION_KEY
+import fr.jbme.raiderioapp.model.SHARED_PREF_KEY
+import fr.jbme.raiderioapp.model.login.LoggedInUser
 import fr.jbme.raiderioapp.ui.login.LoginViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
 import java.util.*
@@ -46,15 +46,15 @@ class LoginActivity : AppCompatActivity() {
         val regionItemAdapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
             R.layout.dropdown_region_selection_popup,
-            resources.getStringArray(R.array.regionOptions)
+            resources.getStringArray(R.array.region_options)
         )
-        regionSelectionAutoCompleteTextView.setText(resources.getStringArray(R.array.regionOptions)[0])
+        regionSelectionAutoCompleteTextView.setText(resources.getStringArray(R.array.region_options)[0])
         regionSelectionAutoCompleteTextView.setAdapter(regionItemAdapter)
 
         sharedPref?.let {
             realmNameLayout.editText!!.setText(it.getString(REALM_NAME_KEY, ""))
             characterNameLayout.editText!!.setText(it.getString(CHARACTER_NAME_KEY, ""))
-            val spinnerRegionOptions = resources.getStringArray(R.array.regionOptions)
+            val spinnerRegionOptions = resources.getStringArray(R.array.region_options)
             regionSelectionAutoCompleteTextView.setSelection(
                 spinnerRegionOptions.indexOf(
                     it.getString(REGION_KEY, "eu")?.toUpperCase(Locale.ROOT)

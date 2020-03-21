@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.components.DynamicHeightImageView
-import fr.jbme.raiderioapp.data.model.wow.character.Raids
+import fr.jbme.raiderioapp.model.BlizzCharacter.Raids
 import fr.jbme.raiderioapp.utils.Whatever.repeat
 
 @SuppressLint("SetTextI18n")

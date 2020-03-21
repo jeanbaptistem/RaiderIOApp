@@ -1,8 +1,8 @@
 package fr.jbme.raiderioapp.network.services
 
-import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
-import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.data.model.raidInfo.RaidInfoResponse
+import fr.jbme.raiderioapp.model.itemInfo.BlizMediaResponse
+import fr.jbme.raiderioapp.model.itemInfo.ItemInfoResponse
+import fr.jbme.raiderioapp.model.raidInfo.RaidInfoResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

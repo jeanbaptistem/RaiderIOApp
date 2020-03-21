@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.data.model.wow.character.Raids
+import fr.jbme.raiderioapp.model.BlizzCharacter.Raids
 
 class RaidCardViewAdapter(
     val context: Context?,

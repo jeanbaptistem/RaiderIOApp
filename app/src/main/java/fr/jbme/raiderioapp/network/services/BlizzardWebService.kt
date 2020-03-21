@@ -1,6 +1,6 @@
 package fr.jbme.raiderioapp.network.services
 
-import fr.jbme.raiderioapp.data.model.wow.character.BlizCharacterResponse
+import fr.jbme.raiderioapp.model.BlizzCharacter.BlizCharacterResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -3,7 +3,7 @@ package fr.jbme.raiderioapp.ui.navigation.navHeader
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.data.model.character.RIOCharacterResponse
+import fr.jbme.raiderioapp.model.RIOCharacter.RIOCharacterResponse
 import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.RaiderIOService
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils

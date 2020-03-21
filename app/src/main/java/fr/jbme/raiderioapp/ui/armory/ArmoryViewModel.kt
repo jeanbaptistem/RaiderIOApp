@@ -3,18 +3,18 @@ package fr.jbme.raiderioapp.ui.armory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.data.BLIZZARD_ACCESS_TOKEN
-import fr.jbme.raiderioapp.data.model.character.Gear
-import fr.jbme.raiderioapp.data.model.character.GearItem
-import fr.jbme.raiderioapp.data.model.character.RIOCharacterResponse
-import fr.jbme.raiderioapp.data.model.itemInfo.BlizMediaResponse
-import fr.jbme.raiderioapp.data.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.data.model.utils.APIError
+import fr.jbme.raiderioapp.model.BLIZZARD_ACCESS_TOKEN
+import fr.jbme.raiderioapp.model.RIOCharacter.Gear
+import fr.jbme.raiderioapp.model.RIOCharacter.GearItem
+import fr.jbme.raiderioapp.model.RIOCharacter.RIOCharacterResponse
+import fr.jbme.raiderioapp.model.itemInfo.BlizMediaResponse
+import fr.jbme.raiderioapp.model.itemInfo.ItemInfoResponse
 import fr.jbme.raiderioapp.network.factory.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.network.services.BlizzardService
 import fr.jbme.raiderioapp.network.services.RaiderIOService
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
+import fr.jbme.raiderioapp.utils.APIError
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -100,7 +100,10 @@ class ArmoryViewModel : ViewModel() {
         val tempList = mutableListOf<ItemInfoResponse>()
         gearItemList.forEach {
             val itemId = it.itemId!!
-            blizzardService?.getItemInfo(itemId, BLIZZARD_ACCESS_TOKEN)
+            blizzardService?.getItemInfo(
+                    itemId,
+                    BLIZZARD_ACCESS_TOKEN
+                )
                 ?.enqueue(object : Callback<ItemInfoResponse> {
                     override fun onFailure(call: Call<ItemInfoResponse>, t: Throwable) {
                         throw APIError(t.message)
@@ -127,7 +130,10 @@ class ArmoryViewModel : ViewModel() {
         gearItemList.forEach {
             val itemId = it.itemId!!
             blizzardService
-                ?.getItemMediaInfo(itemId, BLIZZARD_ACCESS_TOKEN)
+                ?.getItemMediaInfo(
+                    itemId,
+                    BLIZZARD_ACCESS_TOKEN
+                )
                 ?.enqueue(object : Callback<BlizMediaResponse> {
                     override fun onFailure(call: Call<BlizMediaResponse>, t: Throwable) {
                         throw APIError(t.message)
@@ -156,7 +162,10 @@ class ArmoryViewModel : ViewModel() {
         gearItemList.forEach { it ->
             if (it.gems!!.isNotEmpty()) {
                 it.gems!!.forEach {
-                    blizzardService?.getItemMediaInfo(it, BLIZZARD_ACCESS_TOKEN)
+                    blizzardService?.getItemMediaInfo(
+                            it,
+                            BLIZZARD_ACCESS_TOKEN
+                        )
                         ?.enqueue(object : Callback<BlizMediaResponse> {
                             override fun onFailure(call: Call<BlizMediaResponse>, t: Throwable) {
                                 throw APIError(t.message)

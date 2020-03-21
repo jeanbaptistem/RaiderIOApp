@@ -3,7 +3,7 @@ package fr.jbme.raiderioapp.ui.navigation.toolbar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.data.model.wow.character.BlizCharacterResponse
+import fr.jbme.raiderioapp.model.BlizzCharacter.BlizCharacterResponse
 import fr.jbme.raiderioapp.network.factory.RetrofitBlizzardWebInstance
 import fr.jbme.raiderioapp.network.services.BlizzardWebService
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
