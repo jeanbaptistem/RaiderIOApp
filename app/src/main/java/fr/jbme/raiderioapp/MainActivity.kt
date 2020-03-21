@@ -23,12 +23,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import fr.jbme.raiderioapp.components.CustomCollapsingToolbarLayout
 import fr.jbme.raiderioapp.components.CustomLinearLayout
 import fr.jbme.raiderioapp.data.BG_DEFAULT_URL
 import fr.jbme.raiderioapp.data.model.login.LoggedInUser
 import fr.jbme.raiderioapp.ui.login.LoginViewModel
 import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
 import fr.jbme.raiderioapp.ui.navigation.navHeader.NavHeaderViewModel
+import fr.jbme.raiderioapp.ui.navigation.toolbar.ToolbarViewModel
+import fr.jbme.raiderioapp.utils.Whatever
 import java.util.*
 
 
@@ -43,18 +46,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navHeaderView: View
     private lateinit var navController: NavController
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var customToolbar: View
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         loginViewModel = LoginViewModelFactory().create(LoginViewModel::class.java)
 
-        toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
 
         drawerLayout = findViewById(R.id.drawer_layout)
 
@@ -76,7 +75,33 @@ class MainActivity : AppCompatActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         setupNavHeader()
+        setupToolbar()
     }
+
+    private fun setupToolbar() {
+        val toolbarViewModel: ToolbarViewModel =
+            ViewModelProvider.NewInstanceFactory().create(ToolbarViewModel::class.java)
+        val toolbarLayout: CustomCollapsingToolbarLayout = findViewById(R.id.toolbar_layout)
+
+        try {
+            toolbarViewModel.fetchData(
+                Whatever.parseToSlug(user.region)!!,
+                Whatever.parseToSlug(user.realmName)!!,
+                Whatever.parseToSlug(user.characterName)!!
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        toolbarViewModel.character.observe(this, Observer {
+            Picasso.get()
+                .load(it.character.render.url)
+                .resize(toolbarLayout.width, resources.getDimension(R.dimen.app_bar_height).toInt())
+                .centerCrop()
+                .into(toolbarLayout)
+        })
+    }
+
 
     private fun setupNavHeader() {
         val navHeaderTitle: TextView = navHeaderView.findViewById(R.id.navHeaderTitle)

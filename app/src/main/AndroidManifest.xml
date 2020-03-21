@@ -3,21 +3,22 @@
     package="fr.jbme.raiderioapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:name="fr.jbme.raiderioapp.RaiderIOApp"
+        android:name=".RaiderIOApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RaiderIoApp.NoActionBar">
-
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.RaiderIoApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,4 +28,5 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.RaiderIoApp.NoActionBar" />
     </application>
+
 </manifest>
