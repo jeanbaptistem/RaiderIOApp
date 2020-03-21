@@ -9,11 +9,31 @@
     <!-- Preference -->
     <array name="language_entries">
         <item>French</item>
-        <item>English</item>
+        <item>English US</item>
+        <item>English GB</item>
+        <item>Spanish MX</item>
+        <item>Spanish ES</item>
+        <item>pt_BR</item>
+        <item>pt_PT</item>
+        <item>Russian</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Korean</item>
+        <item>Taiwan</item>
     </array>
     <array name="language_values">
         <item>fr_FR</item>
+        <item>en_US</item>
         <item>en_GB</item>
+        <item>es_MX</item>
+        <item>es_ES</item>
+        <item>pt_BR</item>
+        <item>pt_PT</item>
+        <item>ru_RU</item>
+        <item>de_DE</item>
+        <item>it_IT</item>
+        <item>ko_KR</item>
+        <item>zh_TW</item>
     </array>
 
 </resources>
