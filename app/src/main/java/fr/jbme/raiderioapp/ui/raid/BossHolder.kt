@@ -5,11 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.model.BOSS_ICON_URL
-import fr.jbme.raiderioapp.model.BlizzCharacter.Bosses
-import fr.jbme.raiderioapp.utils.Whatever
 
 @SuppressLint("SetTextI18n")
 class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -17,7 +13,7 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val raidBossKillCounterTextView: TextView =
         itemView.findViewById(R.id.raidBossKillCounterTextView)
 
-
+/*
     fun bind(bosses: Bosses?, raidId: String?) {
         raidBossKillCounterTextView.text = bosses?.killCount.toString() + " kill"
         var boss = Whatever.parseToSlug(bosses?.name)
@@ -28,6 +24,6 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             boss = "zaqul"
         }
         Picasso.get().load(BOSS_ICON_URL.format(raid, boss)).into(raidBossImageView)
-    }
+    }*/
 
 }

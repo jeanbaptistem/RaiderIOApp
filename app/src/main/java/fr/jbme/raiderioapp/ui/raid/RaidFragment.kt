@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,12 +33,12 @@ class RaidFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_raid, container, false)
         raidViewModel = ViewModelProvider.NewInstanceFactory().create(RaidViewModel::class.java)
-        val slugRegion = Whatever.parseToSlug(user.region)
-        val slugRealm = Whatever.parseToSlug(user.realmName)
-        val slugName = Whatever.parseToSlug(user.characterName)
+        //val slugRegion = Whatever.parseToSlug(user.region)
+        //val slugRealm = Whatever.parseToSlug(user.realmName)
+        val slugName = Whatever.parseToSlug(user.accessToken)
         try {
             raidViewModel.run {
-                fetchRaidData(slugRegion, slugRealm, slugName)
+                //fetchRaidData(slugRegion, slugRealm, slugName)
             }
         } catch (e: Exception) {
             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
@@ -47,7 +46,7 @@ class RaidFragment : Fragment() {
         portraitLayoutManager = LinearLayoutManager(context)
         landscapeLayoutManager = GridLayoutManager(context, 2)
 
-        raidCardViewAdapter = RaidCardViewAdapter(context, listOf())
+        raidCardViewAdapter = RaidCardViewAdapter(context)//, listOf())
 
         raidRecyclerView = root.findViewById(R.id.raidRecyclerView)
         raidRecyclerView.run {
@@ -59,14 +58,6 @@ class RaidFragment : Fragment() {
             adapter = raidCardViewAdapter
         }
         return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        raidViewModel.raid.observe(viewLifecycleOwner, Observer {
-            raidCardViewAdapter.raidList = it.asReversed()
-            raidCardViewAdapter.notifyDataSetChanged()
-        })
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

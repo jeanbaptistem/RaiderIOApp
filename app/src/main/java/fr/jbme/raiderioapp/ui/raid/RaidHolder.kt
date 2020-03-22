@@ -1,15 +1,12 @@
 package fr.jbme.raiderioapp.ui.raid
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.components.DynamicHeightImageView
-import fr.jbme.raiderioapp.model.BlizzCharacter.Raids
 import fr.jbme.raiderioapp.utils.Whatever.repeat
 
 @SuppressLint("SetTextI18n")
@@ -36,12 +33,12 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val bossRecyclerView: RecyclerView =
         itemView.findViewById(R.id.raidProgressionBossRecyclerView)
     private val bossCardViewAdapter: BossCardViewAdapter =
-        BossCardViewAdapter(itemView.context, listOf(), "")
+        BossCardViewAdapter(itemView.context, "")//, listOf(), "")
 
     private val difficultyListIterator =
         sequenceOf("MYTHIC", "HEROIC", "NORMAL", "LFR").repeat().iterator()
 
-
+/*
     fun bind(raid: Raids?) {
         bossRecyclerView.adapter = bossCardViewAdapter
 
@@ -101,12 +98,12 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         Picasso.get()
             .load(raid?.icon?.url)
             .into(dynamicImageView)
-    }
-
+    }*/
+/*
     private fun displayBossCounter(raid: Raids?, difficulty: String?): String? {
         val difficulties =
             raid?.difficulties?.firstOrNull { diff -> diff.difficulty.enum == difficulty }
         return difficulties?.bosses?.filter { bosses -> bosses.killCount != 0 }?.size.toString() + "/" +
                 difficulties?.total.toString()
-    }
+    }*/
 }

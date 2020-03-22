@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.model.BlizzCharacter.Bosses
 
 class BossCardViewAdapter(
     val context: Context?,
-    var bosses: List<Bosses>,
+    //var bosses: List<Bosses>,
     var raidId: String
 ) : RecyclerView.Adapter<BossHolder>() {
 
@@ -21,11 +20,11 @@ class BossCardViewAdapter(
     }
 
     override fun onBindViewHolder(holder: BossHolder, position: Int) {
-        holder.bind(bosses[position], raidId)
+        //holder.bind(bosses[position], raidId)
     }
 
     override fun getItemCount(): Int {
-        return bosses.size
+        return 0//bosses.size
     }
 
 }

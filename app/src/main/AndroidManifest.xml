@@ -15,11 +15,21 @@
 
         <activity
             android:name=".LoginActivity"
-            android:label="@string/raider_io_login_title"
             android:theme="@style/Theme.RaiderIoApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://raiderioapp.jbme.fr/callback” -->
+                <data
+                    android:host="raiderioapp.jbme.fr"
+                    android:pathPrefix="/callback"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 
@@ -27,7 +37,7 @@
             android:name=".MainActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RaiderIoApp.NoActionBar"></activity>
+            android:theme="@style/Theme.RaiderIoApp.NoActionBar" />
 
         <activity
             android:name=".SettingsActivity"

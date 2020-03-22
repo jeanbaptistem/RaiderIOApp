@@ -9,125 +9,43 @@
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingBottom="@dimen/fragment_vertical_margin">
 
+
     <ImageView
         android:id="@+id/loginTitle"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:contentDescription="@string/raider_io_login_title"
         android:src="@drawable/ic_logo_color"
-        app:layout_constraintBottom_toTopOf="@+id/realmNameLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/realmNameLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_realm_name"
-        android:importantForAutofill="no"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/realmNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:selectAllOnFocus="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/characterNameLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_character_name"
-        android:importantForAutofill="no"
-        android:selectAllOnFocus="false"
-        android:textColor="@android:color/primary_text_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/realmNameLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/characterNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:selectAllOnFocus="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/region_selection"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toEndOf="@+id/characterNameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/characterNameLayout">
-
-        <AutoCompleteTextView
-            android:id="@+id/regionSelection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:text="EU" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintVertical_bias="0.665" />
 
     <Button
         android:id="@+id/login"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="240dp"
         android:enabled="false"
         android:text="@string/action_log_in"
         android:textAllCaps="true"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/characterNameLayout"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/loading"
-        style="@android:style/Widget.Material.ProgressBar.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:indeterminateOnly="true"
-        android:indeterminateTint="@color/colorPrimary"
+    <WebView
+        android:id="@+id/loginWebView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/login"
-        app:layout_constraintEnd_toEndOf="@+id/characterNameLayout"
-        app:layout_constraintStart_toStartOf="@+id/characterNameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/characterNameLayout" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

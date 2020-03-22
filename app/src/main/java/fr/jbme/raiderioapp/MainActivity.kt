@@ -1,6 +1,8 @@
 package fr.jbme.raiderioapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
@@ -18,23 +20,22 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.components.CustomLinearLayout
-import fr.jbme.raiderioapp.model.BG_DEFAULT_URL
-import fr.jbme.raiderioapp.model.login.LoggedInUser
-import fr.jbme.raiderioapp.ui.login.LoginViewModel
-import fr.jbme.raiderioapp.ui.login.LoginViewModelFactory
-import fr.jbme.raiderioapp.ui.navigation.navHeader.NavHeaderViewModel
-import fr.jbme.raiderioapp.ui.navigation.toolbar.ToolbarViewModel
-import fr.jbme.raiderioapp.utils.Whatever
+import fr.jbme.raiderioapp.model.CHARACTER_NAME_KEY
+import fr.jbme.raiderioapp.model.REALM_NAME_KEY
+import fr.jbme.raiderioapp.model.SHARED_PREF_KEY
+import fr.jbme.raiderioapp.model.blizzard.characterMedia.CharacterMedia
+import fr.jbme.raiderioapp.model.blizzard.characterProfile.CharacterProfile
+import fr.jbme.raiderioapp.ui.main.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private val user: LoggedInUser = RaiderIOApp.loginRepository.user!!
+    private lateinit var sharedPref: SharedPreferences
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     private lateinit var navHeaderView: View
     private lateinit var navController: NavController
@@ -43,8 +44,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loginViewModel = LoginViewModelFactory().create(LoginViewModel::class.java)
+        sharedPref = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
 
+        mainActivityViewModel =
+            ViewModelProvider.NewInstanceFactory().create(MainActivityViewModel::class.java)
+        try {
+            mainActivityViewModel.fetchProfileInfo()
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+        }
         setSupportActionBar(toolbar)
 
         navHeaderView = nav_view.inflateHeaderView(R.layout.nav_header_main)
@@ -72,94 +80,86 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        mainActivityViewModel.profileInfo.observe(this, Observer {
+            val name = it.wow_accounts[0].characters[0].name.toLowerCase(Locale.ROOT)
+            val realm = it.wow_accounts[0].characters[0].realm.slug
+            with(sharedPref.edit()) {
+                putString(REALM_NAME_KEY, realm)
+                putString(CHARACTER_NAME_KEY, name)
+                apply()
+            }
+            try {
+                mainActivityViewModel.fetchCharacterMedia(realm, name)
+                mainActivityViewModel.fetchCharacterProfile(realm, name)
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        setupNavHeader()
-        setupToolbar()
-    }
-
-    private fun setupToolbar() {
-        val toolbarViewModel: ToolbarViewModel =
-            ViewModelProvider.NewInstanceFactory().create(ToolbarViewModel::class.java)
-
-        try {
-            toolbarViewModel.fetchData(
-                Whatever.parseToSlug(user.region)!!,
-                Whatever.parseToSlug(user.realmName)!!,
-                Whatever.parseToSlug(user.characterName)!!
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        toolbarViewModel.character.observe(this, Observer {
-            Picasso.get()
-                .load(it.character.render.url)
-                .resize(
-                    toolbar_layout.width,
-                    resources.getDimension(R.dimen.app_bar_expanded_height).toInt()
-                )
-                .centerCrop()
-                .into(toolbar_layout)
-
-            charTitleTextView.text =
-                it.character.prefix?.capitalize() ?: it.character.suffix?.capitalize()
-            charNameTextView.text = it.character.name
-            charNameTextView.setTextColor(
-                when (it.character._class.enum) {
-                    "DEATHKNIGHT" -> getColor(R.color.DEATHKNIGHT)
-                    "DEMONHUNTER" -> getColor(R.color.DEMONHUNTER)
-                    "DRUID" -> getColor(R.color.DRUID)
-                    "HUNTER" -> getColor(R.color.HUNTER)
-                    "MAGE" -> getColor(R.color.MAGE)
-                    "MONK" -> getColor(R.color.MONK)
-                    "PALADIN" -> getColor(R.color.PALADIN)
-                    "PRIEST" -> getColor(R.color.PRIEST)
-                    "ROGUE" -> getColor(R.color.ROGUE)
-                    "SHAMAN" -> getColor(R.color.SHAMAN)
-                    "WARLOCK" -> getColor(R.color.WARLOCK)
-                    "WARRIOR" -> getColor(R.color.WARRIOR)
-                    else -> getColor(R.color.colorText)
-                }
-            )
-            charClassTextView.text = it.character._class.name
-            charSpectextView.text = it.character.spec.name
-            charRealmTextView.text = it.character.realm.name
-
+        mainActivityViewModel.characterMedia.observe(this, Observer {
+            setupNavHeader(it)
+            setupToolbarBackground(it)
         })
+        mainActivityViewModel.characterProfile.observe(this, Observer {
+            setupToolbar(it)
+        })
+
     }
 
-
-    private fun setupNavHeader() {
-        val navViewModel =
-            ViewModelProvider.NewInstanceFactory().create(NavHeaderViewModel::class.java)
-
-        navViewModel.fetchData(user.region, user.realmName, user.characterName)
-
-        navViewModel.character.observe(this, Observer {
-            navHeaderTitle.text = it.name
-            navHeaderDescription.text = String.format(
-                "%s %s", it.realm, it.region!!.toUpperCase(
-                    Locale.ROOT
-                )
+    private fun setupToolbarBackground(characterMedia: CharacterMedia) {
+        Picasso.get().load(characterMedia.render_url)
+            .resize(
+                toolbar_layout.width,
+                resources.getDimension(R.dimen.app_bar_expanded_height).toInt()
             )
-            Picasso.get().load(it.thumbnailUrl)
+            .centerCrop()
+            .into(toolbar_layout)
+    }
+
+    private fun setupToolbar(characterProfile: CharacterProfile) {
+        charNameTextView.text = characterProfile.name
+        charNameTextView.setTextColor(
+            when (characterProfile.character_class.id) {
+                6 -> getColor(R.color.DEATHKNIGHT)
+                12 -> getColor(R.color.DEMONHUNTER)
+                11 -> getColor(R.color.DRUID)
+                3 -> getColor(R.color.HUNTER)
+                8 -> getColor(R.color.MAGE)
+                10 -> getColor(R.color.MONK)
+                2 -> getColor(R.color.PALADIN)
+                5 -> getColor(R.color.PRIEST)
+                4 -> getColor(R.color.ROGUE)
+                7 -> getColor(R.color.SHAMAN)
+                9 -> getColor(R.color.WARLOCK)
+                1 -> getColor(R.color.WARRIOR)
+                else -> getColor(R.color.colorText)
+            }
+        )
+        charClassTextView.text = characterProfile.character_class.name
+        charSpectextView.text = characterProfile.active_spec.name
+        charRealmTextView.text = characterProfile.realm.name
+    }
+
+    private fun setupNavHeader(characterMedia: CharacterMedia) {
+        characterMedia.let {
+            navHeaderTitle.text = it.character.name
+            navHeaderDescription.text = it.character.realm.name
+            Picasso.get().load(it.avatar_url)
                 .resize(180, 180)
-                .placeholder(getDrawable(R.mipmap.ic_launcher)!!)
-                .error(getDrawable(R.mipmap.ic_launcher)!!)
                 .into(navHeaderThumbnail)
 
             val customLinearLayout: CustomLinearLayout = findViewById(R.id.navHeaderLayout)
-            Picasso.get().load(BG_DEFAULT_URL + it.profileBanner + ".jpg")
+            Picasso.get().load(it.bust_url)
                 .resize(
                     navHeaderView.measuredWidth,
                     resources.getDimension(R.dimen.nav_header_height).toInt()
                 )
                 .centerCrop(Gravity.START)
                 .into(customLinearLayout)
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_logout -> {
-                loginViewModel.logout()
+                //loginViewModel.logout()
                 Toast.makeText(this, "Goodbye", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, LoginActivity::class.java)
                 this.startActivity(intent)

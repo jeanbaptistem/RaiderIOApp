@@ -1,90 +1,64 @@
 package fr.jbme.raiderioapp.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.model.RIOCharacter.RIOCharacterResponse
-import fr.jbme.raiderioapp.model.login.LoggedInUser
+import fr.jbme.raiderioapp.model.blizzard.login.AccessTokenResponse
+import fr.jbme.raiderioapp.model.blizzard.login.TokenCheckResponse
+import fr.jbme.raiderioapp.model.login.Result
+import fr.jbme.raiderioapp.network.login.BlizzardLoginService
 import fr.jbme.raiderioapp.network.login.LoginRepository
-import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
-import fr.jbme.raiderioapp.utils.APIError
+import fr.jbme.raiderioapp.network.login.RetrofitBlizzardLoginInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-    private val _loginForm = MutableLiveData<LoginFormState>()
-    val loginFormState: LiveData<LoginFormState> = _loginForm
+    private val _loggedUser = MutableLiveData<AccessTokenResponse>()
+    var loggedUser: LiveData<AccessTokenResponse> = _loggedUser
 
-    private val _loginResult = MutableLiveData<LoginResult>()
-    val loginResult: LiveData<LoginResult> = _loginResult
-
-    fun login(realmName: String, characterName: String, region: String) {
-        loginRepository.login(
-            realmName,
-            characterName,
-            region,
-            object : Callback<RIOCharacterResponse> {
-                override fun onFailure(call: Call<RIOCharacterResponse>, t: Throwable) {
-                    _loginResult.value =
-                        LoginResult(error = t.message)
-                }
-
-                override fun onResponse(
-                    call: Call<RIOCharacterResponse>,
-                    response: Response<RIOCharacterResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val body = response.body()!!
-                        _loginResult.value =
-                            LoginResult(
-                                success = LoggedInUser(
-                                    body.realm!!,
-                                    body.name!!,
-                                    body.region!!
-                                )
-                            )
-                    } else {
-                        val error = NetworkErrorUtils.parseRIOError(response)
-                        onFailure(
-                            call,
-                            APIError(
-                                error.message,
-                                error.statusCode,
-                                error.error
-                            )
-                        )
-                    }
-
-                }
-            })
-    }
-
-    fun logout() {
-        loginRepository.logout()
-    }
-
-    fun loginDataChanged(realmName: String, characterName: String) {
-        if (!isRealmNameValid(realmName) && realmName != "") {
-            _loginForm.value = LoginFormState(realmNameError = R.string.invalid_realm_name)
-        } else if (!isCharacterNameValid(characterName) && characterName != "") {
-            _loginForm.value = LoginFormState(characterNameError = R.string.invalid_character_name)
-        } else if (realmName == "" || characterName == "") {
-            _loginForm.value = LoginFormState(isDataValid = false)
+    fun login(code: String?) {
+        Log.i("login", code.toString())
+        if (code != null) {
+            val subject = loginRepository.login(code)
+            subject.observeForever {
+                _loggedUser.value = it
+            }
         } else {
-            _loginForm.value = LoginFormState(isDataValid = true)
+            _loggedUser.value = null
         }
     }
 
-    // A placeholder realm name validation check
-    private fun isRealmNameValid(realmName: String): Boolean {
-        return realmName.replace('-', ' ').matches(Regex("[a-zA-Z ]+"))
-    }
+    private val _checkToken = MutableLiveData<Result<TokenCheckResponse>>()
+    var tokenCheck: LiveData<Result<TokenCheckResponse>> = _checkToken
 
-    // A placeholder RIOCharacter name validation check
-    private fun isCharacterNameValid(characterName: String): Boolean {
-        return characterName.matches(Regex("[a-zA-Z]+"))
+    private var blizzardLoginService: BlizzardLoginService? =
+        RetrofitBlizzardLoginInstance.retrofitInstance?.create(
+            BlizzardLoginService::class.java
+        )
+
+    fun checkToken(token: String) {
+        blizzardLoginService?.checkTokenValidity(token)
+            ?.enqueue(object : Callback<TokenCheckResponse> {
+                override fun onFailure(call: Call<TokenCheckResponse>, t: Throwable) {
+                    _checkToken.value = Result.Error(Exception(t.message))
+                }
+
+                override fun onResponse(
+                    call: Call<TokenCheckResponse>,
+                    response: Response<TokenCheckResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        _checkToken.value = Result.Success(response.body()!!)
+                    } else {
+                        _checkToken.value =
+                            Result.Error(Exception("Blizzard token check failed, code: ${response.code()}"))
+                    }
+                }
+
+            })
     }
 }

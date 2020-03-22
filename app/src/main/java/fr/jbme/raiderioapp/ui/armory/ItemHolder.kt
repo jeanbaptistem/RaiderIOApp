@@ -1,6 +1,5 @@
 package fr.jbme.raiderioapp.ui.armory
 
-import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,12 +7,21 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.model.ICON_DEFAULT_URL
-import fr.jbme.raiderioapp.model.RIOCharacter.GearItem
-import fr.jbme.raiderioapp.model.itemInfo.BlizMediaResponse
-import fr.jbme.raiderioapp.model.itemInfo.ItemInfoResponse
+import fr.jbme.raiderioapp.model.blizzard.characterEquipment.EquippedItems
+import fr.jbme.raiderioapp.model.blizzard.itemMedia.ItemMedia
+import fr.jbme.raiderioapp.network.main.BlizzardService
+import fr.jbme.raiderioapp.network.main.RetrofitBlizzardInstance
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private var blizzardService: BlizzardService? =
+        RetrofitBlizzardInstance.retrofitInstance?.create(
+            BlizzardService::class.java
+        )
+    private val globalParamItem = mapOf("namespace" to "static-eu", "locale" to "fr_FR")
+
     private val itemThumbnail: ImageView = itemView.findViewById(R.id.itemThumbnail)
     private val itemThumbnailCardView: CardView = itemView.findViewById(R.id.itemThumbnailCardView)
     private val itemName: TextView = itemView.findViewById(R.id.itemNameTextView)
@@ -33,68 +41,57 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     )
 
 
-    fun bindThumbnail(iconThumbnailUrl: String?, gearItem: GearItem?) {
+    fun bindThumbnail(iconThumbnailUrl: String?, itemQuality: String?) {
         Picasso.get().load(iconThumbnailUrl).into(itemThumbnail)
         itemThumbnailCardView.setCardBackgroundColor(
-            when (gearItem?.itemQuality) {
-                0 -> itemView.context.getColor(R.color.itemQualityPoor)
-                1 -> itemView.context.getColor(R.color.itemQualityCommon)
-                2 -> itemView.context.getColor(R.color.itemQualityUncommon)
-                3 -> itemView.context.getColor(R.color.itemQualityRare)
-                4 -> itemView.context.getColor(R.color.itemQualityEpic)
-                5 -> itemView.context.getColor(R.color.itemQualityLegendary)
-                6 -> itemView.context.getColor(R.color.itemQualityArtifact)
-                7 -> itemView.context.getColor(R.color.itemQualityHeirloom)
+            when (itemQuality) {
+                "POOR" -> itemView.context.getColor(R.color.itemQualityPoor)
+                "COMMON" -> itemView.context.getColor(R.color.itemQualityCommon)
+                "UNCOMMON" -> itemView.context.getColor(R.color.itemQualityUncommon)
+                "RARE" -> itemView.context.getColor(R.color.itemQualityRare)
+                "EPIC" -> itemView.context.getColor(R.color.itemQualityEpic)
+                "LEGENDARY" -> itemView.context.getColor(R.color.itemQualityLegendary)
+                "ARTIFACT" -> itemView.context.getColor(R.color.itemQualityArtifact)
+                "HEIRLOOM" -> itemView.context.getColor(R.color.itemQualityHeirloom)
                 else -> itemView.context.getColor(R.color.colorPrimary)
             }
         )
     }
 
-    @SuppressLint("SetTextI18n")
-    fun bindItem(itemInfo: ItemInfoResponse?, gearItem: GearItem?, gems: List<BlizMediaResponse>?) {
-        itemName.text = itemInfo?.name
-        ilvlTextView.text = "Ilvl: " + gearItem?.itemLevel.toString()
+    fun bindItem(equippedItem: EquippedItems?) {
+        itemName.text = equippedItem?.name
+        ilvlTextView.text = "Ilvl: ${equippedItem?.level?.value}"
         socketLayoutList.forEach { it.visibility = View.GONE }
         socketImageViewList.forEach { it.visibility = View.GONE }
         postGemsTextView.visibility = View.GONE
-        when {
-            gearItem?.isAzeriteArmor!! -> {
-                // Display major azerite power
-                val color = itemView.context.getColor(R.color.itemQualityArtifact)
-                socketLayoutList.subList(0, 2).forEach {
-                    it.setCardBackgroundColor(color)
-                    it.visibility = View.VISIBLE
-                }
-                gearItem.azeritePowers!!
-                    .filter { it.tier == 3 }
-                    .mapIndexed { index, azeritePower ->
-                        Picasso.get()
-                            .load(ICON_DEFAULT_URL + azeritePower.spell!!.icon + ".jpg")
-                            .into(socketImageViewList[index])
-                        socketImageViewList[index].visibility = View.VISIBLE
-                    }
-            }
-            gearItem.gems!!.isNotEmpty() -> {
-                // Display gems
-                val color = itemView.context.getColor(R.color.itemQualityEpic)
-                gearItem.gems!!.mapIndexed { index, gemId ->
-                    with(socketLayoutList[index]) {
+        if (equippedItem?.azerite_details?.selected_essences != null) {
+            val color = itemView.context.getColor(R.color.itemQualityArtifact)
+            equippedItem.azerite_details.selected_essences.filter { it.slot == 0 }
+                .mapIndexed { index, essencePower ->
+                    val essenceId = essencePower.essence.id
+                    blizzardService?.getAzeriteEssenceMedia(essenceId, globalParamItem)
+                        ?.enqueue(object : Callback<ItemMedia> {
+                            override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
+                                throw t
+                            }
+
+                            override fun onResponse(
+                                call: Call<ItemMedia>,
+                                response: Response<ItemMedia>
+                            ) {
+                                if (response.isSuccessful) {
+                                    Picasso.get()
+                                        .load(response.body()?.assets?.first()?.value)
+                                        .into(socketImageViewList[index])
+                                }
+                            }
+                        })
+                    socketImageViewList[index].visibility = View.VISIBLE
+                    socketLayoutList[index].run {
                         setCardBackgroundColor(color)
                         visibility = View.VISIBLE
                     }
-                    with(socketImageViewList[index]) {
-                        gems?.first { gem -> gem.id == gemId }.let {
-                            Picasso.get().load(it?.assets?.first()?.value).into(this)
-                        }
-                        visibility = View.VISIBLE
-                    }
                 }
-            }
-            gearItem.corruption?.cloakRank != null -> {
-                // If cloak, then display lvl
-                postGemsTextView.text = "Lvl: " + gearItem.corruption?.cloakRank.toString()
-                postGemsTextView.visibility = View.VISIBLE
-            }
         }
     }
 }

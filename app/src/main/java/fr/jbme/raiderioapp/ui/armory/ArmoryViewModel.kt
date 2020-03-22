@@ -3,119 +3,73 @@ package fr.jbme.raiderioapp.ui.armory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.model.BLIZZARD_ACCESS_TOKEN
-import fr.jbme.raiderioapp.model.RIOCharacter.Gear
-import fr.jbme.raiderioapp.model.RIOCharacter.GearItem
-import fr.jbme.raiderioapp.model.RIOCharacter.RIOCharacterResponse
-import fr.jbme.raiderioapp.model.itemInfo.BlizMediaResponse
-import fr.jbme.raiderioapp.model.itemInfo.ItemInfoResponse
-import fr.jbme.raiderioapp.network.factory.RetrofitBlizzardInstance
-import fr.jbme.raiderioapp.network.factory.RetrofitRaiderIOInstance
-import fr.jbme.raiderioapp.network.services.BlizzardService
-import fr.jbme.raiderioapp.network.services.RaiderIOService
+import fr.jbme.raiderioapp.model.blizzard.characterEquipment.CharacterEquipment
+import fr.jbme.raiderioapp.model.blizzard.characterEquipment.EquippedItems
+import fr.jbme.raiderioapp.model.blizzard.itemInfo.ItemInfo
+import fr.jbme.raiderioapp.model.blizzard.itemMedia.ItemMedia
+import fr.jbme.raiderioapp.network.main.BlizzardService
+import fr.jbme.raiderioapp.network.main.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
-import fr.jbme.raiderioapp.utils.APIError
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ArmoryViewModel : ViewModel() {
 
-    private var _gear = MutableLiveData<List<GearItem>>()
-    val gear: LiveData<List<GearItem>> = _gear
-
-    private var _items = MutableLiveData<List<ItemInfoResponse>>()
-    val items: LiveData<List<ItemInfoResponse>> = _items
-
-    private var _medias = MutableLiveData<List<BlizMediaResponse>>()
-    val medias: LiveData<List<BlizMediaResponse>> = _medias
-
-    private var _gems = MutableLiveData<List<BlizMediaResponse>>()
-    val gems: LiveData<List<BlizMediaResponse>> = _gems
+    private val globalParamProfile = mapOf("namespace" to "profile-eu", "locale" to "fr_FR")
+    private val globalParamItem = mapOf("namespace" to "static-eu", "locale" to "fr_FR")
 
 
-    private var raiderIOService: RaiderIOService? =
-        RetrofitRaiderIOInstance.retrofitInstance?.create(
-            RaiderIOService::class.java
-        )
+    private var _characterEquipment = MutableLiveData<List<EquippedItems>>()
+    val characterEquipment: LiveData<List<EquippedItems>> = _characterEquipment
+
     private var blizzardService: BlizzardService? =
         RetrofitBlizzardInstance.retrofitInstance?.create(
             BlizzardService::class.java
         )
 
-    fun fetchCharacterData(
-        region: String,
-        realm: String,
-        name: String
-    ) {
-        try {
-            raiderIOService
-                ?.getGearedCharacter(region, realm, name)
-                ?.enqueue(object :
-                    Callback<RIOCharacterResponse> {
-                    override fun onFailure(call: Call<RIOCharacterResponse>, t: Throwable) {
-                        throw  APIError(t.message)
+    fun fetchCharacterEquipment(realmSlug: String?, characterName: String?) {
+        blizzardService?.getCharacterEquipment(realmSlug, characterName, globalParamProfile)
+            ?.enqueue(object :
+                Callback<CharacterEquipment> {
+                override fun onFailure(call: Call<CharacterEquipment>, t: Throwable) {
+                    throw  t
+                }
+
+                override fun onResponse(
+                    call: Call<CharacterEquipment>,
+                    response: Response<CharacterEquipment>
+                ) {
+                    if (response.isSuccessful) {
+                        _characterEquipment.value = response.body()?.equipped_items
+                    } else {
+                        val error = NetworkErrorUtils.parseBlizError(response)
+                        throw error
+                    }
+                }
+            })
+    }
+
+    private var _itemInfo = MutableLiveData<List<ItemInfo>>()
+    val itemsInfo: LiveData<List<ItemInfo>> = _itemInfo
+
+    fun fetchItemInfo(itemList: List<EquippedItems>) {
+        val tempList = mutableListOf<ItemInfo>()
+        itemList.forEach {
+            val itemId = it.item.id
+            blizzardService?.getItemInfo(itemId, globalParamItem)
+                ?.enqueue(object : Callback<ItemInfo> {
+                    override fun onFailure(call: Call<ItemInfo>, t: Throwable) {
+                        throw t
                     }
 
                     override fun onResponse(
-                        call: Call<RIOCharacterResponse>,
-                        response: Response<RIOCharacterResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            _gear.value = gearToGearItemList(response.body()!!.gear!!)
-                        } else {
-                            val error = NetworkErrorUtils.parseRIOError(response)
-                            throw error
-                        }
-                    }
-                })
-        } catch (e: Exception) {
-            throw APIError(e.message)
-        }
-    }
-
-    private fun gearToGearItemList(gear: Gear): List<GearItem> {
-        val itemList = gear.items!!
-        return listOfNotNull(
-            itemList.head,
-            itemList.neck,
-            itemList.shoulder,
-            itemList.back,
-            itemList.chest,
-            itemList.waist,
-            itemList.wrist,
-            itemList.hands,
-            itemList.legs,
-            itemList.feet,
-            itemList.finger1,
-            itemList.finger2,
-            itemList.trinket1,
-            itemList.trinket2,
-            itemList.mainhand,
-            itemList.offhand
-        )
-    }
-
-    fun fetchItemInfo(gearItemList: List<GearItem>) {
-        val tempList = mutableListOf<ItemInfoResponse>()
-        gearItemList.forEach {
-            val itemId = it.itemId!!
-            blizzardService?.getItemInfo(
-                    itemId,
-                    BLIZZARD_ACCESS_TOKEN
-                )
-                ?.enqueue(object : Callback<ItemInfoResponse> {
-                    override fun onFailure(call: Call<ItemInfoResponse>, t: Throwable) {
-                        throw APIError(t.message)
-                    }
-
-                    override fun onResponse(
-                        call: Call<ItemInfoResponse>,
-                        response: Response<ItemInfoResponse>
+                        call: Call<ItemInfo>,
+                        response: Response<ItemInfo>
                     ) {
                         if (response.isSuccessful) {
                             tempList.add(response.body()!!)
-                            _items.value = tempList.toList()
+                            _itemInfo.value = tempList.toList()
                         } else {
                             val error = NetworkErrorUtils.parseBlizError(response)
                             throw error
@@ -125,27 +79,26 @@ class ArmoryViewModel : ViewModel() {
         }
     }
 
-    fun fetchItemMedia(gearItemList: List<GearItem>) {
-        val tempList = mutableListOf<BlizMediaResponse>()
-        gearItemList.forEach {
-            val itemId = it.itemId!!
-            blizzardService
-                ?.getItemMediaInfo(
-                    itemId,
-                    BLIZZARD_ACCESS_TOKEN
-                )
-                ?.enqueue(object : Callback<BlizMediaResponse> {
-                    override fun onFailure(call: Call<BlizMediaResponse>, t: Throwable) {
-                        throw APIError(t.message)
+    private var _itemMedia = MutableLiveData<List<ItemMedia>>()
+    val itemMedia: LiveData<List<ItemMedia>> = _itemMedia
+
+    fun fetchItemMedia(itemList: List<EquippedItems>) {
+        val tempList = mutableListOf<ItemMedia>()
+        itemList.forEach {
+            val itemId = it.item.id
+            blizzardService?.getItemMedia(itemId, globalParamItem)
+                ?.enqueue(object : Callback<ItemMedia> {
+                    override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
+                        throw t
                     }
 
                     override fun onResponse(
-                        call: Call<BlizMediaResponse>,
-                        response: Response<BlizMediaResponse>
+                        call: Call<ItemMedia>,
+                        response: Response<ItemMedia>
                     ) {
                         if (response.isSuccessful) {
                             tempList.add(response.body()!!)
-                            _medias.value = tempList.toList()
+                            _itemMedia.value = tempList.toList()
 
                         } else {
                             val error = NetworkErrorUtils.parseBlizError(response)
@@ -156,9 +109,9 @@ class ArmoryViewModel : ViewModel() {
                 })
         }
     }
-
+/*
     fun fetchGemsMedia(gearItemList: List<GearItem>) {
-        val tempList = mutableListOf<BlizMediaResponse>()
+        val tempList = mutableListOf<ItemMedia>()
         gearItemList.forEach { it ->
             if (it.gems!!.isNotEmpty()) {
                 it.gems!!.forEach {
@@ -166,14 +119,14 @@ class ArmoryViewModel : ViewModel() {
                             it,
                             BLIZZARD_ACCESS_TOKEN
                         )
-                        ?.enqueue(object : Callback<BlizMediaResponse> {
-                            override fun onFailure(call: Call<BlizMediaResponse>, t: Throwable) {
+                        ?.enqueue(object : Callback<ItemMedia> {
+                            override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
                                 throw APIError(t.message)
                             }
 
                             override fun onResponse(
-                                call: Call<BlizMediaResponse>,
-                                response: Response<BlizMediaResponse>
+                                call: Call<ItemMedia>,
+                                response: Response<ItemMedia>
                             ) {
                                 if (response.isSuccessful) {
                                     tempList.add(response.body()!!)
@@ -189,5 +142,5 @@ class ArmoryViewModel : ViewModel() {
                 _gems.value = listOf()
             }
         }
-    }
+    }*/
 }

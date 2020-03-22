@@ -1,0 +1,9 @@
+package fr.jbme.raiderioapp.model.blizzard.itemMedia
+
+import com.google.gson.annotations.SerializedName
+
+data class Assets(
+
+    @SerializedName("key") val key: String,
+    @SerializedName("value") val value: String
+)
