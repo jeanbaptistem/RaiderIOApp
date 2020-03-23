@@ -18,9 +18,6 @@ import fr.jbme.raiderioapp.network.utils.LiveDataUtils
 
 
 class ArmoryFragment : Fragment() {
-
-    private lateinit var armoryViewModel: ArmoryViewModel
-
     private lateinit var armoryRecyclerView: RecyclerView
     private lateinit var armoryCardViewAdapter: ArmoryCardViewAdapter
 
@@ -42,7 +39,8 @@ class ArmoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        armoryViewModel = ViewModelProvider.NewInstanceFactory().create(ArmoryViewModel::class.java)
+        val armoryViewModel =
+            ViewModelProvider.NewInstanceFactory().create(ArmoryViewModel::class.java)
         observeViewModel(armoryViewModel)
 
         return root
@@ -58,8 +56,8 @@ class ArmoryFragment : Fragment() {
                     armoryViewModel.itemInfoObservable(equippedItemsList),
                     armoryViewModel.itemMediaObservable(equippedItemsList)
                 )
-            zippedLiveData.observe(viewLifecycleOwner, Observer {
-                armoryCardViewAdapter.itemsData = it
+            zippedLiveData.observe(viewLifecycleOwner, Observer { triple ->
+                armoryCardViewAdapter.itemsData = triple
                 armoryCardViewAdapter.notifyDataSetChanged()
             })
         })
