@@ -11,7 +11,7 @@ object NetworkErrorUtils {
         var message: String
         try {
             val errorBody: String? = response.errorBody()?.string()
-            val bodyObj = JSONObject(errorBody!!)
+            val bodyObj = JSONObject(errorBody.toString())
             statusCode = bodyObj.getInt("statusCode")
             error = bodyObj.getString("error")
             message = bodyObj.getString("message")

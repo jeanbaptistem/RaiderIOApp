@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.model.blizzard.characterEquipment.CharacterEquipment
 import fr.jbme.raiderioapp.model.blizzard.characterEquipment.EquippedItems
 import fr.jbme.raiderioapp.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.model.blizzard.itemMedia.ItemMedia
+import fr.jbme.raiderioapp.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.network.main.BlizzardService
 import fr.jbme.raiderioapp.network.main.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.network.utils.NetworkErrorUtils
@@ -79,22 +79,22 @@ class ArmoryViewModel : ViewModel() {
         }
     }
 
-    private var _itemMedia = MutableLiveData<List<ItemMedia>>()
-    val itemMedia: LiveData<List<ItemMedia>> = _itemMedia
+    private var _itemMedia = MutableLiveData<List<Media>>()
+    val itemMedia: LiveData<List<Media>> = _itemMedia
 
     fun fetchItemMedia(itemList: List<EquippedItems>) {
-        val tempList = mutableListOf<ItemMedia>()
+        val tempList = mutableListOf<Media>()
         itemList.forEach {
             val itemId = it.item.id
             blizzardService?.getItemMedia(itemId, globalParamItem)
-                ?.enqueue(object : Callback<ItemMedia> {
-                    override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
+                ?.enqueue(object : Callback<Media> {
+                    override fun onFailure(call: Call<Media>, t: Throwable) {
                         throw t
                     }
 
                     override fun onResponse(
-                        call: Call<ItemMedia>,
-                        response: Response<ItemMedia>
+                        call: Call<Media>,
+                        response: Response<Media>
                     ) {
                         if (response.isSuccessful) {
                             tempList.add(response.body()!!)
@@ -111,7 +111,7 @@ class ArmoryViewModel : ViewModel() {
     }
 /*
     fun fetchGemsMedia(gearItemList: List<GearItem>) {
-        val tempList = mutableListOf<ItemMedia>()
+        val tempList = mutableListOf<Media>()
         gearItemList.forEach { it ->
             if (it.gems!!.isNotEmpty()) {
                 it.gems!!.forEach {
@@ -119,14 +119,14 @@ class ArmoryViewModel : ViewModel() {
                             it,
                             BLIZZARD_ACCESS_TOKEN
                         )
-                        ?.enqueue(object : Callback<ItemMedia> {
-                            override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
+                        ?.enqueue(object : Callback<Media> {
+                            override fun onFailure(call: Call<Media>, t: Throwable) {
                                 throw APIError(t.message)
                             }
 
                             override fun onResponse(
-                                call: Call<ItemMedia>,
-                                response: Response<ItemMedia>
+                                call: Call<Media>,
+                                response: Response<Media>
                             ) {
                                 if (response.isSuccessful) {
                                     tempList.add(response.body()!!)

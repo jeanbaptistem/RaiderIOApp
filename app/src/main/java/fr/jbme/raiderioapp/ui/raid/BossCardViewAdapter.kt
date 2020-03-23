@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
+import fr.jbme.raiderioapp.model.blizzard.raidInfo.Encounters
 
 class BossCardViewAdapter(
     val context: Context?,
-    //var bosses: List<Bosses>,
+    var bosses: List<Encounters>,
     var raidId: String
 ) : RecyclerView.Adapter<BossHolder>() {
 
@@ -20,11 +21,11 @@ class BossCardViewAdapter(
     }
 
     override fun onBindViewHolder(holder: BossHolder, position: Int) {
-        //holder.bind(bosses[position], raidId)
+        holder.bind(bosses[position], raidId)
     }
 
     override fun getItemCount(): Int {
-        return 0//bosses.size
+        return bosses.size
     }
 
 }

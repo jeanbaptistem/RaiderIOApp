@@ -19,7 +19,7 @@ import fr.jbme.raiderioapp.model.REALM_NAME_KEY
 import fr.jbme.raiderioapp.model.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.model.blizzard.characterEquipment.EquippedItems
 import fr.jbme.raiderioapp.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.model.blizzard.itemMedia.ItemMedia
+import fr.jbme.raiderioapp.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.network.utils.LiveDataUtils
 
 
@@ -31,7 +31,7 @@ class ArmoryFragment : Fragment() {
     private lateinit var armoryRecyclerView: RecyclerView
     private lateinit var armoryCardViewAdapter: ArmoryCardViewAdapter
 
-    private lateinit var zippedLiveData: LiveData<Triple<List<EquippedItems>, List<ItemInfo>, List<ItemMedia>>>
+    private lateinit var zippedLiveData: LiveData<Triple<List<EquippedItems>, List<ItemInfo>, List<Media>>>
 
     private var characterName: String? = null
     private var realmSlug: String? = null

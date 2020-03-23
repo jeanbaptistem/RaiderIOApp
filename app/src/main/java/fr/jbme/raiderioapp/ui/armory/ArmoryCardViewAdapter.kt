@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.model.blizzard.characterEquipment.EquippedItems
 import fr.jbme.raiderioapp.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.model.blizzard.itemMedia.ItemMedia
-import kotlin.math.min
+import fr.jbme.raiderioapp.model.blizzard.itemMedia.Media
 
 
 class ArmoryCardViewAdapter(
     val context: Context?,
-    var itemsData: Triple<List<EquippedItems>, List<ItemInfo>, List<ItemMedia>>
+    var itemsData: Triple<List<EquippedItems>, List<ItemInfo>, List<Media>>
 ) : RecyclerView.Adapter<ItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
@@ -24,18 +23,17 @@ class ArmoryCardViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-
         val id = itemsData.first[position].item.id
         val equippedItem: EquippedItems? = itemsData.first.find { gear -> gear.item.id == id }
         val itemInfo: ItemInfo? = itemsData.second.find { item -> item.id == id }
-        val media: ItemMedia? = itemsData.third.find { media -> media.id == id }
+        val media: Media? = itemsData.third.find { media -> media.id == id }
 
         holder.bindThumbnail(media?.assets?.first()?.value, itemInfo?.quality?.type)
         holder.bindItem(equippedItem)
     }
 
     override fun getItemCount(): Int {
-        return min(itemsData.first.size, min(itemsData.second.size, itemsData.third.size))
+        return itemsData.first.size
     }
 
 }

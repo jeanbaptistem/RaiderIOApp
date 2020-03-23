@@ -4,9 +4,9 @@ import fr.jbme.raiderioapp.model.blizzard.characterEquipment.CharacterEquipment
 import fr.jbme.raiderioapp.model.blizzard.characterMedia.CharacterMedia
 import fr.jbme.raiderioapp.model.blizzard.characterProfile.CharacterProfile
 import fr.jbme.raiderioapp.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.model.blizzard.itemMedia.ItemMedia
+import fr.jbme.raiderioapp.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.model.blizzard.profileInfo.ProfileInfo
-import fr.jbme.raiderioapp.model.blizzard.raidInfo.CharacterRaidInfo
+import fr.jbme.raiderioapp.model.blizzard.raidInfo.RaidInfo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -46,7 +46,7 @@ interface BlizzardService {
         @Path("realmSlug") realmSlug: String?,
         @Path("characterName") characterName: String?,
         @QueryMap globalParam: Map<String, String>
-    ): Call<CharacterRaidInfo>
+    ): Call<RaidInfo>
 
 
     //Item Data
@@ -54,7 +54,7 @@ interface BlizzardService {
     fun getItemMedia(
         @Path("itemId") itemId: Int?,
         @QueryMap globalParam: Map<String, String>
-    ): Call<ItemMedia>
+    ): Call<Media>
 
     @GET("data/wow/item/{itemId}")
     fun getItemInfo(
@@ -68,7 +68,7 @@ interface BlizzardService {
     fun getSpellMedia(
         @Path("spellId") spellId: Int?,
         @QueryMap globalParam: Map<String, String>
-    ): Call<ItemMedia>
+    ): Call<Media>
 
 
     //AzeriteEssences Date
@@ -76,5 +76,5 @@ interface BlizzardService {
     fun getAzeriteEssenceMedia(
         @Path("azeriteEssenceId") azeriteEssenceId: Int?,
         @QueryMap globalParam: Map<String, String>
-    ): Call<ItemMedia>
+    ): Call<Media>
 }

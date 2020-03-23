@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ItemInfo(
 
-    @SerializedName("fr.jbme.raiderioapp.model.blizzard.itemMedia._links") val _links: _links,
+    @SerializedName("_links") val _links: _links,
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("quality") val quality: Quality,

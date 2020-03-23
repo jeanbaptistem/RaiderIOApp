@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.model.blizzard.characterEquipment.EquippedItems
-import fr.jbme.raiderioapp.model.blizzard.itemMedia.ItemMedia
+import fr.jbme.raiderioapp.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.network.main.BlizzardService
 import fr.jbme.raiderioapp.network.main.RetrofitBlizzardInstance
 import retrofit2.Call
@@ -70,14 +70,14 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .mapIndexed { index, essencePower ->
                     val essenceId = essencePower.essence.id
                     blizzardService?.getAzeriteEssenceMedia(essenceId, globalParamItem)
-                        ?.enqueue(object : Callback<ItemMedia> {
-                            override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
+                        ?.enqueue(object : Callback<Media> {
+                            override fun onFailure(call: Call<Media>, t: Throwable) {
                                 throw t
                             }
 
                             override fun onResponse(
-                                call: Call<ItemMedia>,
-                                response: Response<ItemMedia>
+                                call: Call<Media>,
+                                response: Response<Media>
                             ) {
                                 if (response.isSuccessful) {
                                     Picasso.get()

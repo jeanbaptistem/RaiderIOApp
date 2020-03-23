@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CharacterProfile(
 
-    @SerializedName("fr.jbme.raiderioapp.model.blizzard.itemInfo.fr.jbme.raiderioapp.model.blizzard.itemMedia._links") val _links: _links,
+    @SerializedName("_links") val _links: _links,
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("gender") val gender: Gender,
