@@ -2,8 +2,8 @@ package fr.jbme.raiderioapp
 
 import android.app.Application
 import android.content.Context
-import fr.jbme.raiderioapp.network.login.LoginDataSource
-import fr.jbme.raiderioapp.network.login.LoginRepository
+import fr.jbme.raiderioapp.service.repository.login.LoginDataSource
+import fr.jbme.raiderioapp.service.repository.login.LoginRepository
 
 class RaiderIOApp : Application() {
     companion object {

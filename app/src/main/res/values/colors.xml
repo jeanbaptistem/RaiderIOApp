@@ -31,5 +31,6 @@
     <color name="SHAMAN">#2359ff</color>
     <color name="WARLOCK">#9382c9</color>
     <color name="WARRIOR">#c69b6d</color>
+    <color name="invisible">#00FFFFFF</color>
 
 </resources>

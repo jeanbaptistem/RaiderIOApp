@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.raid.RaidFragment">
+    tools:context=".view.ui.fragment.RaidFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/raidRecyclerView"

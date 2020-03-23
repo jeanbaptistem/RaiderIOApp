@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_armory"
-        android:name="fr.jbme.raiderioapp.ui.armory.ArmoryFragment"
+        android:name="fr.jbme.raiderioapp.view.ui.fragment.ArmoryFragment"
         android:label="@string/menu_armory"
         tools:layout="@layout/fragment_armory" />
 
     <fragment
         android:id="@+id/nav_dungeon"
-        android:name="fr.jbme.raiderioapp.ui.dungeon.DungeonFragment"
+        android:name="fr.jbme.raiderioapp.view.ui.fragment.DungeonFragment"
         android:label="@string/menu_dungeon"
         tools:layout="@layout/fragment_dungeon" />
 
     <fragment
         android:id="@+id/nav_raid"
-        android:name="fr.jbme.raiderioapp.ui.raid.RaidFragment"
+        android:name="fr.jbme.raiderioapp.view.ui.fragment.RaidFragment"
         android:label="@string/menu_raid"
         tools:layout="@layout/fragment_raid" />
     <action
@@ -31,4 +31,11 @@
     <action
         android:id="@+id/action_global_nav_raid"
         app:destination="@id/nav_raid" />
+    <fragment
+        android:id="@+id/nav_loading"
+        android:name="fr.jbme.raiderioapp.view.ui.fragment.LoadingFragment"
+        android:label="LoadingFragment" />
+    <action
+        android:id="@+id/action_global_loadingFragment"
+        app:destination="@id/nav_loading" />
 </navigation>
