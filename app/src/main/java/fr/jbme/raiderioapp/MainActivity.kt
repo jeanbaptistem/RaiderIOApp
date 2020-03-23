@@ -25,6 +25,7 @@ import fr.jbme.raiderioapp.model.REALM_NAME_KEY
 import fr.jbme.raiderioapp.model.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.model.blizzard.characterMedia.CharacterMedia
 import fr.jbme.raiderioapp.model.blizzard.characterProfile.CharacterProfile
+import fr.jbme.raiderioapp.network.utils.LiveDataUtils
 import fr.jbme.raiderioapp.ui.main.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -46,13 +47,6 @@ class MainActivity : AppCompatActivity() {
 
         sharedPref = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
 
-        mainActivityViewModel =
-            ViewModelProvider.NewInstanceFactory().create(MainActivityViewModel::class.java)
-        try {
-            mainActivityViewModel.fetchProfileInfo()
-        } catch (e: Exception) {
-            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-        }
         setSupportActionBar(toolbar)
 
         navHeaderView = nav_view.inflateHeaderView(R.layout.nav_header_main)
@@ -80,33 +74,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        mainActivityViewModel.profileInfo.observe(this, Observer {
-            val name = it.wow_accounts[0].characters[0].name.toLowerCase(Locale.ROOT)
-            val realm = it.wow_accounts[0].characters[0].realm.slug
+        mainActivityViewModel =
+            ViewModelProvider.NewInstanceFactory().create(MainActivityViewModel::class.java)
+        observeViewModel(mainActivityViewModel)
+    }
+
+    private fun observeViewModel(mainActivityViewModel: MainActivityViewModel) {
+        mainActivityViewModel.profileInfoObservable().observe(this, Observer { profileInfo ->
+            val name = profileInfo.wow_accounts[0].characters[0].name.toLowerCase(Locale.ROOT)
+            val realm = profileInfo.wow_accounts[0].characters[0].realm.slug
             with(sharedPref.edit()) {
                 putString(REALM_NAME_KEY, realm)
                 putString(CHARACTER_NAME_KEY, name)
                 apply()
             }
-            try {
-                mainActivityViewModel.fetchCharacterMedia(realm, name)
-                mainActivityViewModel.fetchCharacterProfile(realm, name)
-            } catch (e: Exception) {
-                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-            }
-        })
-    }
+            val zippedLiveData = LiveDataUtils.zipPair(
+                mainActivityViewModel.characterMediaObservable(),
+                mainActivityViewModel.characterProfileObservable()
+            )
+            zippedLiveData.observe(this, Observer {
+                setupNavHeader(it.first)
+                setupToolbarBackground(it.first)
+                setupToolbar(it.second)
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        mainActivityViewModel.characterMedia.observe(this, Observer {
-            setupNavHeader(it)
-            setupToolbarBackground(it)
+            })
         })
-        mainActivityViewModel.characterProfile.observe(this, Observer {
-            setupToolbar(it)
-        })
-
     }
 
     private fun setupToolbarBackground(characterMedia: CharacterMedia) {
@@ -170,7 +162,6 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_logout -> {
-                //loginViewModel.logout()
                 Toast.makeText(this, "Goodbye", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, LoginActivity::class.java)
                 this.startActivity(intent)
