@@ -52,16 +52,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val token = intent.extras?.getString(BEARER_TOKEN_EXTRA)
 
         sharedPref = getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
 
         setSupportActionBar(toolbar)
-
         navHeaderView = nav_view.inflateHeaderView(R.layout.nav_header_main)
         nav_view.inflateMenu(R.menu.activity_main_drawer)
-
         navController = findNavController(R.id.nav_host_fragment)
-
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_armory,
@@ -78,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_armory -> {
                     app_bar.setExpanded(true)
                 }
-                R.id.nav_raid, R.id.nav_dungeon, R.id.nav_loading -> {
+                R.id.nav_raid, R.id.nav_dungeon -> {
                     app_bar.setExpanded(false)
                 }
             }

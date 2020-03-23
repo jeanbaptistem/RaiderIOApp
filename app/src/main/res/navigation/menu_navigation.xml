@@ -31,11 +31,4 @@
     <action
         android:id="@+id/action_global_nav_raid"
         app:destination="@id/nav_raid" />
-    <fragment
-        android:id="@+id/nav_loading"
-        android:name="fr.jbme.raiderioapp.view.ui.fragment.LoadingFragment"
-        android:label="LoadingFragment" />
-    <action
-        android:id="@+id/action_global_loadingFragment"
-        app:destination="@id/nav_loading" />
 </navigation>
