@@ -1,6 +1,8 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/Theme.RaiderIoApp">
     <PreferenceCategory
         android:divider="?attr/dividerHorizontal"
+        android:theme="@style/Theme.RaiderIoApp"
         android:title="Global">
 
         <ListPreference
@@ -9,6 +11,7 @@
             android:entryValues="@array/language_values"
             android:icon="@android:drawable/ic_menu_mapmode"
             android:key="language"
+            android:theme="@style/Theme.RaiderIoApp"
             android:title="Language" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import fr.jbme.raiderioapp.DEFAULT_LOCALE
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.TITLE_TAG
+import fr.jbme.raiderioapp.service.network.retrofit.utils.CustomOkHttpClient
 import fr.jbme.raiderioapp.view.fragment.settings.SettingsHeaderFragment
 
 class SettingsActivity : AppCompatActivity(),
@@ -31,6 +34,20 @@ class SettingsActivity : AppCompatActivity(),
             }
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setBackgroundDrawable(getDrawable(R.color.colorPrimary))
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == "language") {
+                    //TODO: find a getter way to change language
+                    CustomOkHttpClient.setLocale(
+                        sharedPreferences.getString(
+                            "language",
+                            DEFAULT_LOCALE
+                        ).toString()
+                    )
+                }
+            }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

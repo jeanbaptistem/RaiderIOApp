@@ -3,7 +3,7 @@ package fr.jbme.raiderioapp.service.network.retrofit.utils
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class BlizzardQueryParamsInterceptor : Interceptor {
+class BlizzardQueryParamsInterceptor(private val locale: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         val odlUrl = request.url()
@@ -53,6 +53,5 @@ class BlizzardQueryParamsInterceptor : Interceptor {
         private const val namespaceProfile = "profile-eu"
         private const val namespaceStatic = "static-eu"
         private const val namespaceDynamic = "dynamic-eu"
-        private const val locale = "fr_FR"
     }
 }

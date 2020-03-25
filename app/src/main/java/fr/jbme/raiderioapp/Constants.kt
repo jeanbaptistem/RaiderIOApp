@@ -14,6 +14,9 @@ const val TITLE_TAG = "settingsActivityTitle"
 const val CLIENT_ID = "691eff2cd3f549beb614fcb629d78872"
 const val CLIENT_SECRET = "VxIhB2CE6PgO47pr3WSYxCE215S0LdDb"
 const val REDIRECTED_URI = "http://raiderioapp.jbme.fr/callback"
-const val REGION = "eu"
 
 const val BEARER_TOKEN_EXTRA = "fr.jbme.raiderioapp.constants.BEARER_TOKEN_EXTRA"
+
+// Network values
+const val DEFAULT_LOCALE = "en_US"
+const val REGION = "eu"
