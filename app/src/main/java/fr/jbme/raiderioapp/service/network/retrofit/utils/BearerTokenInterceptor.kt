@@ -1,11 +1,9 @@
 package fr.jbme.raiderioapp.service.network.retrofit.utils
 
 import android.content.Context
-import android.util.Log
 import fr.jbme.raiderioapp.BEARER_TOKEN_KEY
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.SHARED_PREF_KEY
-
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -23,9 +21,11 @@ class BearerTokenInterceptor : Interceptor {
                     .build()
 
             }
+        } else {
+            request = request.newBuilder()
+                .removeHeader("No-Authentication")
+                .build()
         }
-        Log.i("RequestHeaders", request.headers().toString())
-        Log.i("RequestURL", request.url().toString())
         return chain.proceed(request)
     }
 

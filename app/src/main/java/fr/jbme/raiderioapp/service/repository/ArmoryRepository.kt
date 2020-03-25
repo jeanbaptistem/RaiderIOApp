@@ -14,9 +14,6 @@ import retrofit2.Response
 
 
 object ArmoryRepository {
-    private val globalParamProfile = mapOf("namespace" to "profile-eu", "locale" to "fr_FR")
-    private val globalParamItem = mapOf("namespace" to "static-eu", "locale" to "fr_FR")
-
     private var blizzardService: BlizzardService? =
         RetrofitBlizzardInstance.retrofitInstance?.create(
             BlizzardService::class.java
@@ -27,7 +24,7 @@ object ArmoryRepository {
         characterName: String?,
         callback: DataCallback
     ) {
-        blizzardService?.getCharacterEquipment(realmSlug, characterName, globalParamProfile)
+        blizzardService?.getCharacterEquipment(realmSlug, characterName)
             ?.enqueue(object : Callback<CharacterEquipment> {
                 override fun onFailure(call: Call<CharacterEquipment>, t: Throwable) {
                     throw  t
@@ -51,7 +48,7 @@ object ArmoryRepository {
         val tempList = mutableListOf<ItemInfo>()
         itemList.forEach {
             val itemId = it.item.id
-            blizzardService?.getItemInfo(itemId, globalParamItem)
+            blizzardService?.getItemInfo(itemId)
                 ?.enqueue(object : Callback<ItemInfo> {
                     override fun onFailure(call: Call<ItemInfo>, t: Throwable) {
                         throw t
@@ -77,7 +74,7 @@ object ArmoryRepository {
         val tempList = mutableListOf<Media>()
         itemList.forEach {
             val itemId = it.item.id
-            blizzardService?.getItemMedia(itemId, globalParamItem)
+            blizzardService?.getItemMedia(itemId)
                 ?.enqueue(object : Callback<Media> {
                     override fun onFailure(call: Call<Media>, t: Throwable) {
                         throw t

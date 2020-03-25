@@ -15,14 +15,17 @@ object CustomOkHttpClient {
             }
             return baseClient!!
         }
-    private var tokenInterceptorClient: OkHttpClient? = null
-    val tokenInterceptorClientInstance: OkHttpClient
+    private var blizzardClient: OkHttpClient? = null
+    val blizzardClientInstance: OkHttpClient
         get() {
-            if (tokenInterceptorClient == null) {
-                tokenInterceptorClient = baseClientInstance.newBuilder()
-                    .addInterceptor(BearerTokenInterceptor())
-                    .build()
+            if (blizzardClient == null) {
+                blizzardClient =
+                    baseClientInstance.newBuilder()
+                        .addInterceptor(BlizzardQueryParamsInterceptor())
+                        .addInterceptor(BearerTokenInterceptor())
+                        .addInterceptor(LoggerInterceptor())
+                        .build()
             }
-            return tokenInterceptorClient!!
+            return blizzardClient!!
         }
 }

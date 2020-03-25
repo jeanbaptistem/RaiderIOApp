@@ -15,10 +15,8 @@ object CharacterRepository {
     private val blizzardService =
         RetrofitBlizzardInstance.retrofitInstance?.create(BlizzardService::class.java)
 
-    private val globalParamProfile = mapOf("namespace" to "profile-eu", "locale" to "fr_FR")
-
     fun fetchProfileInfo(callback: DataCallback) {
-        blizzardService?.getProfileInfo(globalParamProfile)
+        blizzardService?.getProfileInfo()
             ?.enqueue(object : Callback<ProfileInfo> {
                 override fun onFailure(call: Call<ProfileInfo>, t: Throwable) {
                     throw t
@@ -39,7 +37,7 @@ object CharacterRepository {
     }
 
     fun fetchCharacterMedia(realm: String, characterName: String, callback: DataCallback) {
-        blizzardService?.getCharacterMedia(realm, characterName, globalParamProfile)
+        blizzardService?.getCharacterMedia(realm, characterName)
             ?.enqueue(object : Callback<CharacterMedia> {
                 override fun onFailure(call: Call<CharacterMedia>, t: Throwable) {
                     throw t
@@ -61,7 +59,7 @@ object CharacterRepository {
     }
 
     fun fetchCharacterData(realm: String, characterName: String, callback: DataCallback) {
-        blizzardService?.getCharacterProfile(realm, characterName, globalParamProfile)
+        blizzardService?.getCharacterProfile(realm, characterName)
             ?.enqueue(object : Callback<CharacterProfile> {
                 override fun onFailure(call: Call<CharacterProfile>, t: Throwable) {
                     throw t

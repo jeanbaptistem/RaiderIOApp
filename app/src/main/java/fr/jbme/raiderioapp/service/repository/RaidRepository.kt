@@ -15,8 +15,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object RaidRepository {
-    private val globalParamProfile = mapOf("namespace" to "profile-eu", "locale" to "fr_FR")
-
     private val blizzardService: BlizzardService? =
         RetrofitBlizzardInstance.retrofitInstance?.create(
             BlizzardService::class.java
@@ -28,9 +26,7 @@ object RaidRepository {
         )
 
     fun fetchRaidInfo(realmSlug: String, characterName: String, callback: DataCallback) {
-        blizzardService?.getCharacterRaidInfo(
-            realmSlug, characterName, globalParamProfile
-        )
+        blizzardService?.getCharacterRaidInfo(realmSlug, characterName)
             ?.enqueue(object :
                 Callback<RaidInfo> {
                 override fun onFailure(call: Call<RaidInfo>, t: Throwable) {
