@@ -155,24 +155,28 @@ class CharacterActivity : AppCompatActivity() {
     }
 
     private fun setupNavHeader(characterMedia: CharacterMedia) {
-        characterMedia.let {
-            navHeaderTitle.text = it.character.name
-            navHeaderDescription.text = it.character.realm.name
-            Picasso.get()
-                .load(it.avatar_url)
-                .placeholder(R.color.colorBackground)
-                .resize(180, 180)
-                .into(navHeaderThumbnail)
-
-            Picasso.get()
-                .load(it.bust_url)
-                .placeholder(R.color.colorBackground)
-                .resize(
-                    navHeaderView.measuredWidth,
-                    resources.getDimension(R.dimen.nav_header_height).toInt()
-                )
-                .centerCrop(Gravity.START)
-                .into(navHeaderLayout)
+        //TODO: fix null value on configuration change
+        characterMedia.let { media ->
+            navHeaderTitle?.text = media.character.name
+            navHeaderDescription?.text = media.character.realm.name
+            navHeaderThumbnail?.let {
+                Picasso.get()
+                    .load(media.avatar_url)
+                    .placeholder(R.color.colorBackground)
+                    .resize(180, 180)
+                    .into(it)
+            }
+            navHeaderLayout?.let {
+                Picasso.get()
+                    .load(media.bust_url)
+                    .placeholder(R.color.colorBackground)
+                    .resize(
+                        navHeaderView.measuredWidth,
+                        resources.getDimension(R.dimen.nav_header_height).toInt()
+                    )
+                    .centerCrop(Gravity.START)
+                    .into(it)
+            }
         }
     }
 

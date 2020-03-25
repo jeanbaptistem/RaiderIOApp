@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -26,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Token is already know in the sharedPref
         if (!sharedPrefToken.isNullOrEmpty() && intent?.action == "android.intent.action.MAIN") {
+            loginInfoTextView.text = getString(R.string.login_check)
             loginViewModel.checkToken(sharedPrefToken).observe(this, Observer {
                 // Valid Token
                 if (it is Result.Success) {
@@ -35,22 +35,27 @@ class LoginActivity : AppCompatActivity() {
                 }
                 // Invalid Token
                 else {
+
+                    loginInfoTextView.text = (it as Result.Error).exception.message
                     loginWebView.loadUrl(
                         "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=$CLIENT_ID&redirect_uri=$REDIRECTED_URI&scope=wow.profile"
                     )
                 }
             })
         } else {
+            loginInfoTextView.text = getString(R.string.login_need_auth)
             loginWebView.loadUrl(
                 "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=$CLIENT_ID&redirect_uri=$REDIRECTED_URI&scope=wow.profile"
             )
         }
 
         if (!intent?.data?.getQueryParameter("code").isNullOrEmpty()) {
+            loginInfoTextView.text = getString(R.string.login_auth_response)
             // Return from web browser
             val code = intent?.data?.getQueryParameter("code")
             if (code != null) {
                 loginViewModel.loginWithCode(code).observe(this, Observer {
+                    loginInfoTextView.text = getString(R.string.login_fetching_token)
                     // We got the right code and a new bearer token
                     if (it is Result.Success) {
                         with(sharedPref?.edit()) {
@@ -63,12 +68,11 @@ class LoginActivity : AppCompatActivity() {
                     }
                     // Something goes wrong
                     else {
-                        Log.i("LoginActivity", (it as Result.Error).exception.message.toString())
+                        loginInfoTextView.text = (it as Result.Error).exception.message
                     }
                 })
             } else {
-                //TODO: should never happened
-                Log.i("LoginActivity", "Query parameter code is null")
+                loginInfoTextView.text = getString(R.string.login_no_response)
             }
 
         }

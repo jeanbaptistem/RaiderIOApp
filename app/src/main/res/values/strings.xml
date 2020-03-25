@@ -14,17 +14,12 @@
     <string name="menu_raid">Raid</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_realm_name">Realm name</string>
-    <string name="prompt_character_name">Character name</string>
-    <string name="region_selection">Region</string>
-    <string name="action_log_in">Log in</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome"</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="invalid_realm_name">Wrong realm name</string>
-    <string name="invalid_character_name">Wrong character name</string>
-    <string name="invalid_region">Wrong region</string>
     <string name="raider_io_login_title">Login</string>
+    <string name="login_check">Checking authorization</string>
+    <string name="login_need_auth">Asking authorization</string>
+    <string name="login_auth_response">Checking authorization response</string>
+    <string name="login_fetching_token">Asking for new token</string>
+    <string name="login_no_response">No authorization response</string>
 
     <!-- Strings related to armory -->
 
