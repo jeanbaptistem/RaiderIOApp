@@ -44,11 +44,9 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             ""
         )
 
-    private val difficultyListIterator =
-        sequenceOf("MYTHIC", "HEROIC", "NORMAL", "LFR").repeat().iterator()
-
-
     fun bind(instances: Instances?) {
+        val difficultyListIterator =
+            sequenceOf("MYTHIC", "HEROIC", "NORMAL", "LFR").repeat().iterator()
         bossRecyclerView.adapter = bossCardViewAdapter
 
         raidNameTextView.text = instances?.instance?.name
@@ -80,7 +78,6 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     else -> itemView.context.getColor(R.color.itemQualityPoor)
                 }
             )
-
         }
         raidToggleBossListButton.callOnClick()
 

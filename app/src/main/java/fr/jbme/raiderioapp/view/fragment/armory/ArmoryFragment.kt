@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,8 @@ import fr.jbme.raiderioapp.view.activity.character.CharacterActivityViewModel
 
 
 class ArmoryFragment : Fragment() {
+    private val armoryViewModel: ArmoryViewModel by viewModels()
+
     private lateinit var armoryRecyclerView: RecyclerView
     private lateinit var armoryCardViewAdapter: ArmoryCardViewAdapter
 
@@ -35,14 +38,13 @@ class ArmoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        val activityViewModel =
+        val characterViewModel =
             activity?.let { ViewModelProvider(it).get(CharacterActivityViewModel::class.java) }
-        val viewModel: ArmoryViewModel = ViewModelProvider(this).get(ArmoryViewModel::class.java)
-        activityViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            viewModel.selectedCharacter(it)
+        characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+            armoryViewModel.selectedCharacter(it)
         })
 
-        observeViewModel(viewModel)
+        observeViewModel(armoryViewModel)
         return root
     }
 

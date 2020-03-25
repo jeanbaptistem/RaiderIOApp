@@ -16,6 +16,8 @@ import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.character.CharacterActivityViewModel
 
 class RaidFragment : Fragment() {
+    private val raidViewModel1: RaidViewModel by viewModels()
+
     private lateinit var raidRecyclerView: RecyclerView
 
     private lateinit var raidCardViewAdapter: RaidCardViewAdapter
@@ -48,13 +50,12 @@ class RaidFragment : Fragment() {
             adapter = raidCardViewAdapter
         }
 
-        val activityViewModel =
+        val characterViewModel =
             activity?.let { ViewModelProvider(it).get(CharacterActivityViewModel::class.java) }
-        val viewModel: RaidViewModel by viewModels()
-        activityViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            viewModel.selectedCharacter(it)
+        characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+            raidViewModel1.selectedCharacter(it)
         })
-        observeViewModel(viewModel)
+        observeViewModel(raidViewModel1)
         return root
     }
 

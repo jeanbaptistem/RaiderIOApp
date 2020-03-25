@@ -14,12 +14,12 @@ import fr.jbme.raiderioapp.view.activity.character.CharacterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val loginViewModel: LoginViewModel by viewModels()
         val sharedPref: SharedPreferences? =
             getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
         val sharedPrefToken = sharedPref?.getString(BEARER_TOKEN_KEY, null)
@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 })
             } else {
-                //TODO
+                //TODO: should never happened
                 Log.i("LoginActivity", "Query parameter code is null")
             }
 

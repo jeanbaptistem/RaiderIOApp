@@ -8,11 +8,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -34,6 +34,8 @@ import kotlinx.android.synthetic.main.nav_header_character.*
 
 @SuppressLint("DefaultLocale")
 class CharacterActivity : AppCompatActivity() {
+    private val characterActivityViewModel: CharacterActivityViewModel by viewModels()
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var navHeaderView: View
@@ -71,9 +73,7 @@ class CharacterActivity : AppCompatActivity() {
                 }
             }
         }
-        val viewModel: CharacterActivityViewModel =
-            ViewModelProvider(this).get(CharacterActivityViewModel::class.java)
-        observeViewModel(viewModel)
+        observeViewModel(characterActivityViewModel)
     }
 
     fun onSelectionButtonClick(view: View) {

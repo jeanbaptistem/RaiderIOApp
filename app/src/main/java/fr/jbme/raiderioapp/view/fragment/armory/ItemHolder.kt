@@ -91,7 +91,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bindStats(itemInfo: ItemInfo?) {
-        //TODO
+        //TODO: add stats
     }
 
 }
