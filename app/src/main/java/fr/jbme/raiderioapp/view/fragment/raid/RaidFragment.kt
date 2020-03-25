@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,7 +49,7 @@ class RaidFragment : Fragment() {
         }
 
         val activityViewModel =
-            activity?.let { ViewModelProviders.of(it).get(CharacterActivityViewModel::class.java) }
+            activity?.let { ViewModelProvider(it).get(CharacterActivityViewModel::class.java) }
         val viewModel: RaidViewModel by viewModels()
         activityViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
             viewModel.selectedCharacter(it)

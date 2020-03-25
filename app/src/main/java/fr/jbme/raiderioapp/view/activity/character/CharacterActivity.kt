@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -72,7 +72,7 @@ class CharacterActivity : AppCompatActivity() {
             }
         }
         val viewModel: CharacterActivityViewModel =
-            ViewModelProviders.of(this).get(CharacterActivityViewModel::class.java)
+            ViewModelProvider(this).get(CharacterActivityViewModel::class.java)
         observeViewModel(viewModel)
     }
 
