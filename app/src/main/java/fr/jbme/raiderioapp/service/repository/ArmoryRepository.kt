@@ -6,7 +6,8 @@ import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
 import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
-import fr.jbme.raiderioapp.utils.NetworkErrorUtils
+import fr.jbme.raiderioapp.service.network.service.BlizzardService
+import fr.jbme.raiderioapp.utils.network.NetworkUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,7 +40,7 @@ object ArmoryRepository {
                     if (response.isSuccessful) {
                         callback.onDataLoaded(Result.Success(response.body()!!))
                     } else {
-                        val error = NetworkErrorUtils.parseBlizError(response)
+                        val error = NetworkUtils.parseBlizError(response)
                         callback.onDataNotAvailable(Result.Error(error))
                     }
                 }
@@ -64,7 +65,7 @@ object ArmoryRepository {
                             tempList.add(response.body()!!)
                             callback.onDataLoaded(Result.Success(tempList.toList()))
                         } else {
-                            val error = NetworkErrorUtils.parseBlizError(response)
+                            val error = NetworkUtils.parseBlizError(response)
                             callback.onDataNotAvailable(Result.Error(error))
                         }
                     }
@@ -91,7 +92,7 @@ object ArmoryRepository {
                             callback.onDataLoaded(Result.Success(tempList.toList()))
 
                         } else {
-                            val error = NetworkErrorUtils.parseBlizError(response)
+                            val error = NetworkUtils.parseBlizError(response)
                             callback.onDataNotAvailable(Result.Error(error))
                         }
                     }

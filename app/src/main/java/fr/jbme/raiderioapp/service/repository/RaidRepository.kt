@@ -6,7 +6,9 @@ import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.model.raiderio.RaidInfoRio
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitRaiderIOInstance
-import fr.jbme.raiderioapp.utils.NetworkErrorUtils
+import fr.jbme.raiderioapp.service.network.service.BlizzardService
+import fr.jbme.raiderioapp.service.network.service.RaiderIOService
+import fr.jbme.raiderioapp.utils.network.NetworkUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,7 +46,7 @@ object RaidRepository {
                                 ?.first { expac -> expac.expansion.id == 396 }
                                 ?.instances!!))
                     } else {
-                        val error = NetworkErrorUtils.parseBlizError(response)
+                        val error = NetworkUtils.parseBlizError(response)
                         callback.onDataNotAvailable(Result.Error(error))
                     }
                 }
@@ -62,7 +64,7 @@ object RaidRepository {
                     if (response.isSuccessful) {
                         callback.onDataLoaded(Result.Success(response.body()?.raid_progression!!))
                     } else {
-                        val error = NetworkErrorUtils.parseRIOError(response)
+                        val error = NetworkUtils.parseRIOError(response)
                         callback.onDataNotAvailable(Result.Error(error))
                     }
                 }

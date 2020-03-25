@@ -2,9 +2,6 @@ package fr.jbme.raiderioapp
 
 const val SHARED_PREF_KEY = "fr.jbme.raiderioapp.constants.SHARED_PREF_KEY"
 
-const val REALM_NAME_KEY = "fr.jbme.raiderioapp.constants.REALM_NAME_KEY"
-const val CHARACTER_NAME_KEY = "fr.jbme.raiderioapp.constants.CHARACTER_NAME_KEY"
-
 const val BG_RAID_URL = "https://cdnassets.raider.io/images/%s/headers/_zone.jpg"
 const val BOSS_ICON_URL = "https://cdnassets.raider.io/images/%s/bossicons/%s.jpg"
 

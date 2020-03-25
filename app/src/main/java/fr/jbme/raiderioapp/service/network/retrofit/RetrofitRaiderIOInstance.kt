@@ -1,7 +1,7 @@
 package fr.jbme.raiderioapp.service.network.retrofit
 
-import fr.jbme.raiderioapp.service.network.retrofitUtils.CustomGsonFactory
-import fr.jbme.raiderioapp.service.network.retrofitUtils.CustomOkHttpClient
+import fr.jbme.raiderioapp.service.network.retrofit.utils.CustomGsonFactory
+import fr.jbme.raiderioapp.service.network.retrofit.utils.CustomOkHttpClient
 import retrofit2.Retrofit
 
 object RetrofitRaiderIOInstance {
