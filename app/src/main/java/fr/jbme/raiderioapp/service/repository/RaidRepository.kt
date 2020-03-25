@@ -1,6 +1,7 @@
 package fr.jbme.raiderioapp.service.repository
 
 import fr.jbme.raiderioapp.REGION
+import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Instances
 import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.RaidInfo
 import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.model.raiderio.RaidInfoRio
@@ -41,10 +42,9 @@ object RaidRepository {
                     response: Response<RaidInfo>
                 ) {
                     if (response.isSuccessful) {
-                        callback.onDataLoaded(
-                            Result.Success(response.body()?.expansions
-                                ?.first { expac -> expac.expansion.id == 396 }
-                                ?.instances!!))
+                        val res = mutableListOf<Instances>()
+                        response.body()?.expansions?.forEach { expac -> res.addAll(expac.instances) }
+                        callback.onDataLoaded(Result.Success(res.asReversed().toList()))
                     } else {
                         val error = NetworkUtils.parseBlizError(response)
                         callback.onDataNotAvailable(Result.Error(error))

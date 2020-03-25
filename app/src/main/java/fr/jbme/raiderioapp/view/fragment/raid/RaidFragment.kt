@@ -60,7 +60,7 @@ class RaidFragment : Fragment() {
 
     private fun observeViewModel(raidViewModel: RaidViewModel) {
         raidViewModel.characterRaidInfo.observe(viewLifecycleOwner, Observer {
-            raidCardViewAdapter.instancesList = it.asReversed()
+            raidCardViewAdapter.instancesList = it
             raidCardViewAdapter.notifyDataSetChanged()
         })
     }

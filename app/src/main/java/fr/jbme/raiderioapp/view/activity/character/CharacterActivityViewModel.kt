@@ -1,20 +1,27 @@
 package fr.jbme.raiderioapp.view.activity.character
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import fr.jbme.raiderioapp.RaiderIOApp
+import fr.jbme.raiderioapp.SELECTED_CHARACTER
+import fr.jbme.raiderioapp.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
 import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProfile
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.service.model.login.Result
-import fr.jbme.raiderioapp.service.repository.CharacterActivityRepository
+import fr.jbme.raiderioapp.service.repository.CharacterRepository
 import fr.jbme.raiderioapp.service.repository.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
 
 
 class CharacterActivityViewModel : ViewModel() {
+    private var sharedPref: SharedPreferences? =
+        RaiderIOApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
     private val _profileInfoData = MutableLiveData<ProfileInfo>()
     val profileInfoData: LiveData<ProfileInfo>
         get() = _profileInfoData
@@ -25,12 +32,13 @@ class CharacterActivityViewModel : ViewModel() {
 
     private val viewSelectedCharacter = MutableLiveData<String>()
     private val modelSelectedCharacter = Transformations.distinctUntilChanged(viewSelectedCharacter)
+
     val getSelectedCharacter: LiveData<String>
         get() = modelSelectedCharacter
 
     init {
         _profileInfoLoading.value = true
-        CharacterActivityRepository.fetchProfileInfo(object : DataCallback {
+        CharacterRepository.fetchProfileInfo(object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 _profileInfoData.value = result.data as ProfileInfo
                 _profileInfoLoading.value = false
@@ -41,11 +49,27 @@ class CharacterActivityViewModel : ViewModel() {
                 _profileInfoLoading.value = false
             }
         })
+
+        sharedPref?.let { sharedPref ->
+            sharedPref.getString(SELECTED_CHARACTER, null)?.let {
+                selectedCharacter(it)
+            }
+        }
     }
 
     fun selectedCharacter(selectedCharName: String?) {
         viewSelectedCharacter.postValue(selectedCharName)
     }
+
+    val updateSharedPref: LiveData<Boolean> =
+        Transformations.switchMap(modelSelectedCharacter) { character ->
+            Log.i("SharedPrefEdit", "true")
+            with(sharedPref?.edit()) {
+                this?.putString(SELECTED_CHARACTER, character)
+                this?.apply()
+            }
+            MutableLiveData(true)
+        }
 
     val characterData: LiveData<CharacterProfile> =
         Transformations.switchMap(modelSelectedCharacter) { character ->
@@ -68,7 +92,7 @@ class CharacterActivityViewModel : ViewModel() {
     private fun loadCharacterData(realm: String, name: String): LiveData<CharacterProfile> {
         val characterProfileResult = MutableLiveData<CharacterProfile>()
         _characterDataLoading.value = true
-        CharacterActivityRepository.fetchCharacterData(realm, name, object : DataCallback {
+        CharacterRepository.fetchCharacterData(realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterProfileResult.value = result.data as CharacterProfile
                 _characterDataLoading.value = false
@@ -90,7 +114,7 @@ class CharacterActivityViewModel : ViewModel() {
     private fun loadCharacterMedia(realm: String, name: String): LiveData<CharacterMedia> {
         val characterMediaResult = MutableLiveData<CharacterMedia>()
         _characterMediaLoading.value = true
-        CharacterActivityRepository.fetchCharacterMedia(realm, name, object : DataCallback {
+        CharacterRepository.fetchCharacterMedia(realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterMediaResult.value = result.data as CharacterMedia
                 _characterMediaLoading.value = false

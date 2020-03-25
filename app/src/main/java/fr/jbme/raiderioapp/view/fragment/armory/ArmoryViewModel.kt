@@ -15,6 +15,7 @@ import fr.jbme.raiderioapp.service.repository.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
 
 
+@Suppress("UNCHECKED_CAST")
 class ArmoryViewModel : ViewModel() {
 
     private val _viewSelectedCharacter = MutableLiveData<String>()
@@ -89,7 +90,6 @@ class ArmoryViewModel : ViewModel() {
                 Log.i("Item data error", error.exception.message.toString())
                 _armoryItemInfoLoading.value = false
             }
-
         })
         return itemDataResult
     }

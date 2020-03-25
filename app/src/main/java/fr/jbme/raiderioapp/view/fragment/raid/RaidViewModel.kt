@@ -11,6 +11,7 @@ import fr.jbme.raiderioapp.service.repository.DataCallback
 import fr.jbme.raiderioapp.service.repository.RaidRepository
 import fr.jbme.raiderioapp.utils.Whatever
 
+@Suppress("UNCHECKED_CAST")
 class RaidViewModel : ViewModel() {
 
     private val _viewSelectedCharacter = MutableLiveData<String>()

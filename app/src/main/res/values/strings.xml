@@ -4,7 +4,7 @@
     <!-- Strings related to navigation header -->
     <string name="nav_header_desc">Character thumbnail</string>
 
-    <!-- Strings related to main menu -->
+    <!-- Strings related to character menu -->
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
 

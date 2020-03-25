@@ -106,6 +106,7 @@ class CharacterActivity : AppCompatActivity() {
             setupNavHeader(it)
             setupToolbarBackground(it)
         })
+        viewModel.updateSharedPref.observe(this, Observer { })
     }
 
     private fun populateCharacterSelectionPopup(profileInfo: ProfileInfo) {
