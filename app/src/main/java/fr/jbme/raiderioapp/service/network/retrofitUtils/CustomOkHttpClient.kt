@@ -16,7 +16,7 @@ object CustomOkHttpClient {
             return baseClient!!
         }
     private var tokenInterceptorClient: OkHttpClient? = null
-    val tokenIntercepClientInstance: OkHttpClient
+    val tokenInterceptorClientInstance: OkHttpClient
         get() {
             if (tokenInterceptorClient == null) {
                 tokenInterceptorClient = baseClientInstance.newBuilder()

@@ -1,7 +1,6 @@
 package fr.jbme.raiderioapp.view.holder
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,7 +22,6 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         raidBossKillCounterTextView.text = encounters?.completed_count.toString() + " kill"
         var boss = Whatever.parseToSlug(encounters?.encounter?.name)
         val raid = Whatever.parseToSlug(raidName)
-        Log.i("boss, raid", "$boss, $raid")
         if (boss?.contains("grong")!!) {
             boss = "grong"
         } else if (boss.contains("zaqul")) {

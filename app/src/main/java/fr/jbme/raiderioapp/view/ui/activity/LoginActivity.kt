@@ -14,7 +14,6 @@ import fr.jbme.raiderioapp.view.model.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-    private val LOG_TAG: String = LoginActivity().localClassName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,18 +53,22 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.loginWithCode(code).observe(this, Observer {
                     // We got the right code and a new bearer token
                     if (it is Result.Success) {
+                        with(sharedPref?.edit()) {
+                            this?.putString(BEARER_TOKEN_KEY, it.data.access_token)
+                            this?.apply()
+                        }
                         startActivity(Intent(this, MainActivity::class.java).apply {
                             putExtra(BEARER_TOKEN_EXTRA, it.data.access_token)
                         })
                     }
                     // Something goes wrong
                     else {
-                        Log.i(LOG_TAG, (it as Result.Error).exception.message.toString())
+                        Log.i("LoginActivity", (it as Result.Error).exception.message.toString())
                     }
                 })
             } else {
                 //TODO
-                Log.i(LOG_TAG, "Query parameter code is null")
+                Log.i("LoginActivity", "Query parameter code is null")
             }
 
         }

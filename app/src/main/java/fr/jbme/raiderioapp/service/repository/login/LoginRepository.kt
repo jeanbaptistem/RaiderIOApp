@@ -9,14 +9,11 @@ import fr.jbme.raiderioapp.SHARED_PREF_KEY
 import fr.jbme.raiderioapp.service.model.blizzard.login.AccessTokenResponse
 import fr.jbme.raiderioapp.service.model.login.LoggedInUser
 
-/**
- * Class that requests authentication and user information from the remote data source and
- * maintains an in-memory cache of login status and user credentials information.
- */
 class LoginRepository(private val dataSource: LoginDataSource) {
 
     private val sharedPref =
         RaiderIOApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
+
     private val loginObserver =
         Observer<AccessTokenResponse>(fun(token) { setLoggedInUser(LoggedInUser(token.access_token)) })
 

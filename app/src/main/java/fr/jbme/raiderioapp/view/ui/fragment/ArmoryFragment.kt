@@ -1,22 +1,20 @@
 package fr.jbme.raiderioapp.view.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.EquippedItems
-import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
-import fr.jbme.raiderioapp.utils.LiveDataUtils
 import fr.jbme.raiderioapp.view.adapter.ArmoryCardViewAdapter
 import fr.jbme.raiderioapp.view.model.ArmoryViewModel
+import fr.jbme.raiderioapp.view.model.MainActivityViewModel
 
 
 class ArmoryFragment : Fragment() {
@@ -41,28 +39,24 @@ class ArmoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        val armoryViewModel =
-            ViewModelProvider.NewInstanceFactory().create(ArmoryViewModel::class.java)
-        observeViewModel(armoryViewModel)
+        val activityViewModel =
+            activity?.let { ViewModelProviders.of(it).get(MainActivityViewModel::class.java) }
+        val viewModel: ArmoryViewModel by viewModels()
+        activityViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+            viewModel.selectedCharacter(it)
+        })
 
+        observeViewModel(viewModel)
         return root
     }
 
-    private fun observeViewModel(armoryViewModel: ArmoryViewModel) {
-        val characterEquipmentObservable =
-            armoryViewModel.characterEquipmentObservable()
-        characterEquipmentObservable.observe(viewLifecycleOwner, Observer { equippedItemsList ->
-            val zippedLiveData: LiveData<Triple<List<EquippedItems>, List<ItemInfo>, List<Media>>> =
-                LiveDataUtils.zipTriple(
-                    characterEquipmentObservable,
-                    armoryViewModel.itemInfoObservable(equippedItemsList),
-                    armoryViewModel.itemMediaObservable(equippedItemsList)
-                )
-            zippedLiveData.observe(viewLifecycleOwner, Observer { triple ->
-                armoryCardViewAdapter.itemsData = triple
-                armoryCardViewAdapter.notifyDataSetChanged()
-            })
+    private fun observeViewModel(viewModel: ArmoryViewModel) {
+        Log.i("Armory", "ObserveViewModel")
+        viewModel.zippedArmoryLiveData.observe(viewLifecycleOwner, Observer {
+            armoryCardViewAdapter.apply {
+                itemsData = it
+                notifyDataSetChanged()
+            }
         })
-
     }
 }

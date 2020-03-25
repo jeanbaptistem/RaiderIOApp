@@ -6,13 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.adapter.RaidCardViewAdapter
+import fr.jbme.raiderioapp.view.model.MainActivityViewModel
 import fr.jbme.raiderioapp.view.model.RaidViewModel
 
 class RaidFragment : Fragment() {
@@ -48,19 +50,22 @@ class RaidFragment : Fragment() {
             adapter = raidCardViewAdapter
         }
 
-        val raidViewModel = ViewModelProvider.NewInstanceFactory().create(RaidViewModel::class.java)
-        observeViewModel(raidViewModel)
-
+        val activityViewModel =
+            activity?.let { ViewModelProviders.of(it).get(MainActivityViewModel::class.java) }
+        val viewModel: RaidViewModel by viewModels()
+        activityViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+            viewModel.selectedCharacter(it)
+        })
+        observeViewModel(viewModel)
         return root
     }
 
     private fun observeViewModel(raidViewModel: RaidViewModel) {
-        raidViewModel.raidInfoObservable().observe(viewLifecycleOwner, Observer {
+        raidViewModel.characterRaidInfo.observe(viewLifecycleOwner, Observer {
             raidCardViewAdapter.instancesList = it.asReversed()
             raidCardViewAdapter.notifyDataSetChanged()
         })
     }
-
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)

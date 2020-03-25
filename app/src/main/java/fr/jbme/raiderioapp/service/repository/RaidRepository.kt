@@ -1,12 +1,9 @@
 package fr.jbme.raiderioapp.service.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import fr.jbme.raiderioapp.REGION
-import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Instances
 import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.RaidInfo
+import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.model.raiderio.RaidInfoRio
-import fr.jbme.raiderioapp.service.model.raiderio.RaidProgression
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitRaiderIOInstance
 import fr.jbme.raiderioapp.utils.NetworkErrorUtils
@@ -27,12 +24,10 @@ object RaidRepository {
             RaiderIOService::class.java
         )
 
-    fun fetchRaidInfo(realmSlug: String?, characterName: String?): LiveData<List<Instances>> {
-        val raidInfo = MutableLiveData<List<Instances>>()
+    fun fetchRaidInfo(realmSlug: String, characterName: String, callback: DataCallback) {
         blizzardService?.getCharacterRaidInfo(
-                realmSlug, characterName,
-                globalParamProfile
-            )
+            realmSlug, characterName, globalParamProfile
+        )
             ?.enqueue(object :
                 Callback<RaidInfo> {
                 override fun onFailure(call: Call<RaidInfo>, t: Throwable) {
@@ -44,19 +39,19 @@ object RaidRepository {
                     response: Response<RaidInfo>
                 ) {
                     if (response.isSuccessful) {
-                        raidInfo.value =
-                            response.body()?.expansions?.first { expac -> expac.expansion.id == 396 }?.instances
+                        callback.onDataLoaded(
+                            Result.Success(response.body()?.expansions
+                                ?.first { expac -> expac.expansion.id == 396 }
+                                ?.instances!!))
                     } else {
                         val error = NetworkErrorUtils.parseBlizError(response)
-                        throw error
+                        callback.onDataNotAvailable(Result.Error(error))
                     }
                 }
             })
-        return raidInfo
     }
 
-    fun fetchRaidInfoRio(realmSlug: String?, characterName: String?): LiveData<RaidProgression> {
-        val raidInfoRio = MutableLiveData<RaidProgression>()
+    fun fetchRaidInfoRio(realmSlug: String, characterName: String, callback: DataCallback) {
         raiderIOService?.getRaidCharacter(REGION, realmSlug, characterName)
             ?.enqueue(object : Callback<RaidInfoRio> {
                 override fun onFailure(call: Call<RaidInfoRio>, t: Throwable) {
@@ -65,13 +60,12 @@ object RaidRepository {
 
                 override fun onResponse(call: Call<RaidInfoRio>, response: Response<RaidInfoRio>) {
                     if (response.isSuccessful) {
-                        raidInfoRio.value = response.body()?.raid_progression
+                        callback.onDataLoaded(Result.Success(response.body()?.raid_progression!!))
                     } else {
                         val error = NetworkErrorUtils.parseRIOError(response)
-                        throw error
+                        callback.onDataNotAvailable(Result.Error(error))
                     }
                 }
             })
-        return raidInfoRio
     }
 }

@@ -1,10 +1,9 @@
 package fr.jbme.raiderioapp.service.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
 import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProfile
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
+import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.utils.NetworkErrorUtils
 import retrofit2.Call
@@ -17,11 +16,8 @@ object MainActivityRepository {
 
     private val globalParamProfile = mapOf("namespace" to "profile-eu", "locale" to "fr_FR")
 
-    fun fetchProfileInfo(): LiveData<ProfileInfo> {
-        val profileInfo = MutableLiveData<ProfileInfo>()
-        blizzardService?.getProfileInfo(
-                globalParamProfile
-            )
+    fun fetchProfileInfo(callback: DataCallback) {
+        blizzardService?.getProfileInfo(globalParamProfile)
             ?.enqueue(object : Callback<ProfileInfo> {
                 override fun onFailure(call: Call<ProfileInfo>, t: Throwable) {
                     throw t
@@ -32,22 +28,17 @@ object MainActivityRepository {
                     response: Response<ProfileInfo>
                 ) {
                     if (response.isSuccessful) {
-                        profileInfo.value = response.body()
+                        callback.onDataLoaded(Result.Success(response.body()!!))
                     } else {
                         val error = NetworkErrorUtils.parseBlizError(response)
-                        throw  error
+                        callback.onDataNotAvailable(Result.Error(error))
                     }
                 }
             })
-        return profileInfo
     }
 
-    fun fetchCharacterMedia(realm: String?, characterName: String?): LiveData<CharacterMedia> {
-        val characterMedia = MutableLiveData<CharacterMedia>()
-        blizzardService?.getCharacterMedia(
-                realm, characterName,
-                globalParamProfile
-            )
+    fun fetchCharacterMedia(realm: String, characterName: String, callback: DataCallback) {
+        blizzardService?.getCharacterMedia(realm, characterName, globalParamProfile)
             ?.enqueue(object : Callback<CharacterMedia> {
                 override fun onFailure(call: Call<CharacterMedia>, t: Throwable) {
                     throw t
@@ -58,23 +49,18 @@ object MainActivityRepository {
                     response: Response<CharacterMedia>
                 ) {
                     if (response.isSuccessful) {
-                        characterMedia.value = response.body()
+                        callback.onDataLoaded(Result.Success(response.body()!!))
                     } else {
                         val error = NetworkErrorUtils.parseBlizError(response)
-                        throw  error
+                        callback.onDataNotAvailable(Result.Error(error))
                     }
                 }
 
             })
-        return characterMedia
     }
 
-    fun fetchCharacterProfile(realm: String?, characterName: String?): LiveData<CharacterProfile> {
-        val characterProfile = MutableLiveData<CharacterProfile>()
-        blizzardService?.getCharacterProfile(
-                realm, characterName,
-                globalParamProfile
-            )
+    fun fetchCharacterData(realm: String, characterName: String, callback: DataCallback) {
+        blizzardService?.getCharacterProfile(realm, characterName, globalParamProfile)
             ?.enqueue(object : Callback<CharacterProfile> {
                 override fun onFailure(call: Call<CharacterProfile>, t: Throwable) {
                     throw t
@@ -85,14 +71,13 @@ object MainActivityRepository {
                     response: Response<CharacterProfile>
                 ) {
                     if (response.isSuccessful) {
-                        characterProfile.value = response.body()
+                        callback.onDataLoaded(Result.Success(response.body()!!))
                     } else {
                         val error = NetworkErrorUtils.parseBlizError(response)
-                        throw  error
+                        callback.onDataNotAvailable(Result.Error(error))
                     }
                 }
             })
-        return characterProfile
     }
 
 }

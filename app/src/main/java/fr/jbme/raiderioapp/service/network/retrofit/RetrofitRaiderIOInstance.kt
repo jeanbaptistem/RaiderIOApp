@@ -11,7 +11,7 @@ object RetrofitRaiderIOInstance {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
                     .baseUrl("https://raider.io/api/v1/")
-                    .client(CustomOkHttpClient.tokenIntercepClientInstance)
+                    .client(CustomOkHttpClient.tokenInterceptorClientInstance)
                     .addConverterFactory(CustomGsonFactory.gsonFactory)
                     .build()
             }
