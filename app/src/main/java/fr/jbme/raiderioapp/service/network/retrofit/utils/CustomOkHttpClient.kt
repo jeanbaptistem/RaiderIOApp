@@ -13,6 +13,7 @@ object CustomOkHttpClient {
                 baseClient = OkHttpClient.Builder()
                     .readTimeout(40, TimeUnit.SECONDS)
                     .writeTimeout(40, TimeUnit.SECONDS)
+                    .addInterceptor(LoggerInterceptor())
                     .build()
             }
             return baseClient!!
@@ -25,7 +26,7 @@ object CustomOkHttpClient {
                     baseClientInstance.newBuilder()
                         .addInterceptor(BlizzardQueryParamsInterceptor(locale))
                         .addInterceptor(BearerTokenInterceptor())
-                        .addInterceptor(LoggerInterceptor())
+
                         .build()
             }
             return blizzardClient!!

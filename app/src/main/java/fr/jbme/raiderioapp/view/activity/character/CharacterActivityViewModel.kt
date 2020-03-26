@@ -15,7 +15,7 @@ import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProf
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.repository.CharacterRepository
-import fr.jbme.raiderioapp.service.repository.DataCallback
+import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
 
 
@@ -38,7 +38,8 @@ class CharacterActivityViewModel : ViewModel() {
 
     init {
         _profileInfoLoading.value = true
-        CharacterRepository.fetchProfileInfo(object : DataCallback {
+        CharacterRepository.fetchProfileInfo(object :
+            DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 _profileInfoData.value = result.data as ProfileInfo
                 _profileInfoLoading.value = false
@@ -92,14 +93,18 @@ class CharacterActivityViewModel : ViewModel() {
     private fun loadCharacterData(realm: String, name: String): LiveData<CharacterProfile> {
         val characterProfileResult = MutableLiveData<CharacterProfile>()
         _characterDataLoading.value = true
-        CharacterRepository.fetchCharacterData(realm, name, object : DataCallback {
+        CharacterRepository.fetchCharacterData(realm, name, object :
+            DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterProfileResult.value = result.data as CharacterProfile
                 _characterDataLoading.value = false
             }
 
             override fun onDataNotAvailable(error: Result.Error) {
-                Log.i("Character data error", error.exception.message.toString())
+                Log.i(
+                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character data error",
+                    error.exception.message.toString()
+                )
                 _characterDataLoading.value = false
             }
         })
@@ -114,14 +119,18 @@ class CharacterActivityViewModel : ViewModel() {
     private fun loadCharacterMedia(realm: String, name: String): LiveData<CharacterMedia> {
         val characterMediaResult = MutableLiveData<CharacterMedia>()
         _characterMediaLoading.value = true
-        CharacterRepository.fetchCharacterMedia(realm, name, object : DataCallback {
+        CharacterRepository.fetchCharacterMedia(realm, name, object :
+            DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterMediaResult.value = result.data as CharacterMedia
                 _characterMediaLoading.value = false
             }
 
             override fun onDataNotAvailable(error: Result.Error) {
-                Log.i("Character media error", error.exception.message.toString())
+                Log.i(
+                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character media error",
+                    error.exception.message.toString()
+                )
                 _characterMediaLoading.value = false
             }
         })

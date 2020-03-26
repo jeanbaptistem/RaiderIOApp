@@ -24,6 +24,9 @@
     <!-- Strings related to armory -->
 
     <!-- Strings related to dungeon -->
+    <string name="dungeon_class_ranks">Class</string>
+    <string name="dungeon_spec_ranks">Spec</string>
+    <string name="dungeon_overall_ranks">Overall</string>
 
     <!-- Strings related to raid -->
     <string name="normal_long">Normal</string>
@@ -38,6 +41,5 @@
     <!-- Strings related to Preference -->
     <string name="title_activity_settings">Settings</string>
     <string name="messages_header">Messages</string>
-
 
 </resources>

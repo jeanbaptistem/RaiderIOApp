@@ -7,8 +7,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Instances
 import fr.jbme.raiderioapp.service.model.login.Result
-import fr.jbme.raiderioapp.service.repository.DataCallback
 import fr.jbme.raiderioapp.service.repository.RaidRepository
+import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
 
 @Suppress("UNCHECKED_CAST")
@@ -33,14 +33,18 @@ class RaidViewModel : ViewModel() {
     private fun loadCharacterRaidInfo(realm: String, name: String): LiveData<List<Instances>> {
         val characterRaidInfoResult = MutableLiveData<List<Instances>>()
         _characterRaidInfoLoading.value = true
-        RaidRepository.fetchRaidInfo(realm, name, object : DataCallback {
+        RaidRepository.fetchRaidInfo(realm, name, object :
+            DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterRaidInfoResult.value = result.data as List<Instances>
                 _characterRaidInfoLoading.value = false
             }
 
             override fun onDataNotAvailable(error: Result.Error) {
-                Log.i("Character armory  error", error.exception.message.toString())
+                Log.i(
+                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character armory  error",
+                    error.exception.message.toString()
+                )
                 _characterRaidInfoLoading.value = false
             }
         })

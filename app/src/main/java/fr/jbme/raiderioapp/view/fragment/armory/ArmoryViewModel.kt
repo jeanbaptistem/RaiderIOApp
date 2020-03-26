@@ -11,7 +11,7 @@ import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
 import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.repository.ArmoryRepository
-import fr.jbme.raiderioapp.service.repository.DataCallback
+import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
 
 
@@ -63,14 +63,18 @@ class ArmoryViewModel : ViewModel() {
     private fun loadCharacterArmory(realm: String, name: String): LiveData<List<EquippedItems>> {
         val characterEquipmentResult = MutableLiveData<List<EquippedItems>>()
         _characterArmoryLoading.value = true
-        ArmoryRepository.fetchCharacterEquipment(realm, name, object : DataCallback {
+        ArmoryRepository.fetchCharacterEquipment(realm, name, object :
+            DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterEquipmentResult.value = (result.data as CharacterEquipment).equipped_items
                 _characterArmoryLoading.value = false
             }
 
             override fun onDataNotAvailable(error: Result.Error) {
-                Log.i("Character armory  error", error.exception.message.toString())
+                Log.i(
+                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character armory  error",
+                    error.exception.message.toString()
+                )
                 _characterArmoryLoading.value = false
             }
         })
@@ -80,7 +84,8 @@ class ArmoryViewModel : ViewModel() {
     private fun loadArmoryItemData(equippedItems: List<EquippedItems>): LiveData<List<ItemInfo>> {
         val itemDataResult = MutableLiveData<List<ItemInfo>>()
         _armoryItemInfoLoading.value = true
-        ArmoryRepository.fetchItemInfo(equippedItems, object : DataCallback {
+        ArmoryRepository.fetchItemInfo(equippedItems, object :
+            DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 itemDataResult.value = result.data as List<ItemInfo>
                 _armoryItemInfoLoading.value = false
@@ -97,7 +102,8 @@ class ArmoryViewModel : ViewModel() {
     private fun loadArmoryItemMedia(equippedItems: List<EquippedItems>): LiveData<List<Media>> {
         val itemMediaResult = MutableLiveData<List<Media>>()
         _armoryItemMediaLoading.value = true
-        ArmoryRepository.fetchItemMedia(equippedItems, object : DataCallback {
+        ArmoryRepository.fetchItemMedia(equippedItems, object :
+            DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 itemMediaResult.value = result.data as List<Media>
                 _armoryItemMediaLoading.value = false

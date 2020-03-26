@@ -13,7 +13,7 @@ object RetrofitBlizzardLoginInstance {
                 retrofit = Retrofit.Builder()
                     .baseUrl("https://${REGION}.battle.net/")
                     .client(CustomOkHttpClient.baseClientInstance)
-                    .addConverterFactory(CustomGsonFactory.gsonFactory)
+                    .addConverterFactory(CustomGsonFactory.gsonFactoryBase)
                     .build()
             }
             return retrofit

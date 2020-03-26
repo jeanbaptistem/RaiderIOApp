@@ -6,6 +6,7 @@ import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardService
+import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.network.NetworkUtils
 import retrofit2.Call
 import retrofit2.Callback

@@ -7,11 +7,18 @@ import java.util.*
 object Whatever {
 
     fun parseToSlug(value: String?): String? {
-        return value?.replace(' ', '-')
+        return value
             ?.split(',')
             ?.reduce { acc, s -> acc + s }
             ?.split('\'')
             ?.reduce { acc, s -> acc + s }
+            ?.split("!!")
+            ?.reduce { acc, s -> acc + s }
+            ?.split(':')
+            ?.reduce { acc, s -> acc + s }
+            ?.split(" -")
+            ?.reduce { acc, s -> acc + s }
+            ?.replace(' ', '-')
             ?.toLowerCase(Locale.ROOT)
     }
 

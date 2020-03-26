@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.service.model.raiderio
+package fr.jbme.raiderioapp.service.model.raiderio.raidInfoRio
 
 import com.google.gson.annotations.SerializedName
 

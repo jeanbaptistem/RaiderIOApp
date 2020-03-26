@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_dungeon"
-        android:name="fr.jbme.raiderioapp.view.fragment.dugeon.DungeonFragment"
+        android:name="fr.jbme.raiderioapp.view.fragment.dungeon.DungeonFragment"
         android:label="@string/menu_dungeon"
         tools:layout="@layout/fragment_dungeon" />
 

@@ -1,8 +1,10 @@
 package fr.jbme.raiderioapp.service.network.service
 
+import fr.jbme.raiderioapp.LAST_SEASON_ID
 import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.CharacterEquipment
 import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
 import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProfile
+import fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.DungeonInfo
 import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
 import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
@@ -20,7 +22,7 @@ interface BlizzardService {
     fun getProfileInfo(): Call<ProfileInfo>
 
 
-    //Character Profile
+    //fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character Profile
     @Headers("Namespace: Profile")
     @GET("/profile/wow/character/{realmSlug}/{characterName}")
     fun getCharacterProfile(
@@ -72,10 +74,19 @@ interface BlizzardService {
     ): Call<Media>
 
 
-    //AzeriteEssences Date
+    //AzeriteEssences Data
     @Headers("Namespace: Static")
     @GET("/data/wow/media/azerite-essence/{azeriteEssenceId}")
     fun getAzeriteEssenceMedia(
         @Path("azeriteEssenceId") azeriteEssenceId: Int?
     ): Call<Media>
+
+
+    //Dungeons Data
+    @Headers("Namespace: Profile")
+    @GET("/profile/wow/character/{realmSlug}/{characterName}/mythic-keystone-profile/season/${LAST_SEASON_ID}")
+    fun getCharacterDungeon(
+        @Path("realmSlug") realmSlug: String,
+        @Path("characterName") characterName: String
+    ): Call<DungeonInfo>
 }

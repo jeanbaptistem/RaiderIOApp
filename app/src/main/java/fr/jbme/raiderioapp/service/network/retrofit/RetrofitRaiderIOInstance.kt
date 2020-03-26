@@ -12,7 +12,7 @@ object RetrofitRaiderIOInstance {
                 retrofit = Retrofit.Builder()
                     .baseUrl("https://raider.io/api/v1/")
                     .client(CustomOkHttpClient.baseClientInstance)
-                    .addConverterFactory(CustomGsonFactory.gsonFactory)
+                    .addConverterFactory(CustomGsonFactory.gsonFactoryCustom)
                     .build()
             }
             return retrofit

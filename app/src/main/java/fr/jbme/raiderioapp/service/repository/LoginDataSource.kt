@@ -14,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * Class that handles authentication w/ login credentials and retrieves user information.
+ * fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Class that handles authentication w/ login credentials and retrieves user information.
  */
 class LoginDataSource {
     private var blizzardLoginService: BlizzardLoginService? =

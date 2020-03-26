@@ -36,4 +36,11 @@
         <item>zh_TW</item>
     </array>
 
+    <array name="dungeon_ranks_title">
+        <item>@string/dungeon_class_ranks</item>
+        <item>@string/dungeon_spec_ranks</item>
+        <item>@string/dungeon_overall_ranks</item>
+    </array>
+
+
 </resources>

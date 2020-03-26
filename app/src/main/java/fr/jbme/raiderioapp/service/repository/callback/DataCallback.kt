@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.service.repository
+package fr.jbme.raiderioapp.service.repository.callback
 
 import fr.jbme.raiderioapp.service.model.login.Result
 
