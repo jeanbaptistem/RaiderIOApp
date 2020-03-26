@@ -114,7 +114,7 @@ class CharacterActivity : AppCompatActivity() {
         profileInfo.wow_accounts.forEach { wowAccounts ->
             wowAccounts.characters
                 .sortedByDescending { characters -> characters.level }
-                .filter { characters -> characters.level == 120 }
+                .filter { characters -> characters.level >= 100 }
                 .forEach { char -> characterList.add(char) }
         }
     }

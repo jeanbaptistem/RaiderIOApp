@@ -15,7 +15,7 @@
     tools:background="@drawable/side_nav_bar">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
+        android:id="@+id/navHeaderThumbnailCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"

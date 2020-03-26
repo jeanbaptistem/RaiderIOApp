@@ -102,7 +102,7 @@ class CharacterActivityViewModel : ViewModel() {
 
             override fun onDataNotAvailable(error: Result.Error) {
                 Log.i(
-                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character data error",
+                    "Character data error",
                     error.exception.message.toString()
                 )
                 _characterDataLoading.value = false
@@ -128,7 +128,7 @@ class CharacterActivityViewModel : ViewModel() {
 
             override fun onDataNotAvailable(error: Result.Error) {
                 Log.i(
-                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character media error",
+                    "Character media error",
                     error.exception.message.toString()
                 )
                 _characterMediaLoading.value = false
