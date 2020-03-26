@@ -20,6 +20,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.squareup.picasso.Picasso
+import fr.jbme.raiderioapp.MAIN_SCREEN_BG
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
@@ -155,7 +156,8 @@ class CharacterActivity : AppCompatActivity() {
     }
 
     private fun setupNavHeader(characterMedia: CharacterMedia) {
-        //TODO: fix null value on configuration change
+        //TODO: fix null value on configuration change :: Fixed
+        //But header disappear on configuration change
         characterMedia.let { media ->
             navHeaderTitle?.text = media.character.name
             navHeaderDescription?.text = media.character.realm.name
@@ -168,7 +170,7 @@ class CharacterActivity : AppCompatActivity() {
             }
             navHeaderLayout?.let {
                 Picasso.get()
-                    .load(media.bust_url)
+                    .load(MAIN_SCREEN_BG)
                     .placeholder(R.color.colorBackground)
                     .resize(
                         navHeaderView.measuredWidth,

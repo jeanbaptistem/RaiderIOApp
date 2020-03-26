@@ -6,6 +6,8 @@ const val SELECTED_CHARACTER = "fr.jbme.raiderioapp.constants.SELECTED_CHARACTER
 
 const val BG_RAID_URL = "https://cdnassets.raider.io/images/%s/headers/_zone.jpg"
 const val BOSS_ICON_URL = "https://cdnassets.raider.io/images/%s/bossicons/%s.jpg"
+const val MAIN_SCREEN_BG =
+    "https://cdn.neow.in/news/images/uploaded/2017/11/1509743935_world_of_warcraft_battle_for_azeroth_story.jpg"
 
 // Setting values
 const val TITLE_TAG = "settingsActivityTitle"
