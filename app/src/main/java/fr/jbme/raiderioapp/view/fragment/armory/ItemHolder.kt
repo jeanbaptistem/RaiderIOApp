@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.EquippedItems
 import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
+import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardService
 
@@ -55,7 +56,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         )
     }
 
-    fun bindItem(equippedItem: EquippedItems?) {
+    fun bindItem(equippedItem: EquippedItems?, azeriteEssences: List<Media>?) {
         itemName.text = equippedItem?.name
         ilvlTextView.text = "Ilvl: ${equippedItem?.level?.value}"
         socketLayoutList.forEach { it.visibility = View.GONE }
@@ -65,9 +66,10 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val color = itemView.context.getColor(R.color.itemQualityArtifact)
             equippedItem.azerite_details.selected_essences.filter { it.slot == 0 }
                 .mapIndexed { index, essencePower ->
-                    val essenceId = essencePower.essence.id
-                    //TODO: add essence thumbnail
-                    //Picasso.get().load(response.body()?.assets?.first()?.value).into(socketImageViewList[index])
+                    val essenceId = essencePower.main_spell_tooltip?.spell?.id
+                    val essenceThumbnail =
+                        azeriteEssences?.firstOrNull { media -> media.id == essenceId }
+                    //Picasso.get().load(essenceThumbnail?.assets?.first()?.value).into(socketImageViewList[index])
                     socketImageViewList[index].visibility = View.VISIBLE
                     socketLayoutList[index].run {
                         setCardBackgroundColor(color)

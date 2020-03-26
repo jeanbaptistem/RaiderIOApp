@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.character.CharacterActivityViewModel
+import kotlinx.android.synthetic.main.fragment_dungeon.*
 
 class DungeonFragment : Fragment() {
     private val dungeonViewModel: DungeonViewModel by viewModels()
@@ -48,6 +49,13 @@ class DungeonFragment : Fragment() {
             dungeonCardViewAdapter.ranksList = it.first
             dungeonCardViewAdapter.dungeonList = it.second
             dungeonCardViewAdapter.notifyDataSetChanged()
+        })
+        dungeonViewModel.zippedDungeonDataLoading.observe(viewLifecycleOwner, Observer {
+            if (it.first || it.second) {
+                dungeonLoading.visibility = View.VISIBLE
+            } else if (!it.first && !it.second) {
+                dungeonLoading.visibility = View.GONE
+            }
         })
     }
 }

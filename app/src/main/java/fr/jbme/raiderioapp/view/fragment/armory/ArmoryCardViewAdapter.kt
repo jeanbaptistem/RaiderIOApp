@@ -9,11 +9,12 @@ import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.EquippedItems
 import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
 import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
+import fr.jbme.raiderioapp.utils.Quadruple
 
 
 class ArmoryCardViewAdapter(
     val context: Context?,
-    var itemsData: Triple<List<EquippedItems>, List<ItemInfo>, List<Media>>
+    var itemsData: Quadruple<List<EquippedItems>, List<ItemInfo>, List<Media>, List<Media>>
 ) : RecyclerView.Adapter<ItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
@@ -29,7 +30,7 @@ class ArmoryCardViewAdapter(
         val media: Media? = itemsData.third.find { media -> media.id == id }
 
         holder.bindThumbnail(media?.assets?.first()?.value, equippedItem?.quality?.type)
-        holder.bindItem(equippedItem)
+        holder.bindItem(equippedItem, itemsData.quatro)
         holder.bindStats(itemInfo)
     }
 

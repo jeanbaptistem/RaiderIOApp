@@ -54,7 +54,7 @@ class DungeonViewModel : ViewModel() {
             }
 
             override fun onDataNotAvailable(error: Result.Error) {
-                _characterRanksLoading.value = false
+                _characterRanksLoading.value = true
             }
 
         })
@@ -71,7 +71,7 @@ class DungeonViewModel : ViewModel() {
             }
 
             override fun onDataNotAvailable(error: Result.Error) {
-                _characterDungeonsLoading.value = false
+                _characterDungeonsLoading.value = true
             }
 
         })

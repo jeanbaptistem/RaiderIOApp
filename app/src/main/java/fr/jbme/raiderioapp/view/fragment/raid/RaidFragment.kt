@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.character.CharacterActivityViewModel
+import kotlinx.android.synthetic.main.fragment_raid.*
 
 class RaidFragment : Fragment() {
     private val raidViewModel1: RaidViewModel by viewModels()
@@ -63,6 +64,13 @@ class RaidFragment : Fragment() {
         raidViewModel.characterRaidInfo.observe(viewLifecycleOwner, Observer {
             raidCardViewAdapter.instancesList = it
             raidCardViewAdapter.notifyDataSetChanged()
+        })
+        raidViewModel.characterRaidInfoLoading.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                raidLoading.visibility = View.VISIBLE
+            } else if (!it) {
+                raidLoading.visibility = View.GONE
+            }
         })
     }
 

@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
+import fr.jbme.raiderioapp.utils.Quadruple
 import fr.jbme.raiderioapp.view.activity.character.CharacterActivityViewModel
+import kotlinx.android.synthetic.main.fragment_armory.*
 
 
 class ArmoryFragment : Fragment() {
@@ -29,7 +31,7 @@ class ArmoryFragment : Fragment() {
         armoryCardViewAdapter =
             ArmoryCardViewAdapter(
                 context,
-                Triple(listOf(), listOf(), listOf())
+                Quadruple(listOf(), listOf(), listOf(), listOf())
             )
 
         armoryRecyclerView = root.findViewById(R.id.armoryRecyclerView)
@@ -53,6 +55,13 @@ class ArmoryFragment : Fragment() {
             armoryCardViewAdapter.apply {
                 itemsData = it
                 notifyDataSetChanged()
+            }
+        })
+        viewModel.zippedArmoryDataLoading.observe(viewLifecycleOwner, Observer {
+            if (it.first || it.second || it.third) {
+                armoryProgressBar.visibility = View.VISIBLE
+            } else if (!it.first && !it.second && !it.third) {
+                armoryProgressBar.visibility = View.GONE
             }
         })
     }

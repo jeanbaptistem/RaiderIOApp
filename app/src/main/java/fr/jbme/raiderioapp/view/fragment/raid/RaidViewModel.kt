@@ -22,7 +22,7 @@ class RaidViewModel : ViewModel() {
         _viewSelectedCharacter.postValue(selectedCharName)
     }
 
-    private val _characterRaidInfoLoading = MutableLiveData<Boolean>()
+    val characterRaidInfoLoading = MutableLiveData<Boolean>()
     val characterRaidInfo: LiveData<List<Instances>> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
             val name = Whatever.parseToSlug(character.split('-')[0])!!
@@ -32,20 +32,20 @@ class RaidViewModel : ViewModel() {
 
     private fun loadCharacterRaidInfo(realm: String, name: String): LiveData<List<Instances>> {
         val characterRaidInfoResult = MutableLiveData<List<Instances>>()
-        _characterRaidInfoLoading.value = true
+        characterRaidInfoLoading.value = true
         RaidRepository.fetchRaidInfo(realm, name, object :
             DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterRaidInfoResult.value = result.data as List<Instances>
-                _characterRaidInfoLoading.value = false
+                characterRaidInfoLoading.value = false
             }
 
             override fun onDataNotAvailable(error: Result.Error) {
                 Log.i(
-                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character armory  error",
+                    "Character armory  error",
                     error.exception.message.toString()
                 )
-                _characterRaidInfoLoading.value = false
+                characterRaidInfoLoading.value = true
             }
         })
         return characterRaidInfoResult

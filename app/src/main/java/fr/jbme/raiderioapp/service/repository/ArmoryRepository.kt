@@ -98,4 +98,34 @@ object ArmoryRepository {
                 })
         }
     }
+
+    fun fetchAzeriteSpellMedia(itemList: List<EquippedItems>, callback: DataCallback) {
+        val tempList = mutableListOf<Media>()
+        itemList.forEach { equippedItems ->
+            equippedItems.azerite_details?.selected_essences?.forEach {
+                blizzardService?.getAzeriteEssenceMedia(it.essence.id)
+                    ?.enqueue(object : Callback<Media> {
+                        override fun onFailure(call: Call<Media>, t: Throwable) {
+                            throw t
+                        }
+
+                        override fun onResponse(
+                            call: Call<Media>,
+                            response: Response<Media>
+                        ) {
+                            if (response.isSuccessful) {
+                                tempList.add(response.body()!!)
+                                callback.onDataLoaded(Result.Success(tempList.toList()))
+
+                            } else {
+                                val error = NetworkUtils.parseBlizError(response)
+                                callback.onDataNotAvailable(Result.Error(error))
+                            }
+                        }
+
+                    })
+            }
+        }
+
+    }
 }

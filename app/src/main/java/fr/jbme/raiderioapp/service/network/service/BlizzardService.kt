@@ -22,7 +22,7 @@ interface BlizzardService {
     fun getProfileInfo(): Call<ProfileInfo>
 
 
-    //fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character Profile
+    //Character Profile
     @Headers("Namespace: Profile")
     @GET("/profile/wow/character/{realmSlug}/{characterName}")
     fun getCharacterProfile(
@@ -78,7 +78,7 @@ interface BlizzardService {
     @Headers("Namespace: Static")
     @GET("/data/wow/media/azerite-essence/{azeriteEssenceId}")
     fun getAzeriteEssenceMedia(
-        @Path("azeriteEssenceId") azeriteEssenceId: Int?
+        @Path("azeriteEssenceId") azeriteEssenceId: Int
     ): Call<Media>
 
 

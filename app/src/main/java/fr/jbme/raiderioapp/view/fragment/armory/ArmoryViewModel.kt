@@ -12,6 +12,7 @@ import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
 import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.repository.ArmoryRepository
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
+import fr.jbme.raiderioapp.utils.Quadruple
 import fr.jbme.raiderioapp.utils.Whatever
 
 
@@ -46,17 +47,25 @@ class ArmoryViewModel : ViewModel() {
             loadArmoryItemMedia(equippedItems)
         }
 
-    val zippedArmoryLiveData: LiveData<Triple<List<EquippedItems>, List<ItemInfo>, List<Media>>> =
-        Whatever.zipTriple(
+    private val _armoryAzeriteSpellLoading = MutableLiveData<Boolean>()
+    private val armoryAzeriteSpell: LiveData<List<Media>> =
+        Transformations.switchMap(characterArmory) { equippedItems ->
+            loadAzeriteItemMedia(equippedItems)
+        }
+
+    val zippedArmoryLiveData: LiveData<Quadruple<List<EquippedItems>, List<ItemInfo>, List<Media>, List<Media>>> =
+        Whatever.zipQuadruple(
             characterArmory,
             armoryItemData,
-            armoryItemMedia
+            armoryItemMedia,
+            armoryAzeriteSpell
         )
-    val zippedArmoryDataLoading: LiveData<Triple<Boolean, Boolean, Boolean>> =
-        Whatever.zipTriple(
+    val zippedArmoryDataLoading: LiveData<Quadruple<Boolean, Boolean, Boolean, Boolean>> =
+        Whatever.zipQuadruple(
             _characterArmoryLoading,
             _armoryItemInfoLoading,
-            _armoryItemMediaLoading
+            _armoryItemMediaLoading,
+            _armoryAzeriteSpellLoading
         )
 
 
@@ -72,10 +81,10 @@ class ArmoryViewModel : ViewModel() {
 
             override fun onDataNotAvailable(error: Result.Error) {
                 Log.i(
-                    "fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Character armory  error",
+                    "Character armory  error",
                     error.exception.message.toString()
                 )
-                _characterArmoryLoading.value = false
+                _characterArmoryLoading.value = true
             }
         })
         return characterEquipmentResult
@@ -93,7 +102,7 @@ class ArmoryViewModel : ViewModel() {
 
             override fun onDataNotAvailable(error: Result.Error) {
                 Log.i("Item data error", error.exception.message.toString())
-                _armoryItemInfoLoading.value = false
+                _armoryItemInfoLoading.value = true
             }
         })
         return itemDataResult
@@ -111,10 +120,29 @@ class ArmoryViewModel : ViewModel() {
 
             override fun onDataNotAvailable(error: Result.Error) {
                 Log.i("Item media error", error.exception.message.toString())
-                _armoryItemMediaLoading.value = false
+                _armoryItemMediaLoading.value = true
             }
 
         })
         return itemMediaResult
+    }
+
+    private fun loadAzeriteItemMedia(equippedItems: List<EquippedItems>): LiveData<List<Media>> {
+        val armoryAzeriteSpellResult = MutableLiveData<List<Media>>()
+        _armoryAzeriteSpellLoading.value = true
+        val azeriteItems =
+            equippedItems.filter { item -> item.azerite_details?.selected_essences != null }
+        ArmoryRepository.fetchAzeriteSpellMedia(azeriteItems, object : DataCallback {
+            override fun onDataLoaded(result: Result.Success<*>) {
+                armoryAzeriteSpellResult.value = result.data as List<Media>
+                _armoryAzeriteSpellLoading.value = false
+            }
+
+            override fun onDataNotAvailable(error: Result.Error) {
+                Log.i("Azerite media error", error.exception.message.toString())
+                _armoryAzeriteSpellLoading.value = true
+            }
+        })
+        return armoryAzeriteSpellResult
     }
 }
