@@ -1,5 +1,6 @@
 package fr.jbme.raiderioapp.view.fragment.dungeon.headerRow
 
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TableRow
@@ -34,10 +35,13 @@ class HeaderPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             Picasso.get().load(iconUrl).into(ivName)
             val tvWorld = TextView(context)
             tvWorld.text = rank.world.toString()
+            tvWorld.gravity = Gravity.END
             val tvRegion = TextView(context)
             tvRegion.text = rank.region.toString()
+            tvRegion.gravity = Gravity.END
             val tvRealm = TextView(context)
             tvRealm.text = rank.realm.toString()
+            tvRealm.gravity = Gravity.END
             rowList[index].run {
                 addView(ivName)
                 addView(tvWorld)
