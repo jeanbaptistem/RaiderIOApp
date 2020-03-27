@@ -33,6 +33,7 @@ class HeaderPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
                 else -> IC_FLAG
             }
             Picasso.get().load(iconUrl).into(ivName)
+            ivName.scaleType = ImageView.ScaleType.FIT_START
             val tvWorld = TextView(context)
             tvWorld.text = rank.world.toString()
             tvWorld.gravity = Gravity.END

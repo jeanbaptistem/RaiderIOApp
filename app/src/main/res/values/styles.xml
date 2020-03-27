@@ -19,6 +19,7 @@
 
     <style name="Theme.RaiderIoApp.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
-    <style name="Theme.RaiderIoApp.PopupOverlay" parent="Theme.MaterialComponents" />
+    <style name="Theme.RaiderIoApp.PopupOverlay" parent="Theme.RaiderIoApp" />
+
 
 </resources>

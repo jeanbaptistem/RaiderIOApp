@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_character.*
 import kotlinx.android.synthetic.main.app_bar_character.*
 import kotlinx.android.synthetic.main.nav_header_character.*
 
+
 @SuppressLint("DefaultLocale")
 class CharacterActivity : AppCompatActivity() {
     private val characterActivityViewModel: CharacterActivityViewModel by viewModels()
@@ -51,8 +52,9 @@ class CharacterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_character)
 
         setSupportActionBar(toolbar)
+
         navHeaderView = nav_view.inflateHeaderView(R.layout.nav_header_character)
-        nav_view.inflateMenu(R.menu.activity_main_drawer)
+        nav_view.inflateMenu(R.menu.activity_character_drawer)
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
             setOf(
