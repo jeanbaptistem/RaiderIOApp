@@ -38,14 +38,14 @@ class LoginActivity : AppCompatActivity() {
 
                     loginInfoTextView.text = (it as Result.Error).exception.message
                     loginWebView.loadUrl(
-                        "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=$CLIENT_ID&redirect_uri=$REDIRECTED_URI&scope=wow.profile"
+                        "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=${BuildConfig.CLIENT_ID}&redirect_uri=$REDIRECTED_URI&scope=wow.profile"
                     )
                 }
             })
         } else {
             loginInfoTextView.text = getString(R.string.login_need_auth)
             loginWebView.loadUrl(
-                "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=$CLIENT_ID&redirect_uri=$REDIRECTED_URI&scope=wow.profile"
+                "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=${BuildConfig.CLIENT_ID}&redirect_uri=$REDIRECTED_URI&scope=wow.profile"
             )
         }
 
