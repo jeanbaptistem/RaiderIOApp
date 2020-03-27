@@ -27,9 +27,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://raiderioapp.jbme.fr/callback” -->
                 <data
-                    android:host="raiderioapp.jbme.fr"
-                    android:pathPrefix="/callback"
-                    android:scheme="http" />
+                    android:host="${host}"
+                    android:pathPrefix="${pathPrefix}"
+                    android:scheme="${scheme}" />
             </intent-filter>
         </activity>
 

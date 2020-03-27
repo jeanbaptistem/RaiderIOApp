@@ -18,9 +18,10 @@ android {
 
     buildTypes {
         buildTypes.each {
-            it.buildConfigField "String", "CLIENT_ID", "$System.env.BLIZZARD_CLIENT_ID"
-            it.buildConfigField "String", "CLIENT_SECRET", "$System.env.BLIZZARD_CLIENT_SECRET"
-            it.buildConfigField "String", "REDIRECTED_URL", redirected_url
+            it.buildConfigField 'String', 'CLIENT_ID', '\"' + System.getenv("BLIZZARD_CLIENT_ID") + '\"'
+            it.buildConfigField 'String', 'CLIENT_SECRET', '\"' + System.getenv("BLIZZARD_CLIENT_SECRET") + '\"'
+            it.buildConfigField 'String', 'REDIRECTED_URL', redirected_url
+            it.manifestPlaceholders = [host: HOSTNAME, scheme: SCHEME, pathPrefix: PREFIX]
         }
     }
 
