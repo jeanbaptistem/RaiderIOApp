@@ -19,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.MAIN_SCREEN_BG
 import fr.jbme.raiderioapp.R
@@ -68,9 +69,11 @@ class CharacterActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.nav_armory -> {
                     app_bar.setExpanded(true)
+                    toolbar_layout.layoutMode = CollapsingToolbarLayout.VISIBLE
                 }
                 R.id.nav_raid, R.id.nav_dungeon -> {
                     app_bar.setExpanded(false)
+                    toolbar_layout.layoutMode = CollapsingToolbarLayout.INVISIBLE
                 }
             }
         }
