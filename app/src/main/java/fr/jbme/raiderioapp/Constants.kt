@@ -4,6 +4,8 @@ const val SHARED_PREF_KEY = "fr.jbme.raiderioapp.constants.SHARED_PREF_KEY"
 const val BEARER_TOKEN_KEY = "fr.jbme.raiderioapp.constants.BEARER_TOKEN_KEY"
 const val SELECTED_CHARACTER = "fr.jbme.raiderioapp.constants.SELECTED_CHARACTER"
 
+const val BEARER_TOKEN_EXTRA = "fr.jbme.raiderioapp.constants.BEARER_TOKEN_EXTRA"
+
 const val BG_RAID_URL = "https://cdnassets.raider.io/images/%s/headers/_zone.jpg"
 const val BOSS_ICON_URL = "https://cdnassets.raider.io/images/%s/bossicons/%s.jpg"
 const val MAIN_SCREEN_BG =
@@ -11,11 +13,6 @@ const val MAIN_SCREEN_BG =
 
 // Setting values
 const val TITLE_TAG = "settingsActivityTitle"
-
-// OAuth values
-const val REDIRECTED_URI = "http://raiderioapp.jbme.fr/callback"
-
-const val BEARER_TOKEN_EXTRA = "fr.jbme.raiderioapp.constants.BEARER_TOKEN_EXTRA"
 
 // Network values
 const val DEFAULT_LOCALE = "en_US"
