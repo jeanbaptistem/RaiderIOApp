@@ -18,7 +18,7 @@ import java.util.*
 @SuppressLint("SetTextI18n")
 class DungeonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val layout: CustomConstraintLayout = itemView.findViewById(R.id.dungeonLayout)
-    private val dungeonLevel: TextView = itemView.findViewById(R.id.dungeonLevel)
+    private val dungeonLevel: TextView = itemView.findViewById(R.id.dungeonLevelTextView)
     private val dungeonName: TextView = itemView.findViewById(R.id.dungeonName)
     private val dungeonDate: TextView = itemView.findViewById(R.id.dungeonDate)
     private val dungeonTime: TextView = itemView.findViewById(R.id.dungeonTime)

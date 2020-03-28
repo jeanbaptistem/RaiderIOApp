@@ -16,5 +16,8 @@
             android:id="@+id/nav_dungeon"
             android:icon="@drawable/ic_menu_dungeon"
             android:title="@string/menu_dungeon" />
+        <item
+            android:id="@+id/nav_search"
+            android:title="@string/title_activity_character_page" />
     </group>
 </menu>

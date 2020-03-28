@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E49F25</color>
-    <color name="colorPrimaryDark">#CA8D21</color>
-    <color name="colorAccent">#1A84EA</color>
-    <color name="colorWarn">#B00020</color>
+    <!-- Theme colors -->
+    <color name="primaryColor">#234a78</color>
+    <color name="primaryLightColor">#5575a7</color>
+    <color name="primaryDarkColor">#00234c</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="errorColor">#B00020</color>
+    <color name="backgroundColor">#E8F0FB</color>
+    <color name="onBackgroundColor">#5575a7</color>
+    <color name="backgroundImageTint">#96234A78</color>
 
-    <color name="colorText">#b3ffffff</color>
-    <color name="colorBackground">#2a2a2a</color>
-
-    <color name="cardBackgroundFaded">#642A2A2A</color>
-
+    <!-- Item quality colors-->
     <color name="itemQualityPoor">#9d9d9d</color>
     <color name="itemQualityCommon">#ffffff</color>
     <color name="itemQualityUncommon">#1eff00</color>
@@ -19,6 +20,7 @@
     <color name="itemQualityArtifact">#e6cc80</color>
     <color name="itemQualityHeirloom">#00ccff</color>
 
+    <!-- Class colors -->
     <color name="DEATHKNIGHT">#c41e3b</color>
     <color name="DEMONHUNTER">#a330c9</color>
     <color name="DRUID">#ff7c0a</color>
@@ -32,12 +34,5 @@
     <color name="WARLOCK">#9382c9</color>
     <color name="WARRIOR">#c69b6d</color>
     <color name="invisible">#00FFFFFF</color>
-
-
-    <color name="bg_blue">#234a78</color>
-    <color name="light_blue">#5f7a9d</color>
-    <color name="grey_blue">#a0b2c9</color>
-    <color name="grey">#2b2d31</color>
-
 
 </resources>

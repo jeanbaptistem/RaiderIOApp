@@ -1,414 +1,409 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@android:style/Widget.Material.ScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_blue"
-    android:fitsSystemWindows="true"
-    android:padding="12dp">
+    android:background="@drawable/main_bg_blue"
+    android:scrollbars="none"
+    tools:context=".view.fragment.search.SearchFragment">
 
-    <TextView
-        android:id="@+id/pageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Character page"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/backButton"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:textAllCaps="false"
-        android:textColor="#5f7a9d"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:icon="@drawable/ic_arrow_back_black_20dp"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
-        app:iconTint="@color/light_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pageTitle"
-        app:rippleColor="@color/light_blue" />
-
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/charThumbnail"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        app:civ_border="true"
-        app:civ_border_color="#FFFFFF"
-        app:civ_border_width="2dp"
-        app:layout_constraintStart_toStartOf="@+id/pageTitle"
-        app:layout_constraintTop_toBottomOf="@+id/pageTitle"
-        app:srcCompat="@drawable/ic_icon_2colorwhite"
-        tools:src="@tools:sample/avatars" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/subThumbnailCradView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="6dp"
-        app:layout_constraintEnd_toEndOf="@+id/charThumbnail"
-        app:layout_constraintStart_toStartOf="@+id/charThumbnail"
-        app:layout_constraintTop_toTopOf="@+id/charThumbnail">
-
-        <TextView
-            android:id="@+id/charClass"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/characterInfoLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="Shaman"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/light_blue"
-            android:textSize="8sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
+            android:layout_height="100dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/charInfoLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/charThumbnail"
-        app:layout_constraintEnd_toEndOf="@+id/backButton"
-        app:layout_constraintStart_toEndOf="@+id/charThumbnail"
-        app:layout_constraintTop_toTopOf="@+id/charThumbnail">
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/charThumbnail"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                app:civ_border="true"
+                app:civ_border_color="@color/primaryTextColor"
+                app:civ_border_width="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_icon_2colorwhite"
+                tools:src="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/charName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kagdush"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/subThumbnailCradView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/charThumbnail"
+                app:layout_constraintStart_toStartOf="@+id/charThumbnail"
+                app:layout_constraintTop_toTopOf="@+id/charThumbnail">
 
-        <TextView
-            android:id="@+id/region"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(EU)"
-            android:textAlignment="viewStart"
-            android:textAllCaps="true"
-            android:textColor="@color/light_blue"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/charName" />
+                <TextView
+                    android:id="@+id/charClass"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Shaman"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/primaryLightColor"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/realm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="Ysondre"
-            android:textColor="@color/light_blue"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/region"
-            app:layout_constraintStart_toEndOf="@+id/region" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/charInfoLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/charThumbnail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/charThumbnail"
+                app:layout_constraintTop_toTopOf="@+id/charThumbnail">
 
-        <TextView
-            android:id="@+id/bestScoreDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Best Mythic+ Score"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/light_blue"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/realm"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <TextView
+                    android:id="@+id/charName"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kagdush"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/bestScoreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3,704"
-            android:textAlignment="viewEnd"
-            android:textColor="@android:color/white"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/charName"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/region"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(EU)"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="true"
+                    android:textColor="@color/primaryLightColor"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/charName" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/buttonMenuLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/charThumbnail">
+                <TextView
+                    android:id="@+id/realm"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Ysondre"
+                    android:textColor="@color/primaryLightColor"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/region"
+                    app:layout_constraintStart_toEndOf="@+id/region" />
 
-        <Button
-            android:id="@+id/buttonFavorites"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            app:icon="@drawable/ic_star_white_40dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/buttonCompare"
-            app:layout_constraintEnd_toStartOf="@+id/buttonCompare"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="@color/light_blue" />
+                <TextView
+                    android:id="@+id/bestScoreDesc"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Best Mythic+ Score"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/primaryLightColor"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/realm"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
-            android:id="@+id/buttonCompare"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_compare_white_40dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/buttonWLogs"
-            app:layout_constraintEnd_toStartOf="@+id/buttonWLogs"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonFavorites"
-            app:rippleColor="@color/light_blue" />
+                <TextView
+                    android:id="@+id/bestScoreTextView"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3,704"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/charName"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/buttonWLogs"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_format_list_bulleted_white_40dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="@android:color/white"
-            app:layout_constraintBaseline_toBaselineOf="@+id/buttonArmory"
-            app:layout_constraintEnd_toStartOf="@+id/buttonArmory"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonCompare"
-            app:rippleColor="@color/light_blue" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/buttonArmory"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_mark_white_40dp"
-            app:iconGravity="textStart"
-            app:iconPadding="0dp"
-            app:iconTint="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonWLogs"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/light_blue" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonMenuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/buttonTextFavorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Favorites"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/buttonFavorites"
-            app:layout_constraintStart_toStartOf="@+id/buttonFavorites"
-            app:layout_constraintTop_toBottomOf="@+id/buttonFavorites" />
+            <Button
+                android:id="@+id/buttonFavorites"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:icon="@drawable/ic_star_white_40dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/primaryTextColor"
+                app:layout_constraintBaseline_toBaselineOf="@+id/buttonCompare"
+                app:layout_constraintEnd_toStartOf="@+id/buttonCompare"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:rippleColor="@color/primaryLightColor" />
 
-        <TextView
-            android:id="@+id/buttontextCompare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Compare"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/buttonCompare"
-            app:layout_constraintStart_toStartOf="@+id/buttonCompare"
-            app:layout_constraintTop_toBottomOf="@+id/buttonCompare" />
+            <Button
+                android:id="@+id/buttonCompare"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:icon="@drawable/ic_compare_white_40dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintBaseline_toBaselineOf="@+id/buttonWLogs"
+                app:layout_constraintEnd_toStartOf="@+id/buttonWLogs"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonFavorites"
+                app:rippleColor="@color/primaryLightColor" />
 
-        <TextView
-            android:id="@+id/buttonTextWLogs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Warcraft Logs"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/buttonWLogs"
-            app:layout_constraintStart_toStartOf="@+id/buttonWLogs"
-            app:layout_constraintTop_toBottomOf="@+id/buttonWLogs" />
+            <Button
+                android:id="@+id/buttonWLogs"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:icon="@drawable/ic_format_list_bulleted_white_40dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintBaseline_toBaselineOf="@+id/buttonArmory"
+                app:layout_constraintEnd_toStartOf="@+id/buttonArmory"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonCompare"
+                app:rippleColor="@color/primaryLightColor" />
 
-        <TextView
-            android:id="@+id/buttonTextArmory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Armory"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/buttonArmory"
-            app:layout_constraintStart_toStartOf="@+id/buttonArmory"
-            app:layout_constraintTop_toBottomOf="@+id/buttonArmory" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bestRunsLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMenuLayout">
-
-        <Button
-            android:id="@+id/bestRunsSeeAll"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="See all"
-            android:textAllCaps="false"
-            android:textColor="#5f7a9d"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:iconPadding="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/light_blue" />
-
-        <TextView
-            android:id="@+id/bestRunsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Best runs"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bestRunsRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bestRunsTitle" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bestRunsLayout">
-
-        <TextView
-            android:id="@+id/bestRunsTitle2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Statistics"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/statsButtonWorld"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="6dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="@+id/bestRunsTitle2"
-            app:layout_constraintEnd_toStartOf="@+id/statsButtonRealm"
-            app:layout_constraintTop_toTopOf="@+id/bestRunsTitle2"
-            app:rippleColor="@color/light_blue">
+            <Button
+                android:id="@+id/buttonArmory"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                app:icon="@drawable/ic_mark_white_40dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonWLogs"
+                app:layout_constraintTop_toTopOf="parent"
+                app:rippleColor="@color/primaryLightColor" />
 
             <TextView
-                android:id="@+id/statsButtonWorldText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="4dp"
-                android:text="World"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/light_blue"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/statsButtonRealm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="6dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="@+id/statsButtonWorld"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/statsButtonWorld"
-            app:rippleColor="@color/light_blue">
+                android:id="@+id/buttonTextFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="Favorites"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/buttonFavorites"
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintStart_toStartOf="@+id/buttonFavorites"
+                app:layout_constraintTop_toTopOf="@+id/buttonFavorites" />
 
             <TextView
-                android:id="@+id/statsButtonRealmText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="4dp"
-                android:text="Realm"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/light_blue"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </com.google.android.material.card.MaterialCardView>
+                android:id="@+id/buttontextCompare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="Compare"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/buttonCompare"
+                app:layout_constraintStart_toStartOf="@+id/buttonCompare"
+                app:layout_constraintTop_toTopOf="@+id/buttonCompare" />
 
-        <androidx.recyclerview.widget.RecyclerView
+            <TextView
+                android:id="@+id/buttonTextWLogs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="Logs"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/buttonWLogs"
+                app:layout_constraintStart_toStartOf="@+id/buttonWLogs"
+                app:layout_constraintTop_toTopOf="@+id/buttonWLogs" />
+
+            <TextView
+                android:id="@+id/buttonTextArmory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="Armory"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/buttonArmory"
+                app:layout_constraintStart_toStartOf="@+id/buttonArmory"
+                app:layout_constraintTop_toTopOf="@+id/buttonArmory" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bestRunsLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bestRunsTitle2" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/bestRunsTitle"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="Best runs"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <Button
+                android:id="@+id/bestRunsSeeAll"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:text="See all"
+                android:textAllCaps="false"
+                android:textColor="@color/primaryLightColor"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:iconPadding="0dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/bestRunsTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:rippleColor="@color/primaryLightColor" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bestRunsRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bestRunsTitle"
+                tools:listitem="@layout/best_runs_card_view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/statisticsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp">
+
+            <TextView
+                android:id="@+id/statisticsTitle"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="Statistics"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="@color/primaryColor"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/statsButtonWorld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardUseCompatPadding="false"
+                app:contentPaddingLeft="5dp"
+                app:contentPaddingRight="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/statisticsTitle"
+                app:layout_constraintEnd_toStartOf="@+id/statsButtonRealm"
+                app:layout_constraintTop_toTopOf="@+id/statisticsTitle">
+
+                <TextView
+                    android:id="@+id/statsButtonWorldText"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="7dp"
+                    android:text="World"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/statsButtonRealm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardUseCompatPadding="false"
+                app:contentPaddingLeft="5dp"
+                app:contentPaddingRight="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/statsButtonWorld"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/statsButtonWorld">
+
+                <TextView
+                    android:id="@+id/statsButtonRealmText"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="7dp"
+                    android:text="Realm"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/statisticsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/statisticsTitle"
+                tools:listitem="@layout/statistics_card_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

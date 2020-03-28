@@ -29,7 +29,6 @@ import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProf
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.Characters
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.view.activity.login.LoginActivity
-import fr.jbme.raiderioapp.view.activity.search.SearchActivity
 import fr.jbme.raiderioapp.view.activity.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_character.*
 import kotlinx.android.synthetic.main.app_bar_character.*
@@ -61,7 +60,8 @@ class CharacterActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_armory,
                 R.id.nav_raid,
-                R.id.nav_dungeon
+                R.id.nav_dungeon,
+                R.id.nav_search
             ), drawer_layout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -74,7 +74,7 @@ class CharacterActivity : AppCompatActivity() {
                     app_bar.setExpanded(true)
                     toolbar_layout.layoutMode = CollapsingToolbarLayout.VISIBLE
                 }
-                R.id.nav_raid, R.id.nav_dungeon -> {
+                R.id.nav_raid, R.id.nav_dungeon, R.id.nav_search -> {
                     app_bar.setExpanded(false)
                     toolbar_layout.layoutMode = CollapsingToolbarLayout.INVISIBLE
                 }
@@ -128,7 +128,7 @@ class CharacterActivity : AppCompatActivity() {
     private fun setupToolbarBackground(characterMedia: CharacterMedia) {
         Picasso.get()
             .load(characterMedia.render_url)
-            .placeholder(R.color.colorBackground)
+            .placeholder(R.color.design_default_color_background)
             .resize(
                 toolbar_layout.width,
                 resources.getDimension(R.dimen.app_bar_expanded_height).toInt()
@@ -152,7 +152,7 @@ class CharacterActivity : AppCompatActivity() {
                 7 -> getColor(R.color.SHAMAN)
                 9 -> getColor(R.color.WARLOCK)
                 1 -> getColor(R.color.WARRIOR)
-                else -> getColor(R.color.colorText)
+                else -> getColor(R.color.primaryTextColor)
             }
         )
         charClassTextView.text = characterProfile.character_class.name
@@ -170,14 +170,14 @@ class CharacterActivity : AppCompatActivity() {
             navHeaderThumbnail?.let {
                 Picasso.get()
                     .load(media.avatar_url)
-                    .placeholder(R.color.colorBackground)
+                    .placeholder(R.color.design_default_color_background)
                     .resize(180, 180)
                     .into(it)
             }
             navHeaderLayout?.let {
                 Picasso.get()
                     .load(MAIN_SCREEN_BG)
-                    .placeholder(R.color.colorBackground)
+                    .placeholder(R.color.design_default_color_background)
                     .resize(
                         navHeaderView.measuredWidth,
                         resources.getDimension(R.dimen.nav_header_height).toInt()
@@ -204,10 +204,6 @@ class CharacterActivity : AppCompatActivity() {
             }
             R.id.action_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.action_search -> {
-                val intent = Intent(this, SearchActivity::class.java)
                 startActivity(intent)
             }
             else -> return super.onOptionsItemSelected(item)

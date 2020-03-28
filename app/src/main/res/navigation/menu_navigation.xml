@@ -22,13 +22,9 @@
         android:name="fr.jbme.raiderioapp.view.fragment.raid.RaidFragment"
         android:label="@string/menu_raid"
         tools:layout="@layout/fragment_raid" />
-    <action
-        android:id="@+id/action_global_nav_armory"
-        app:destination="@id/nav_armory" />
-    <action
-        android:id="@+id/action_global_nav_dungeon"
-        app:destination="@id/nav_dungeon" />
-    <action
-        android:id="@+id/action_global_nav_raid"
-        app:destination="@id/nav_raid" />
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="fr.jbme.raiderioapp.view.fragment.search.SearchFragment"
+        android:label="@string/title_activity_character_page" />
 </navigation>

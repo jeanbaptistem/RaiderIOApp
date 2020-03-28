@@ -47,7 +47,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.character.CharacterActivity" />
         </activity>
-        <activity android:name=".view.activity.search.SearchActivity" />
     </application>
 
 </manifest>

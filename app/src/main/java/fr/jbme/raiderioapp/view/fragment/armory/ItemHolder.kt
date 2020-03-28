@@ -51,7 +51,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 "LEGENDARY" -> itemView.context.getColor(R.color.itemQualityLegendary)
                 "ARTIFACT" -> itemView.context.getColor(R.color.itemQualityArtifact)
                 "HEIRLOOM" -> itemView.context.getColor(R.color.itemQualityHeirloom)
-                else -> itemView.context.getColor(R.color.colorPrimary)
+                else -> itemView.context.getColor(R.color.primaryTextColor)
             }
         )
     }

@@ -81,7 +81,6 @@
                 style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="8dp"
                 app:cardPreventCornerOverlap="true"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +100,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="8dp"
-                app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardSocket_1">
@@ -119,7 +117,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="8dp"
-                app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardSocket_2">
