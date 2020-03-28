@@ -33,4 +33,11 @@
     <color name="WARRIOR">#c69b6d</color>
     <color name="invisible">#00FFFFFF</color>
 
+
+    <color name="bg_blue">#234a78</color>
+    <color name="light_blue">#5f7a9d</color>
+    <color name="grey_blue">#a0b2c9</color>
+    <color name="grey">#2b2d31</color>
+
+
 </resources>

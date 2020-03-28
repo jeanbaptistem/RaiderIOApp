@@ -41,5 +41,6 @@
     <!-- Strings related to Preference -->
     <string name="title_activity_settings">Settings</string>
     <string name="messages_header">Messages</string>
+    <string name="search">Search</string>
 
 </resources>

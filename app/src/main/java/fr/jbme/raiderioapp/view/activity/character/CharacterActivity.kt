@@ -29,6 +29,7 @@ import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProf
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.Characters
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.view.activity.login.LoginActivity
+import fr.jbme.raiderioapp.view.activity.search.SearchActivity
 import fr.jbme.raiderioapp.view.activity.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_character.*
 import kotlinx.android.synthetic.main.app_bar_character.*
@@ -199,11 +200,15 @@ class CharacterActivity : AppCompatActivity() {
                 RaiderIOApp.loginRepository.logout()
                 Toast.makeText(this, "Goodbye", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, LoginActivity::class.java)
-                this.startActivity(intent)
+                startActivity(intent)
             }
             R.id.action_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
-                this.startActivity(intent)
+                startActivity(intent)
+            }
+            R.id.action_search -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
             }
             else -> return super.onOptionsItemSelected(item)
         }
