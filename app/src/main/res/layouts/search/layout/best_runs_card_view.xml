@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="125dp"
     android:layout_height="200dp"
     android:layout_margin="12dp"
+    android:clickable="true"
+    android:focusable="true"
     app:cardCornerRadius="18dp"
     app:cardPreventCornerOverlap="false"
+    app:rippleColor="@color/primaryColor"
     tools:layout_editor_absoluteX="1dp"
     tools:layout_editor_absoluteY="243dp">
 
@@ -46,12 +49,13 @@
                 android:id="@+id/dungeonLevelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
                 android:text="22"
                 android:textAllCaps="true"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="36sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -76,6 +80,17 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/dungeonLevelTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dungeonLevelTextView" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/dungeon_upgrade_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_exposure_plus_2_black_24dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -194,4 +209,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </fr.jbme.raiderioapp.view.components.CustomConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
