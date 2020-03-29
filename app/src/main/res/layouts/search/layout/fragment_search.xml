@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@android:style/Widget.Material.ScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg_blue"
-    android:scrollbars="none"
-    tools:context=".view.fragment.search.SearchFragment">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.fragment.search.SearchFragment"
+    tools:showIn="@layout/main_app_bar">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/characterInfoLayout"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content">
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/charThumbnail"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="fitCenter"
                 app:civ_border="true"
                 app:civ_border_color="@color/primaryTextColor"
                 app:civ_border_width="2dp"
@@ -146,7 +146,7 @@
 
             <Button
                 android:id="@+id/buttonFavorites"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -287,15 +287,15 @@
             <Button
                 android:id="@+id/bestRunsSeeAll"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="8dp"
                 android:text="See all"
+                android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/primaryLightColor"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:iconPadding="0dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/bestRunsTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:rippleColor="@color/primaryLightColor" />
@@ -304,6 +304,7 @@
                 android:id="@+id/bestRunsRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -396,6 +397,7 @@
                 android:id="@+id/statisticsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -406,4 +408,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

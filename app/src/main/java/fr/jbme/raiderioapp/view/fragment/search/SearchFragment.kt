@@ -23,7 +23,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.activity_search, container, false)
+        val root = inflater.inflate(R.layout.fragment_search, container, false)
 
         bestRunsRecyclerView = root.findViewById(R.id.bestRunsRecyclerView)
         bestRunsAdapter =

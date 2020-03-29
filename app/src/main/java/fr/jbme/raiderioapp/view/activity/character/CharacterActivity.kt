@@ -17,21 +17,17 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.MAIN_SCREEN_BG
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
-import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProfile
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.Characters
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.view.activity.login.LoginActivity
 import fr.jbme.raiderioapp.view.activity.settings.SettingsActivity
-import kotlinx.android.synthetic.main.activity_character.*
-import kotlinx.android.synthetic.main.app_bar_character.*
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.nav_header_character.*
 
 
@@ -49,9 +45,7 @@ class CharacterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_character)
-
-        setSupportActionBar(toolbar)
+        setContentView(R.layout.main_activity)
 
         navHeaderView = nav_view.inflateHeaderView(R.layout.nav_header_character)
         nav_view.inflateMenu(R.menu.activity_character_drawer)
@@ -64,22 +58,8 @@ class CharacterActivity : AppCompatActivity() {
                 R.id.nav_search
             ), drawer_layout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            toolbar_layout.title = destination.label
-            when (destination.id) {
-                R.id.nav_armory -> {
-                    app_bar.setExpanded(true)
-                    toolbar_layout.layoutMode = CollapsingToolbarLayout.VISIBLE
-                }
-                R.id.nav_raid, R.id.nav_dungeon, R.id.nav_search -> {
-                    app_bar.setExpanded(false)
-                    toolbar_layout.layoutMode = CollapsingToolbarLayout.INVISIBLE
-                }
-            }
-        }
         observeViewModel(characterActivityViewModel)
     }
 
@@ -107,11 +87,9 @@ class CharacterActivity : AppCompatActivity() {
             populateCharacterSelectionPopup(it)
         })
         viewModel.characterData.observe(this, Observer {
-            setupToolbar(it)
         })
         viewModel.characterMedia.observe(this, Observer {
             setupNavHeader(it)
-            setupToolbarBackground(it)
         })
         viewModel.updateSharedPref.observe(this, Observer { })
     }
@@ -123,42 +101,6 @@ class CharacterActivity : AppCompatActivity() {
                 .filter { characters -> characters.level >= 100 }
                 .forEach { char -> characterList.add(char) }
         }
-    }
-
-    private fun setupToolbarBackground(characterMedia: CharacterMedia) {
-        Picasso.get()
-            .load(characterMedia.render_url)
-            .placeholder(R.color.design_default_color_background)
-            .resize(
-                toolbar_layout.width,
-                resources.getDimension(R.dimen.app_bar_expanded_height).toInt()
-            ).centerCrop()
-            .into(toolbar_layout)
-    }
-
-    private fun setupToolbar(characterProfile: CharacterProfile) {
-        charNameTextView.text = characterProfile.name
-        charNameTextView.setTextColor(
-            when (characterProfile.character_class.id) {
-                6 -> getColor(R.color.DEATHKNIGHT)
-                12 -> getColor(R.color.DEMONHUNTER)
-                11 -> getColor(R.color.DRUID)
-                3 -> getColor(R.color.HUNTER)
-                8 -> getColor(R.color.MAGE)
-                10 -> getColor(R.color.MONK)
-                2 -> getColor(R.color.PALADIN)
-                5 -> getColor(R.color.PRIEST)
-                4 -> getColor(R.color.ROGUE)
-                7 -> getColor(R.color.SHAMAN)
-                9 -> getColor(R.color.WARLOCK)
-                1 -> getColor(R.color.WARRIOR)
-                else -> getColor(R.color.primaryTextColor)
-            }
-        )
-        charClassTextView.text = characterProfile.character_class.name
-        charSpectextView.text = characterProfile.active_spec.name
-        charRealmTextView.text = characterProfile.realm.name
-        charTitleTextView.text = characterProfile.active_title.name.capitalize()
     }
 
     private fun setupNavHeader(characterMedia: CharacterMedia) {
@@ -190,7 +132,7 @@ class CharacterActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
+        //menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
