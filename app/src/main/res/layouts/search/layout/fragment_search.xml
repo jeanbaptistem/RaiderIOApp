@@ -18,6 +18,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="24dp" />
+
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/charThumbnail"
                 android:layout_width="60dp"
@@ -30,8 +44,7 @@
                 app:civ_border_width="2dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_icon_2colorwhite"
-                tools:src="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars[0]" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/subThumbnailCradView"
@@ -51,12 +64,12 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="2dp"
-                    android:text="Shaman"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@color/primaryLightColor"
                     android:textSize="10sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="Shaman" />
             </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,19 +88,18 @@
                     style="@style/Widget.MaterialComponents.TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kagdush"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Kagdush" />
 
                 <TextView
                     android:id="@+id/region"
                     style="@style/Widget.MaterialComponents.TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(EU)"
                     android:textAlignment="viewStart"
                     android:textAllCaps="true"
                     android:textColor="@color/primaryLightColor"
@@ -95,7 +107,8 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/charName" />
+                    app:layout_constraintTop_toBottomOf="@+id/charName"
+                    tools:text="(EU)" />
 
                 <TextView
                     android:id="@+id/realm"
@@ -103,12 +116,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Ysondre"
                     android:textColor="@color/primaryLightColor"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintBaseline_toBaselineOf="@+id/region"
-                    app:layout_constraintStart_toEndOf="@+id/region" />
+                    app:layout_constraintStart_toEndOf="@+id/region"
+                    tools:text="Ysondre" />
 
                 <TextView
                     android:id="@+id/bestScoreDesc"
@@ -128,13 +141,13 @@
                     style="@style/Widget.MaterialComponents.TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3,704"
                     android:textAlignment="viewEnd"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="36sp"
                     android:textStyle="bold"
                     app:layout_constraintBaseline_toBaselineOf="@+id/charName"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="3,704" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -143,6 +156,20 @@
             android:id="@+id/buttonMenuLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="387dp" />
 
             <Button
                 android:id="@+id/buttonFavorites"
@@ -269,6 +296,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="24dp" />
+
             <TextView
                 android:id="@+id/bestRunsTitle"
                 style="@style/Widget.MaterialComponents.TextView"
@@ -276,8 +317,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:text="Best runs"
-                android:textAlignment="viewStart"
-                android:textAllCaps="false"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -286,16 +325,17 @@
 
             <Button
                 android:id="@+id/bestRunsSeeAll"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="See all"
-                android:textAlignment="center"
+                android:textAlignment="textEnd"
                 android:textAllCaps="false"
                 android:textColor="@color/primaryLightColor"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:iconPadding="0dp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/bestRunsTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:rippleColor="@color/primaryLightColor" />
@@ -319,6 +359,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="24dp" />
 
             <TextView
                 android:id="@+id/statisticsTitle"
@@ -368,7 +422,7 @@
                 android:id="@+id/statsButtonRealm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="13dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardCornerRadius="16dp"

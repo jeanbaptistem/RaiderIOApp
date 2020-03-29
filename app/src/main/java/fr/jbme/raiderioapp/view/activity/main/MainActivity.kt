@@ -1,13 +1,9 @@
-package fr.jbme.raiderioapp.view.activity.character
+package fr.jbme.raiderioapp.view.activity.main
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -18,27 +14,22 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import com.squareup.picasso.Picasso
-import fr.jbme.raiderioapp.MAIN_SCREEN_BG
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.RaiderIOApp
-import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.Characters
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
-import fr.jbme.raiderioapp.view.activity.login.LoginActivity
-import fr.jbme.raiderioapp.view.activity.settings.SettingsActivity
 import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.nav_header_character.*
+import kotlinx.android.synthetic.main.main_toolbar.*
 
 
 @SuppressLint("DefaultLocale")
-class CharacterActivity : AppCompatActivity() {
-    private val characterActivityViewModel: CharacterActivityViewModel by viewModels()
+class MainActivity : AppCompatActivity() {
+    private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private lateinit var navHeaderView: View
     private lateinit var navController: NavController
+
+    private lateinit var customToolbar: CustomToolbar
 
     private val characterList = mutableListOf<Characters>()
     private val selectedCharacter = MutableLiveData<String>()
@@ -47,7 +38,6 @@ class CharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        navHeaderView = nav_view.inflateHeaderView(R.layout.nav_header_character)
         nav_view.inflateMenu(R.menu.activity_character_drawer)
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
@@ -55,15 +45,30 @@ class CharacterActivity : AppCompatActivity() {
                 R.id.nav_armory,
                 R.id.nav_raid,
                 R.id.nav_dungeon,
-                R.id.nav_search
+                R.id.nav_character_page
             ), drawer_layout
         )
         nav_view.setupWithNavController(navController)
 
-        observeViewModel(characterActivityViewModel)
+        customToolbar = CustomToolbar.setupCustomToolbar(toolbar_layout)
+        setupToolbar(customToolbar)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            customToolbar.setToolbarTitle(destination.label)
+        }
+
+        observeViewModel(mainActivityViewModel)
     }
 
-    fun onSelectionButtonClick(view: View) {
+    private fun setupToolbar(customToolbar: CustomToolbar?) {
+        customToolbar?.run {
+            setOnBackPressedListener { navController.popBackStack() }
+            setOnHomeButtonClickListener { navController.navigateUp(appBarConfiguration) }
+            setOnProfileClickListener { openCharacterSelection(it) }
+        }
+
+    }
+
+    fun openCharacterSelection(view: View) {
         val menu = PopupMenu(this, view)
         menu.apply {
             gravity = Gravity.END
@@ -79,7 +84,7 @@ class CharacterActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel(viewModel: CharacterActivityViewModel) {
+    private fun observeViewModel(viewModel: MainActivityViewModel) {
         selectedCharacter.observe(this, Observer {
             viewModel.selectedCharacter(it)
         })
@@ -87,9 +92,10 @@ class CharacterActivity : AppCompatActivity() {
             populateCharacterSelectionPopup(it)
         })
         viewModel.characterData.observe(this, Observer {
+            customToolbar.setCharName(it.name)
         })
         viewModel.characterMedia.observe(this, Observer {
-            setupNavHeader(it)
+            customToolbar.setCharThumbnail(it.avatar_url)
         })
         viewModel.updateSharedPref.observe(this, Observer { })
     }
@@ -101,56 +107,6 @@ class CharacterActivity : AppCompatActivity() {
                 .filter { characters -> characters.level >= 100 }
                 .forEach { char -> characterList.add(char) }
         }
-    }
-
-    private fun setupNavHeader(characterMedia: CharacterMedia) {
-        //TODO: fix null value on configuration change :: Fixed
-        //But header disappear on configuration change
-        characterMedia.let { media ->
-            navHeaderTitle?.text = media.character.name
-            navHeaderDescription?.text = media.character.realm.name
-            navHeaderThumbnail?.let {
-                Picasso.get()
-                    .load(media.avatar_url)
-                    .placeholder(R.color.design_default_color_background)
-                    .resize(180, 180)
-                    .into(it)
-            }
-            navHeaderLayout?.let {
-                Picasso.get()
-                    .load(MAIN_SCREEN_BG)
-                    .placeholder(R.color.design_default_color_background)
-                    .resize(
-                        navHeaderView.measuredWidth,
-                        resources.getDimension(R.dimen.nav_header_height).toInt()
-                    )
-                    .centerCrop(Gravity.START)
-                    .into(it)
-            }
-        }
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        //menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_logout -> {
-                RaiderIOApp.loginRepository.logout()
-                Toast.makeText(this, "Goodbye", Toast.LENGTH_LONG).show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.action_settings -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_bg_blue"
     android:fitsSystemWindows="true"
-    tools:context=".view.activity.character.CharacterActivity">
+    tools:context=".view.activity.main.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -14,10 +14,10 @@
         android:fitsSystemWindows="true"
         android:theme="@style/Theme.RaiderIoApp.AppBarOverlay">
 
-        <include layout="@layout/toolbar_layout" />
+        <include layout="@layout/main_toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/main_content" />
+    <include layout="@layout/main_host" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

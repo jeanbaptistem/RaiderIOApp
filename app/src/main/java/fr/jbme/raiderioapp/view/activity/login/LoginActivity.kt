@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import fr.jbme.raiderioapp.*
 import fr.jbme.raiderioapp.service.model.login.Result
-import fr.jbme.raiderioapp.view.activity.character.CharacterActivity
+import fr.jbme.raiderioapp.view.activity.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.checkToken(sharedPrefToken).observe(this, Observer {
                 // Valid Token
                 if (it is Result.Success) {
-                    startActivity(Intent(this, CharacterActivity::class.java).apply {
+                    startActivity(Intent(this, MainActivity::class.java).apply {
                         putExtra(BEARER_TOKEN_EXTRA, sharedPrefToken)
                     })
                 }
@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                             this?.putString(BEARER_TOKEN_KEY, it.data.access_token)
                             this?.apply()
                         }
-                        startActivity(Intent(this, CharacterActivity::class.java).apply {
+                        startActivity(Intent(this, MainActivity::class.java).apply {
                             putExtra(BEARER_TOKEN_EXTRA, it.data.access_token)
                         })
                     }

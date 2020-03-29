@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.view.activity.character
+package fr.jbme.raiderioapp.view.activity.main
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -19,7 +19,7 @@ import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
 
 
-class CharacterActivityViewModel : ViewModel() {
+class MainActivityViewModel : ViewModel() {
     private var sharedPref: SharedPreferences? =
         RaiderIOApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
     private val _profileInfoData = MutableLiveData<ProfileInfo>()

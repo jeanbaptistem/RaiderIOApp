@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.utils.Quadruple
-import fr.jbme.raiderioapp.view.activity.character.CharacterActivityViewModel
+import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
 import kotlinx.android.synthetic.main.fragment_armory.*
 
 
@@ -41,7 +41,7 @@ class ArmoryFragment : Fragment() {
         }
 
         val characterViewModel =
-            activity?.let { ViewModelProvider(it).get(CharacterActivityViewModel::class.java) }
+            activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
         characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
             armoryViewModel.selectedCharacter(it)
         })

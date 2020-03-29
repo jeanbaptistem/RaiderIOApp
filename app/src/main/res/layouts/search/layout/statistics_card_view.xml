@@ -21,7 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="All\nShamans"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/primaryLightColor"
@@ -29,14 +28,14 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="All\nShamans" />
 
         <TextView
             android:id="@+id/statisticsMainScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="2,430"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/primaryColor"
@@ -44,14 +43,14 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/statisticsMainTitle"
             app:layout_constraintStart_toStartOf="@+id/statisticsMainTitle"
-            app:layout_constraintTop_toBottomOf="@+id/statisticsMainTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/statisticsMainTitle"
+            tools:text="2,430" />
 
         <TextView
             android:id="@+id/statisticsSecondaryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Horde\nShamans"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/primaryLightColor"
@@ -59,14 +58,14 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/statisticsSecondaryScore"
             app:layout_constraintEnd_toEndOf="@+id/statisticsMainTitle"
-            app:layout_constraintStart_toStartOf="@+id/statisticsMainTitle" />
+            app:layout_constraintStart_toStartOf="@+id/statisticsMainTitle"
+            tools:text="Horde\nShamans" />
 
         <TextView
             android:id="@+id/statisticsSecondaryScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="1,320"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/primaryColor"
@@ -74,7 +73,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/statisticsSecondaryTitle"
-            app:layout_constraintStart_toStartOf="@+id/statisticsSecondaryTitle" />
+            app:layout_constraintStart_toStartOf="@+id/statisticsSecondaryTitle"
+            tools:text="1,320" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
