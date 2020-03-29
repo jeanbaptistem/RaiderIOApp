@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.view.fragment.search.statistics
+package fr.jbme.raiderioapp.view.fragment.character.statistics
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

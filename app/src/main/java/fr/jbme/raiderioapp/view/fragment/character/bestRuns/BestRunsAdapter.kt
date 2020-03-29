@@ -1,4 +1,4 @@
-package fr.jbme.raiderioapp.view.fragment.search.bestRuns
+package fr.jbme.raiderioapp.view.fragment.character.bestRuns
 
 import android.content.Context
 import android.view.LayoutInflater

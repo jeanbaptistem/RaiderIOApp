@@ -17,6 +17,7 @@ import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.repository.CharacterRepository
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 
 
 class MainActivityViewModel : ViewModel() {
@@ -30,10 +31,10 @@ class MainActivityViewModel : ViewModel() {
     val profileInfoLoading: LiveData<Boolean>
         get() = _profileInfoLoading
 
-    private val viewSelectedCharacter = MutableLiveData<String>()
+    private val viewSelectedCharacter = MutableLiveData<PopupCharacterItem>()
     private val modelSelectedCharacter = Transformations.distinctUntilChanged(viewSelectedCharacter)
 
-    val getSelectedCharacter: LiveData<String>
+    val getSelectedCharacter: LiveData<PopupCharacterItem>
         get() = modelSelectedCharacter
 
     init {
@@ -52,12 +53,16 @@ class MainActivityViewModel : ViewModel() {
 
         sharedPref?.let { sharedPref ->
             sharedPref.getString(SELECTED_CHARACTER, null)?.let {
-                selectedCharacter(it)
+                selectedCharacter(
+                    PopupCharacterItem(
+                        it
+                    )
+                )
             }
         }
     }
 
-    fun selectedCharacter(selectedCharName: String?) {
+    fun selectedCharacter(selectedCharName: PopupCharacterItem?) {
         viewSelectedCharacter.postValue(selectedCharName)
     }
 
@@ -65,7 +70,7 @@ class MainActivityViewModel : ViewModel() {
         Transformations.switchMap(modelSelectedCharacter) { character ->
             Log.i("SharedPrefEdit", "true")
             with(sharedPref?.edit()) {
-                this?.putString(SELECTED_CHARACTER, character)
+                this?.putString(SELECTED_CHARACTER, character.name + "-" + character.realmSlug)
                 this?.apply()
             }
             MutableLiveData(true)
@@ -73,15 +78,15 @@ class MainActivityViewModel : ViewModel() {
 
     val characterData: LiveData<CharacterProfile> =
         Transformations.switchMap(modelSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
+            val name = Whatever.parseToSlug(character.name)!!
+            val realm = character.realmSlug
             loadCharacterData(realm, name)
         }
 
     val characterMedia: LiveData<CharacterMedia> =
         Transformations.switchMap(modelSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
+            val name = Whatever.parseToSlug(character.name)!!
+            val realm = character.realmSlug
             loadCharacterMedia(realm, name)
         }
 

@@ -2,11 +2,10 @@ package fr.jbme.raiderioapp.view.activity.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -15,8 +14,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.Characters
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupListAdapter
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.main_toolbar.*
 
@@ -31,14 +31,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var customToolbar: CustomToolbar
 
-    private val characterList = mutableListOf<Characters>()
-    private val selectedCharacter = MutableLiveData<String>()
+    private val characterList = mutableListOf<PopupCharacterItem>()
+    private val selectedCharacter = MutableLiveData<PopupCharacterItem>()
+
+    private lateinit var popupWindow: ListPopupWindow
+    private lateinit var popupListAdapter: PopupListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        nav_view.inflateMenu(R.menu.activity_character_drawer)
+        nav_view.inflateMenu(R.menu.activity_main_drawer)
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -56,31 +59,38 @@ class MainActivity : AppCompatActivity() {
             customToolbar.setToolbarTitle(destination.label)
         }
 
+        popupListAdapter =
+            PopupListAdapter(
+                this,
+                characterList
+            )
+        popupWindow = ListPopupWindow(this).apply {
+            setAdapter(popupListAdapter)
+            setOnItemClickListener { _, _, position, _ ->
+                selectedCharacter.value = popupListAdapter.charList[position]
+                dismiss()
+            }
+        }
+
         observeViewModel(mainActivityViewModel)
     }
 
     private fun setupToolbar(customToolbar: CustomToolbar?) {
         customToolbar?.run {
-            setOnBackPressedListener { navController.popBackStack() }
+            setOnBackPressedListener { onBackPressed() }
             setOnHomeButtonClickListener { navController.navigateUp(appBarConfiguration) }
             setOnProfileClickListener { openCharacterSelection(it) }
         }
 
     }
 
-    fun openCharacterSelection(view: View) {
-        val menu = PopupMenu(this, view)
-        menu.apply {
-            gravity = Gravity.END
-            characterList.forEach { characters ->
-                this.menu.add(characters.name + "-" + characters.realm.name)
+    private fun openCharacterSelection(view: View) {
+        if (popupWindow.isShowing) popupWindow.dismiss()
+        else {
+            popupWindow.run {
+                anchorView = view
+                show()
             }
-            setOnMenuItemClickListener {
-                selectedCharacter.value = it.title.toString()
-                drawer_layout.closeDrawers()
-                true
-            }
-            show()
         }
     }
 
@@ -103,9 +113,20 @@ class MainActivity : AppCompatActivity() {
     private fun populateCharacterSelectionPopup(profileInfo: ProfileInfo) {
         profileInfo.wow_accounts.forEach { wowAccounts ->
             wowAccounts.characters
-                .sortedByDescending { characters -> characters.level }
                 .filter { characters -> characters.level >= 100 }
-                .forEach { char -> characterList.add(char) }
+                .sortedByDescending { characters -> characters.level }
+                .sortedByDescending { characters -> characters.realm.slug }
+                .forEach { char ->
+                    characterList.add(
+                        PopupCharacterItem(
+                            char
+                        )
+                    )
+                }
+        }
+        popupListAdapter.run {
+            this.charList = characterList
+            notifyDataSetChanged()
         }
     }
 

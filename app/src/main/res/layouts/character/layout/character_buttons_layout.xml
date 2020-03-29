@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/buttonMenuLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/character_fragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="387dp" />
+
+    <Button
+        android:id="@+id/buttonFavorites"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:icon="@drawable/ic_star_white_40dp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@color/primaryTextColor"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonCompare"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCompare"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/primaryLightColor" />
+
+    <Button
+        android:id="@+id/buttonCompare"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:icon="@drawable/ic_compare_white_40dp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@android:color/white"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonWLogs"
+        app:layout_constraintEnd_toStartOf="@+id/buttonWLogs"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonFavorites"
+        app:rippleColor="@color/primaryLightColor" />
+
+    <Button
+        android:id="@+id/buttonWLogs"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:icon="@drawable/ic_format_list_bulleted_white_40dp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@android:color/white"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonArmory"
+        app:layout_constraintEnd_toStartOf="@+id/buttonArmory"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonCompare"
+        app:rippleColor="@color/primaryLightColor" />
+
+    <Button
+        android:id="@+id/buttonArmory"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        app:icon="@drawable/ic_mark_white_40dp"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonWLogs"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/primaryLightColor" />
+
+    <TextView
+        android:id="@+id/buttonTextFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="Favorites"
+        android:textColor="@color/primaryTextColor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonFavorites"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/buttonFavorites"
+        app:layout_constraintTop_toTopOf="@+id/buttonFavorites" />
+
+    <TextView
+        android:id="@+id/buttontextCompare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="Compare"
+        android:textColor="@color/primaryTextColor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonCompare"
+        app:layout_constraintStart_toStartOf="@+id/buttonCompare"
+        app:layout_constraintTop_toTopOf="@+id/buttonCompare" />
+
+    <TextView
+        android:id="@+id/buttonTextWLogs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="Logs"
+        android:textColor="@color/primaryTextColor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonWLogs"
+        app:layout_constraintStart_toStartOf="@+id/buttonWLogs"
+        app:layout_constraintTop_toTopOf="@+id/buttonWLogs" />
+
+    <TextView
+        android:id="@+id/buttonTextArmory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:text="Armory"
+        android:textColor="@color/primaryTextColor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonArmory"
+        app:layout_constraintStart_toStartOf="@+id/buttonArmory"
+        app:layout_constraintTop_toTopOf="@+id/buttonArmory" />
+</androidx.constraintlayout.widget.ConstraintLayout>

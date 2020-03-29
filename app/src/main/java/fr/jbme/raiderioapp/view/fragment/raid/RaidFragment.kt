@@ -54,7 +54,7 @@ class RaidFragment : Fragment() {
         val characterViewModel =
             activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
         characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            raidViewModel1.selectedCharacter(it)
+            raidViewModel1.selectedCharacter(it.asCharString())
         })
         observeViewModel(raidViewModel1)
         return root

@@ -14,6 +14,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
+    private val LOGIN_URL =
+        "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=${BuildConfig.CLIENT_ID}&redirect_uri=${BuildConfig.REDIRECTED_URL}&scope=wow.profile"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         val sharedPrefToken = sharedPref?.getString(BEARER_TOKEN_KEY, null)
 
         // Token is already know in the sharedPref
-        if (!sharedPrefToken.isNullOrEmpty() && intent?.action == "android.intent.action.MAIN") {
+        if (!sharedPrefToken.isNullOrEmpty()) {
             loginInfoTextView.text = getString(R.string.login_check)
             loginViewModel.checkToken(sharedPrefToken).observe(this, Observer {
                 // Valid Token
@@ -35,21 +38,11 @@ class LoginActivity : AppCompatActivity() {
                 }
                 // Invalid Token
                 else {
-
                     loginInfoTextView.text = (it as Result.Error).exception.message
-                    loginWebView.loadUrl(
-                        "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=${BuildConfig.CLIENT_ID}&redirect_uri=${BuildConfig.REDIRECTED_URL}&scope=wow.profile"
-                    )
+                    loginWebView.loadUrl(LOGIN_URL)
                 }
             })
-        } else {
-            loginInfoTextView.text = getString(R.string.login_need_auth)
-            loginWebView.loadUrl(
-                "https://$REGION.battle.net/oauth/authorize?response_type=code&client_id=${BuildConfig.CLIENT_ID}&redirect_uri=${BuildConfig.REDIRECTED_URL}&scope=wow.profile"
-            )
-        }
-
-        if (!intent?.data?.getQueryParameter("code").isNullOrEmpty()) {
+        } else if (!intent?.data?.getQueryParameter("code").isNullOrEmpty()) {
             loginInfoTextView.text = getString(R.string.login_auth_response)
             // Return from web browser
             val code = intent?.data?.getQueryParameter("code")
@@ -74,7 +67,9 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 loginInfoTextView.text = getString(R.string.login_no_response)
             }
-
+        } else {
+            loginInfoTextView.text = getString(R.string.login_need_auth)
+            loginWebView.loadUrl(LOGIN_URL)
         }
     }
 }
