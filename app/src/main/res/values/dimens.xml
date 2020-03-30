@@ -13,4 +13,6 @@
 
     <dimen name="best_run_cardview_width">125dp</dimen>
     <dimen name="best_run_cardview_height">200dp</dimen>
+    <dimen name="card_corner_radius_button">16dp</dimen>
+
 </resources>

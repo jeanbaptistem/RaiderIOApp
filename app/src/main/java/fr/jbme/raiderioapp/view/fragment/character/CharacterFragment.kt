@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
@@ -25,6 +27,12 @@ class CharacterFragment : Fragment() {
     private lateinit var statisticsRecyclerView: RecyclerView
     private lateinit var statisticsAdapter: StatisticsAdapter
 
+    private lateinit var statsButtonWorld: MaterialCardView
+    private lateinit var statsButtonWorldText: TextView
+    private lateinit var statsButtonRealm: MaterialCardView
+    private lateinit var statsButtonRealmText: TextView
+    private var worldStats = true
+
     private val characterViewModel: CharacterViewModel by viewModels()
 
     override fun onCreateView(
@@ -33,6 +41,13 @@ class CharacterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.character_fragment, container, false)
+        statsButtonWorld = root.findViewById(R.id.statsButtonWorld)
+        statsButtonWorldText = root.findViewById(R.id.statsButtonWorldText)
+        statsButtonRealm = root.findViewById(R.id.statsButtonRealm)
+        statsButtonRealmText = root.findViewById(R.id.statsButtonRealmText)
+
+        statsButtonWorld.setOnClickListener { onStatisticsButtonClick() }
+        statsButtonRealm.setOnClickListener { onStatisticsButtonClick() }
 
         val mainViewModel =
             activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
@@ -40,24 +55,35 @@ class CharacterFragment : Fragment() {
             characterViewModel.setSelectedCharacter(it)
         })
 
+        bestRunsAdapter = BestRunsAdapter(context, listOf())
         bestRunsRecyclerView = root.findViewById(R.id.bestRunsRecyclerView)
-        bestRunsAdapter =
-            BestRunsAdapter(
-                context,
-                listOf()
-            )
         bestRunsRecyclerView.adapter = bestRunsAdapter
 
+        statisticsAdapter = StatisticsAdapter(context, listOf())
         statisticsRecyclerView = root.findViewById(R.id.statisticsRecyclerView)
-        statisticsAdapter =
-            StatisticsAdapter(
-                context,
-                listOf()
-            )
         statisticsRecyclerView.adapter = statisticsAdapter
 
         observeViewModel(characterViewModel)
+
         return root
+    }
+
+    private fun onStatisticsButtonClick() {
+        worldStats = !worldStats
+        val worldText: Int?
+        val worldBackground: Int?
+        if (worldStats) {
+            worldText = context?.getColor(R.color.primaryTextColor)
+            worldBackground = context?.getColor(R.color.primaryColor)
+        } else {
+            worldText = context?.getColor(R.color.primaryColor)
+            worldBackground = context?.getColor(R.color.primaryTextColor)
+        }
+        statsButtonWorld.setCardBackgroundColor(worldBackground!!)
+        statsButtonWorldText.setTextColor(worldText!!)
+        statsButtonRealm.setCardBackgroundColor(worldText)
+        statsButtonRealmText.setTextColor(worldBackground)
+
     }
 
     private fun observeViewModel(characterViewModel: CharacterViewModel) {
