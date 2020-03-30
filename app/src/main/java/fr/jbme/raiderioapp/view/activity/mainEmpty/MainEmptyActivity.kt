@@ -4,15 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import fr.jbme.raiderioapp.BEARER_TOKEN_EXTRA
+import androidx.lifecycle.Observer
 import fr.jbme.raiderioapp.BEARER_TOKEN_KEY
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.SHARED_PREF_KEY
+import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.view.activity.login.LoginActivity
+import fr.jbme.raiderioapp.view.activity.login.LoginViewModel
 import fr.jbme.raiderioapp.view.activity.main.MainActivity
 
 class MainEmptyActivity : AppCompatActivity() {
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +28,12 @@ class MainEmptyActivity : AppCompatActivity() {
         if (sharedPrefToken.isNullOrEmpty()) {
             startActivity(Intent(this, LoginActivity::class.java))
         } else {
-            startActivity(Intent(this, MainActivity::class.java).apply {
-                putExtra(BEARER_TOKEN_EXTRA, sharedPrefToken)
+            loginViewModel.checkToken(sharedPrefToken).observe(this, Observer {
+                if (it is Result.Success) {
+                    startActivity(Intent(this, MainActivity::class.java))
+                } else {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             })
         }
     }

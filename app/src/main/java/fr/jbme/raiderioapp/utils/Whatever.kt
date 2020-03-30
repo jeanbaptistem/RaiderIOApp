@@ -6,7 +6,7 @@ import java.util.*
 
 object Whatever {
 
-    fun parseToSlug(value: String?): String? {
+    fun parseToSlug(value: String?): String {
         return value
             ?.split(',')
             ?.reduce { acc, s -> acc + s }
@@ -19,7 +19,7 @@ object Whatever {
             ?.split(" -")
             ?.reduce { acc, s -> acc + s }
             ?.replace(' ', '-')
-            ?.toLowerCase(Locale.ROOT)
+            ?.toLowerCase(Locale.ROOT) ?: ""
     }
 
     fun <T> Sequence<T>.repeat() = sequence { while (true) yieldAll(this@repeat) }

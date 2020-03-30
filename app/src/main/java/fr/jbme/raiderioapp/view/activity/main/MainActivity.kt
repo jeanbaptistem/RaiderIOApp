@@ -2,6 +2,7 @@ package fr.jbme.raiderioapp.view.activity.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupListAdapter
 import kotlinx.android.synthetic.main.main_activity.*
@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var customToolbar: CustomToolbar
 
-    private val characterList = mutableListOf<PopupCharacterItem>()
     private val selectedCharacter = MutableLiveData<PopupCharacterItem>()
 
     private lateinit var popupWindow: ListPopupWindow
@@ -41,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+        // Init nav controller
         nav_view.inflateMenu(R.menu.activity_main_drawer)
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
@@ -53,19 +53,22 @@ class MainActivity : AppCompatActivity() {
         )
         nav_view.setupWithNavController(navController)
 
+        // Init toolbar
         customToolbar = CustomToolbar.setupCustomToolbar(toolbar_layout)
         setupToolbar(customToolbar)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             customToolbar.setToolbarTitle(destination.label)
         }
 
+        // Init character popup list
         popupListAdapter =
             PopupListAdapter(
                 this,
-                characterList
+                listOf()
             )
         popupWindow = ListPopupWindow(this).apply {
             setAdapter(popupListAdapter)
+            setDropDownGravity(Gravity.END)
             setOnItemClickListener { _, _, position, _ ->
                 selectedCharacter.value = popupListAdapter.charList[position]
                 dismiss()
@@ -81,7 +84,6 @@ class MainActivity : AppCompatActivity() {
             setOnHomeButtonClickListener { navController.navigateUp(appBarConfiguration) }
             setOnProfileClickListener { openCharacterSelection(it) }
         }
-
     }
 
     private fun openCharacterSelection(view: View) {
@@ -89,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         else {
             popupWindow.run {
                 anchorView = view
+                setContentWidth(popupListAdapter.measureContentWidth())
                 show()
             }
         }
@@ -97,41 +100,20 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewModel(viewModel: MainActivityViewModel) {
         selectedCharacter.observe(this, Observer {
             viewModel.selectedCharacter(it)
-        })
-        viewModel.profileInfoData.observe(this, Observer {
-            populateCharacterSelectionPopup(it)
-        })
-        viewModel.characterData.observe(this, Observer {
             customToolbar.setCharName(it.name)
+            customToolbar.setCharThumbnail(it.thumbnailUrl)
         })
-        viewModel.characterMedia.observe(this, Observer {
-            customToolbar.setCharThumbnail(it.avatar_url)
+        viewModel.toolbarCharactersList.observe(this, Observer {
+            popupListAdapter.run {
+                this.charList = it
+                notifyDataSetChanged()
+            }
         })
-        viewModel.updateSharedPref.observe(this, Observer { })
-    }
-
-    private fun populateCharacterSelectionPopup(profileInfo: ProfileInfo) {
-        profileInfo.wow_accounts.forEach { wowAccounts ->
-            wowAccounts.characters
-                .filter { characters -> characters.level >= 100 }
-                .sortedByDescending { characters -> characters.level }
-                .sortedByDescending { characters -> characters.realm.slug }
-                .forEach { char ->
-                    characterList.add(
-                        PopupCharacterItem(
-                            char
-                        )
-                    )
-                }
-        }
-        popupListAdapter.run {
-            this.charList = characterList
-            notifyDataSetChanged()
-        }
+        viewModel.updateSharedPref.observe(this, Observer {})
+        viewModel.updateSelectedChar.observe(this, Observer {})
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
 }

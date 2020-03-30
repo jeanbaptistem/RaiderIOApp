@@ -25,16 +25,16 @@ class DungeonViewModel : ViewModel() {
     private val _characterRanksLoading = MutableLiveData<Boolean>()
     private val characterRanks: LiveData<List<Rank>> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
+            val name = Whatever.parseToSlug(character.split('-')[0])
+            val realm = Whatever.parseToSlug(character.split('-')[1])
             loadCharacterRanks(realm, name)
         }
 
     private val _characterDungeonsLoading = MutableLiveData<Boolean>()
     private val characterDungeons: LiveData<List<BestRuns>> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
+            val name = Whatever.parseToSlug(character.split('-')[0])
+            val realm = Whatever.parseToSlug(character.split('-')[1])
             loadCharacterDungeons(realm, name)
         }
 
@@ -64,7 +64,7 @@ class DungeonViewModel : ViewModel() {
     private fun loadCharacterDungeons(realm: String, name: String): LiveData<List<BestRuns>> {
         val characterDungeonsResult = MutableLiveData<List<BestRuns>>()
         _characterDungeonsLoading.value = true
-        DungeonRepository.fetchDungeons(realm, name, object : DataCallback {
+        DungeonRepository.fetchBlizzardDungeons(realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterDungeonsResult.value = (result.data as DungeonInfo).best_runs
                 _characterDungeonsLoading.value = false

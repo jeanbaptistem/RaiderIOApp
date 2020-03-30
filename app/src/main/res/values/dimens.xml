@@ -10,4 +10,7 @@
     <dimen name="app_bar_expanded_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="best_run_cardview_width">125dp</dimen>
+    <dimen name="best_run_cardview_height">200dp</dimen>
 </resources>

@@ -24,14 +24,13 @@ class ArmoryViewModel : ViewModel() {
         Transformations.distinctUntilChanged(_viewSelectedCharacter)
 
     fun selectedCharacter(selectedCharName: String?) {
-        _viewSelectedCharacter.postValue(selectedCharName)
     }
 
     private val _characterArmoryLoading = MutableLiveData<Boolean>()
     private val characterArmory: LiveData<List<EquippedItems>> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
+            val name = Whatever.parseToSlug(character.split('-')[0])
+            val realm = Whatever.parseToSlug(character.split('-')[1])
             loadCharacterArmory(realm, name)
         }
 

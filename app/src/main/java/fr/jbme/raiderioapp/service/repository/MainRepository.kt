@@ -1,7 +1,6 @@
 package fr.jbme.raiderioapp.service.repository
 
 import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
-import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProfile
 import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
 import fr.jbme.raiderioapp.service.model.login.Result
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
@@ -12,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-object CharacterRepository {
+object MainRepository {
     private val blizzardService =
         RetrofitBlizzardInstance.retrofitInstance?.create(BlizzardService::class.java)
 
@@ -58,26 +57,4 @@ object CharacterRepository {
 
             })
     }
-
-    fun fetchCharacterData(realm: String, characterName: String, callback: DataCallback) {
-        blizzardService?.getCharacterProfile(realm, characterName)
-            ?.enqueue(object : Callback<CharacterProfile> {
-                override fun onFailure(call: Call<CharacterProfile>, t: Throwable) {
-                    throw t
-                }
-
-                override fun onResponse(
-                    call: Call<CharacterProfile>,
-                    response: Response<CharacterProfile>
-                ) {
-                    if (response.isSuccessful) {
-                        callback.onDataLoaded(Result.Success(response.body()!!))
-                    } else {
-                        val error = NetworkUtils.parseBlizError(response)
-                        callback.onDataNotAvailable(Result.Error(error))
-                    }
-                }
-            })
-    }
-
 }

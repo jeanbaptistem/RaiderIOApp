@@ -22,7 +22,7 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         raidBossKillCounterTextView.text = encounters?.completed_count.toString() + " kill"
         var boss = Whatever.parseToSlug(encounters?.encounter?.name)
         val raid = Whatever.parseToSlug(raidName)
-        if (boss?.contains("grong")!!) {
+        if (boss.contains("grong")) {
             boss = "grong"
         } else if (boss.contains("zaqul")) {
             boss = "zaqul"

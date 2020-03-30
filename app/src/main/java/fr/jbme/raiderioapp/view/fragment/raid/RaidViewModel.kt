@@ -25,8 +25,8 @@ class RaidViewModel : ViewModel() {
     val characterRaidInfoLoading = MutableLiveData<Boolean>()
     val characterRaidInfo: LiveData<List<Instances>> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
+            val name = Whatever.parseToSlug(character.split('-')[0])
+            val realm = Whatever.parseToSlug(character.split('-')[1])
             loadCharacterRaidInfo(realm, name)
         }
 

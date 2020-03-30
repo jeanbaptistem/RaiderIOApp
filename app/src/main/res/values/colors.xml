@@ -2,13 +2,13 @@
 <resources>
     <!-- Theme colors -->
     <color name="primaryColor">#234a78</color>
-    <color name="primaryLightColor">#5575a7</color>
+    <color name="primaryLightColor">#7A9BCF</color>
     <color name="primaryDarkColor">#00234c</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="errorColor">#B00020</color>
     <color name="backgroundColor">#E8F0FB</color>
     <color name="onBackgroundColor">#5575a7</color>
-    <color name="backgroundImageTint">#96234A78</color>
+    <color name="backgroundImageTint">#7D5575A7</color>
 
     <!-- Item quality colors-->
     <color name="itemQualityPoor">#9d9d9d</color>

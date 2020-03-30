@@ -1,6 +1,8 @@
 package fr.jbme.raiderioapp.service.network.service
 
+import fr.jbme.raiderioapp.service.model.raiderio.characterScore.CharacterScore
 import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.DungeonsRanks
+import fr.jbme.raiderioapp.service.model.raiderio.dungeonsBestRuns.BestRuns
 import fr.jbme.raiderioapp.service.model.raiderio.raidInfoRio.RaidInfoRio
 import retrofit2.Call
 import retrofit2.http.GET
@@ -21,5 +23,20 @@ interface RaiderIOService {
         @Query("realm") realmName: String?,
         @Query("name") characterName: String?
     ): Call<DungeonsRanks>
+
+    @GET("characters/profile?fields=mythic_plus_best_runs%3Aall")
+    fun getCharacterBestRuns(
+        @Query("region") region: String,
+        @Query("realm") realmName: String,
+        @Query("name") characterName: String
+    ): Call<BestRuns>
+
+
+    @GET("characters/profile?fields=mythic_plus_scores_by_season%3Acurrent")
+    fun getCharacterScore(
+        @Query("region") region: String,
+        @Query("realm") realmName: String,
+        @Query("name") characterName: String
+    ): Call<CharacterScore>
 
 }
