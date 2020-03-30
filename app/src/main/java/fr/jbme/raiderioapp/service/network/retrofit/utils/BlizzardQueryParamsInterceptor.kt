@@ -6,7 +6,7 @@ import okhttp3.Response
 class BlizzardQueryParamsInterceptor(private val locale: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        val odlUrl = request.url()
+        val odlUrl = request.url
 
         when (request.header("Namespace")) {
             "Static" -> {

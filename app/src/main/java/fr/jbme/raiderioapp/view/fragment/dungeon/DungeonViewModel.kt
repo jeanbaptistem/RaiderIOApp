@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.BestRuns
 import fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.DungeonInfo
 import fr.jbme.raiderioapp.service.model.login.Result
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.DungeonsRanks
 import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Rank
 import fr.jbme.raiderioapp.service.repository.DungeonRepository
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
@@ -49,7 +48,7 @@ class DungeonViewModel : ViewModel() {
         _characterRanksLoading.value = true
         DungeonRepository.fetchRanks(realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                characterRanksResult.value = (result.data as DungeonsRanks).mythic_plus_ranks
+                characterRanksResult.value = (result.data as List<Rank>)
                 _characterRanksLoading.value = false
             }
 
