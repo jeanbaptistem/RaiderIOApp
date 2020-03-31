@@ -37,7 +37,7 @@ class DungeonFragment : Fragment() {
         val characterViewModel =
             activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
         characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            dungeonViewModel.selectedCharacter(it.asCharString())
+            dungeonViewModel.selectedCharacter(it)
         })
 
         observeViewModel(dungeonViewModel)

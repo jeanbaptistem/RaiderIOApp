@@ -1,8 +1,8 @@
 package fr.jbme.raiderioapp.service.network.service
 
 import fr.jbme.raiderioapp.BuildConfig
-import fr.jbme.raiderioapp.service.model.blizzard.login.AccessTokenResponse
-import fr.jbme.raiderioapp.service.model.blizzard.login.TokenCheckResponse
+import fr.jbme.raiderioapp.service.model.login.AccessTokenResponse
+import fr.jbme.raiderioapp.service.model.login.TokenCheckResponse
 import retrofit2.Call
 import retrofit2.http.Header
 import retrofit2.http.Headers

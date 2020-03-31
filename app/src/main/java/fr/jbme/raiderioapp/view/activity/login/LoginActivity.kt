@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import fr.jbme.raiderioapp.*
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.utils.network.Result
 import fr.jbme.raiderioapp.view.activity.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -35,11 +35,11 @@ class LoginActivity : AppCompatActivity() {
                     if (it is Result.Success) {
                         // We got the right code and a new bearer token
                         with(sharedPref?.edit()) {
-                            this?.putString(BEARER_TOKEN_KEY, it.data.access_token)
+                            this?.putString(BEARER_TOKEN_KEY, it.data.accessToken)
                             this?.apply()
                         }
                         startActivity(Intent(this, MainActivity::class.java).apply {
-                            putExtra(BEARER_TOKEN_EXTRA, it.data.access_token)
+                            putExtra(BEARER_TOKEN_EXTRA, it.data.accessToken)
                         })
                     } else {
                         // Something goes wrong

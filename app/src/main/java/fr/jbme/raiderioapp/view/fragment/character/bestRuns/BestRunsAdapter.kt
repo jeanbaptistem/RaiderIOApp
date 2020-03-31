@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonsBestRuns.MythicPlusBestRuns
+import fr.jbme.raiderioapp.service.model.raiderio.CharacterBestRuns
 
-class BestRunsAdapter(val context: Context?, var bestRunsList: List<MythicPlusBestRuns>) :
+class BestRunsAdapter(
+    val context: Context?,
+    var bestRunsList: List<CharacterBestRuns.MythicPlusBestRun>
+) :
     RecyclerView.Adapter<BestRunsHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestRunsHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.best_runs_card_view, parent, false)

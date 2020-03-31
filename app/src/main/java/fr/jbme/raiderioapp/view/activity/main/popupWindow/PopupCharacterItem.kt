@@ -1,6 +1,6 @@
 package fr.jbme.raiderioapp.view.activity.main.popupWindow
 
-import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.Characters
+import fr.jbme.raiderioapp.service.model.blizzard.AccountProfile
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -11,11 +11,11 @@ class PopupCharacterItem {
     var realmSlug: String
     var thumbnailUrl: String = "default"
 
-    constructor(character: Characters) {
+    constructor(character: AccountProfile.WowAccount.Character) {
         id = idCounter.getAndIncrement().toLong()
-        name = character.name
-        realm = character.realm.name
-        realmSlug = character.realm.slug
+        name = character.name!!
+        realm = character.realm?.name!!
+        realmSlug = character.realm.slug!!
     }
 
     constructor(charString: String) {

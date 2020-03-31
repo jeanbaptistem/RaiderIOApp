@@ -9,10 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.*
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonsBestRuns.MythicPlusBestRuns
+import fr.jbme.raiderioapp.service.model.raiderio.CharacterBestRuns
 import fr.jbme.raiderioapp.utils.Whatever
 import fr.jbme.raiderioapp.view.components.CustomConstraintLayout
-import java.util.concurrent.TimeUnit
 
 
 class BestRunsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,7 +24,7 @@ class BestRunsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val timeTextView: TextView = itemView.findViewById(R.id.timeTextView)
     private val dungeonUpgrade: ImageView = itemView.findViewById(R.id.dungeonUpgrade)
 
-    private val affxiesList = listOf<CircularImageView>(
+    private val affixesList = listOf<CircularImageView>(
         itemView.findViewById(R.id.affixe1),
         itemView.findViewById(R.id.affixe2),
         itemView.findViewById(R.id.affixe3),
@@ -33,13 +32,13 @@ class BestRunsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     )
 
     @SuppressLint("SimpleDateFormat")
-    fun bind(bestRun: MythicPlusBestRuns) {
+    fun bind(bestRun: CharacterBestRuns.MythicPlusBestRun) {
         dungeonName.text = bestRun.dungeon
-        dungeonLevelTextView.text = bestRun.mythic_level.toString()
+        dungeonLevelTextView.text = bestRun.mythicLevel.toString()
         scoreTextView.text = bestRun.score.toString()
-        timeTextView.text = formatTime(bestRun.clear_time_ms)
+        timeTextView.text = Whatever.formatTime(bestRun.clearTimeMs!!)
         dungeonUpgrade.setImageDrawable(
-            when (bestRun.num_keystone_upgrades) {
+            when (bestRun.numKeystoneUpgrades) {
                 0 -> itemView.context.getDrawable(R.drawable.ic_exposure_neg_1_black_24dp)
                 1 -> itemView.context.getDrawable(R.drawable.ic_exposure_plus_1_black_24dp)
                 2 -> itemView.context.getDrawable(R.drawable.ic_exposure_plus_2_black_24dp)
@@ -53,8 +52,8 @@ class BestRunsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .centerCrop(Gravity.CENTER)
             .into(backgroundLayout)
 
-        bestRun.affixes.forEachIndexed { index, affix ->
-            val imgUrl = when (affix.name) {
+        bestRun.affixes?.forEachIndexed { index, affix ->
+            val imgUrl = when (affix?.name) {
                 "Skittish" -> SKITTISH
                 "Volcanic" -> VOLCANIC
                 "Necrotic" -> NECROTIC
@@ -71,20 +70,7 @@ class BestRunsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 "Awakened" -> AWAKENED
                 else -> "null"
             }
-            Picasso.get().load(imgUrl).into(affxiesList[index])
+            Picasso.get().load(imgUrl).into(affixesList[index])
         }
-    }
-
-    private fun formatTime(clearTimeMs: Long): String? {
-        require(clearTimeMs >= 0) { "Duration must be greater than zero!" }
-        var millis = clearTimeMs
-
-        val hours = TimeUnit.MILLISECONDS.toHours(millis)
-        millis -= TimeUnit.HOURS.toMillis(hours)
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
-        millis -= TimeUnit.MINUTES.toMillis(minutes)
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(millis)
-
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 }

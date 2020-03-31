@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Rank
+import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 
 class HeaderPageAdapter(
     val context: Context,
-    var ranksList: List<Rank>
+    var ranksList: List<CharacterRanks.Rank>
 ) : RecyclerView.Adapter<HeaderPagerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderPagerViewHolder {

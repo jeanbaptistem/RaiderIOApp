@@ -3,6 +3,7 @@ package fr.jbme.raiderioapp.utils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object Whatever {
 
@@ -128,5 +129,18 @@ object Whatever {
                 update()
             }
         }
+    }
+
+    fun formatTime(clearTimeMs: Long): String? {
+        require(clearTimeMs >= 0) { "Duration must be greater than zero!" }
+        var millis = clearTimeMs
+
+        val hours = TimeUnit.MILLISECONDS.toHours(millis)
+        millis -= TimeUnit.HOURS.toMillis(hours)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(millis)
+        millis -= TimeUnit.MINUTES.toMillis(minutes)
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(millis)
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 }

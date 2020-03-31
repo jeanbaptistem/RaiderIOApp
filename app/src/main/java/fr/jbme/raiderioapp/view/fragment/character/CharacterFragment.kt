@@ -93,16 +93,15 @@ class CharacterFragment : Fragment() {
                 .placeholder(R.color.primaryColor)
                 .error(R.color.errorColor)
                 .into(charThumbnail)
-            charClass.text = it._class
+            charClass.text = it.classX
             charName.text = it.name
-            region.text = "(${it.region.toUpperCase(Locale.ROOT)})"
+            region.text = "(${it.region?.toUpperCase(Locale.ROOT)})"
             realm.text = it.realm
-            bestScoreTextView.text = it.mythic_plus_scores_by_season
-                .first().scores.all.toString()
+            bestScoreTextView.text = it.mythicPlusScoresBySeason?.first()?.scores?.all.toString()
         })
         characterViewModel.characterBestRuns.observe(viewLifecycleOwner, Observer {
             bestRunsAdapter.run {
-                bestRunsList = it.sortedByDescending { it.mythic_level }
+                bestRunsList = it.sortedByDescending { it.mythicLevel }
                 notifyDataSetChanged()
             }
         })

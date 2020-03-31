@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.BG_RAID_URL
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Instances
+import fr.jbme.raiderioapp.service.model.blizzard.RaidInfo
 import fr.jbme.raiderioapp.utils.Whatever
 import fr.jbme.raiderioapp.utils.Whatever.repeat
 import fr.jbme.raiderioapp.view.components.DynamicHeightImageView
@@ -44,20 +44,22 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             ""
         )
 
-    fun bind(instances: Instances?) {
+    fun bind(instances: RaidInfo.Expansion.Instance) {
         val difficultyListIterator =
             sequenceOf("MYTHIC", "HEROIC", "NORMAL", "LFR").repeat().iterator()
         bossRecyclerView.adapter = bossCardViewAdapter
 
-        raidNameTextView.text = instances?.instance?.name
+        raidNameTextView.text = instances.instance?.name
 
         raidToggleBossListButton.setOnClickListener {
             val difficulty = difficultyListIterator.next()
             bossCardViewAdapter.run {
-                bosses =
-                    instances?.modes?.firstOrNull { modes -> modes.difficulty.type == difficulty }?.progress?.encounters
-                        ?: listOf()
-                raidName = instances?.instance?.name.toString()
+                bosses = (instances.modes
+                    ?.firstOrNull { modes -> modes?.difficulty?.type == difficulty }
+                    ?.progress?.encounters
+                    ?: listOf<RaidInfo.Expansion.Instance.Mode.Progress.Encounter>())
+                        as List<RaidInfo.Expansion.Instance.Mode.Progress.Encounter>
+                raidName = instances.instance?.name.toString()
                 notifyDataSetChanged()
             }
 
@@ -101,14 +103,17 @@ class RaidHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         raidHMTextView.text = displayBossCounter(instances, "HEROIC")
         raidMMTextView.text = displayBossCounter(instances, "MYTHIC")
 
-        Picasso.get().load(BG_RAID_URL.format(Whatever.parseToSlug(instances?.instance?.name)))
+        Picasso.get().load(BG_RAID_URL.format(Whatever.parseToSlug(instances.instance?.name)))
             .into(dynamicImageView)
     }
 
-    private fun displayBossCounter(instances: Instances?, difficulty: String?): String {
+    private fun displayBossCounter(
+        instances: RaidInfo.Expansion.Instance?,
+        difficulty: String?
+    ): String {
         val difficulties =
-            instances?.modes?.firstOrNull { modes -> modes.difficulty.type == difficulty }
-        return "${difficulties?.progress?.completed_count ?: 0}/${difficulties?.progress?.total_count ?: 0}"
+            instances?.modes?.firstOrNull { modes -> modes?.difficulty?.type == difficulty }
+        return "${difficulties?.progress?.completedCount ?: 0}/${difficulties?.progress?.totalCount ?: 0}"
 
     }
 }

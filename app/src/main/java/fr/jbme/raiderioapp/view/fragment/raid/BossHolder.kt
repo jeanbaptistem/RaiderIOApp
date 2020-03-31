@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.BOSS_ICON_URL
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Encounters
+import fr.jbme.raiderioapp.service.model.blizzard.RaidInfo
 import fr.jbme.raiderioapp.utils.Whatever
 
 @SuppressLint("SetTextI18n")
@@ -18,8 +18,8 @@ class BossHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById(R.id.raidBossKillCounterTextView)
 
 
-    fun bind(encounters: Encounters?, raidName: String?) {
-        raidBossKillCounterTextView.text = encounters?.completed_count.toString() + " kill"
+    fun bind(encounters: RaidInfo.Expansion.Instance.Mode.Progress.Encounter?, raidName: String?) {
+        raidBossKillCounterTextView.text = encounters?.completedCount.toString() + " kill"
         var boss = Whatever.parseToSlug(encounters?.encounter?.name)
         val raid = Whatever.parseToSlug(raidName)
         if (boss.contains("grong")) {

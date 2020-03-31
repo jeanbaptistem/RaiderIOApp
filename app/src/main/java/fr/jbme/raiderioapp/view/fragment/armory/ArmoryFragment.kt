@@ -43,7 +43,7 @@ class ArmoryFragment : Fragment() {
         val characterViewModel =
             activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
         characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            armoryViewModel.selectedCharacter(it.asCharString())
+            armoryViewModel.selectedCharacter(it)
         })
 
         observeViewModel(armoryViewModel)

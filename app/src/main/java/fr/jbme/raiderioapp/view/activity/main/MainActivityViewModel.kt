@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModel
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.SELECTED_CHARACTER
 import fr.jbme.raiderioapp.SHARED_PREF_KEY
-import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
-import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.service.model.blizzard.AccountProfile
+import fr.jbme.raiderioapp.service.model.blizzard.CharacterMedia
 import fr.jbme.raiderioapp.service.repository.MainRepository
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.Whatever
+import fr.jbme.raiderioapp.utils.network.Result
 import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 import java.util.*
 
@@ -24,8 +24,8 @@ class MainActivityViewModel : ViewModel() {
     private var sharedPref: SharedPreferences? =
         RaiderIOApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
 
-    private val _profileInfoData = MutableLiveData<ProfileInfo>()
-    val profileInfoData: LiveData<ProfileInfo>
+    private val _profileInfoData = MutableLiveData<AccountProfile>()
+    val profileInfoData: LiveData<AccountProfile>
         get() = _profileInfoData
 
     private val _profileInfoLoading = MutableLiveData<Boolean>()
@@ -42,7 +42,7 @@ class MainActivityViewModel : ViewModel() {
         _profileInfoLoading.value = true
         MainRepository.fetchProfileInfo(object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                _profileInfoData.value = result.data as ProfileInfo
+                _profileInfoData.value = result.data as AccountProfile
                 _profileInfoLoading.value = false
             }
 
@@ -70,11 +70,11 @@ class MainActivityViewModel : ViewModel() {
     val toolbarCharactersList: LiveData<List<PopupCharacterItem>> =
         Transformations.switchMap(_profileInfoData) { profile ->
             val charactersList = mutableListOf<PopupCharacterItem>()
-            profile.wow_accounts.forEach { account ->
-                account.characters
-                    .filter { characters -> characters.level >= 100 }
-                    .forEach { characters ->
-                        val characterItem = PopupCharacterItem(characters)
+            profile.wowAccounts?.forEach { account ->
+                account?.characters
+                    ?.filter { characters -> characters?.level!! >= 100 }
+                    ?.forEach { characters ->
+                        val characterItem = PopupCharacterItem(characters!!)
                         charactersList.add(characterItem)
                     }
             }
@@ -87,7 +87,7 @@ class MainActivityViewModel : ViewModel() {
             MainRepository.fetchCharacterMedia(characters.realmSlug,
                 characters.name.toLowerCase(Locale.ROOT), object : DataCallback {
                     override fun onDataLoaded(result: Result.Success<*>) {
-                        characters.thumbnailUrl = (result.data as CharacterMedia).avatar_url
+                        characters.thumbnailUrl = (result.data as CharacterMedia).avatarUrl!!
                     }
 
                     override fun onDataNotAvailable(error: Result.Error) {

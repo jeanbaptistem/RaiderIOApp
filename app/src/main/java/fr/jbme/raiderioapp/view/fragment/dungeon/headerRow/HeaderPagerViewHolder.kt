@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.*
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Rank
+import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 
 
 class HeaderPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,7 +19,7 @@ class HeaderPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         itemView.findViewById(R.id.row4)
     )
 
-    fun bindTab(ranksList: List<Rank>?) {
+    fun bindTab(ranksList: List<CharacterRanks.Rank>?) {
         val context = itemView.context
         ranksList?.filter { rank ->
             rank.world != 0 && !rank.name?.contains("faction")!!

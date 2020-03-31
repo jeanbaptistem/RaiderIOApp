@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import fr.jbme.raiderioapp.BuildConfig
-import fr.jbme.raiderioapp.service.model.blizzard.login.AccessTokenResponse
+import fr.jbme.raiderioapp.service.model.login.AccessTokenResponse
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardLoginInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardLoginService
 import okhttp3.Credentials

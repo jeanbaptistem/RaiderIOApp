@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Rank
+import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 
-class StatisticsAdapter(val context: Context?, var staticsList: List<Rank>) :
+class StatisticsAdapter(val context: Context?, var staticsList: List<CharacterRanks.Rank>) :
     RecyclerView.Adapter<StatisticsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticsHolder {

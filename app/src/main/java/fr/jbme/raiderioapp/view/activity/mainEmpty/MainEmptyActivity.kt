@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import fr.jbme.raiderioapp.BEARER_TOKEN_KEY
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.SHARED_PREF_KEY
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.utils.network.Result
 import fr.jbme.raiderioapp.view.activity.login.LoginActivity
 import fr.jbme.raiderioapp.view.activity.login.LoginViewModel
 import fr.jbme.raiderioapp.view.activity.main.MainActivity

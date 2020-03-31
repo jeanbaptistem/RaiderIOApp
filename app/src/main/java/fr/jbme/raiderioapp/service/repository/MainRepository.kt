@@ -1,12 +1,12 @@
 package fr.jbme.raiderioapp.service.repository
 
-import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
-import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.service.model.blizzard.AccountProfile
+import fr.jbme.raiderioapp.service.model.blizzard.CharacterMedia
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardService
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.network.NetworkUtils
+import fr.jbme.raiderioapp.utils.network.Result
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,15 +16,15 @@ object MainRepository {
         RetrofitBlizzardInstance.retrofitInstance?.create(BlizzardService::class.java)
 
     fun fetchProfileInfo(callback: DataCallback) {
-        blizzardService?.getProfileInfo()
-            ?.enqueue(object : Callback<ProfileInfo> {
-                override fun onFailure(call: Call<ProfileInfo>, t: Throwable) {
+        blizzardService?.getProfileInfoBliz()
+            ?.enqueue(object : Callback<AccountProfile> {
+                override fun onFailure(call: Call<AccountProfile>, t: Throwable) {
                     throw t
                 }
 
                 override fun onResponse(
-                    call: Call<ProfileInfo>,
-                    response: Response<ProfileInfo>
+                    call: Call<AccountProfile>,
+                    response: Response<AccountProfile>
                 ) {
                     if (response.isSuccessful) {
                         callback.onDataLoaded(Result.Success(response.body()!!))
@@ -37,7 +37,7 @@ object MainRepository {
     }
 
     fun fetchCharacterMedia(realm: String, characterName: String, callback: DataCallback) {
-        blizzardService?.getCharacterMedia(realm, characterName)
+        blizzardService?.getCharacterMediaBliz(realm, characterName)
             ?.enqueue(object : Callback<CharacterMedia> {
                 override fun onFailure(call: Call<CharacterMedia>, t: Throwable) {
                     throw t

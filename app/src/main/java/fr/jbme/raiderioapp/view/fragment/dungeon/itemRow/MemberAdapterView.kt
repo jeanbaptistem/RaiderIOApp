@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.Members
+import fr.jbme.raiderioapp.service.model.blizzard.DungeonInfo
 
-class MemberAdapterView(val context: Context?, var memberList: List<Members>) :
+class MemberAdapterView(val context: Context?, var memberList: List<DungeonInfo.BestRun.Member>) :
     RecyclerView.Adapter<MemberViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
         val view: View =

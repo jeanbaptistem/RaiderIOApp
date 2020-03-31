@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import fr.jbme.raiderioapp.BEARER_TOKEN_KEY
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.SHARED_PREF_KEY
-import fr.jbme.raiderioapp.service.model.blizzard.login.AccessTokenResponse
+import fr.jbme.raiderioapp.service.model.login.AccessTokenResponse
 import fr.jbme.raiderioapp.service.model.login.LoggedInUser
 
 class LoginRepository(private val dataSource: LoginDataSource) {
@@ -15,7 +15,7 @@ class LoginRepository(private val dataSource: LoginDataSource) {
         RaiderIOApp.context?.getSharedPreferences(SHARED_PREF_KEY, Context.MODE_PRIVATE)
 
     private val loginObserver =
-        Observer<AccessTokenResponse>(fun(token) { setLoggedInUser(LoggedInUser(token.access_token)) })
+        Observer<AccessTokenResponse>(fun(token) { setLoggedInUser(LoggedInUser(token.accessToken)) })
 
     var user: LoggedInUser? = null
         private set
