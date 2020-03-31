@@ -9,22 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
+import fr.jbme.raiderioapp.view.components.RecyclerViewHorizontalDecoration
 import fr.jbme.raiderioapp.view.fragment.character.bestRuns.BestRunsAdapter
 import fr.jbme.raiderioapp.view.fragment.character.statistics.StatisticsAdapter
 import kotlinx.android.synthetic.main.character_info_layout.*
 import java.util.*
 
 class CharacterFragment : Fragment() {
-
-    private lateinit var bestRunsRecyclerView: RecyclerView
     private lateinit var bestRunsAdapter: BestRunsAdapter
-
-    private lateinit var statisticsRecyclerView: RecyclerView
     private lateinit var statisticsAdapter: StatisticsAdapter
 
     private lateinit var statsButtonWorld: MaterialCardView
@@ -46,8 +44,8 @@ class CharacterFragment : Fragment() {
         statsButtonRealm = root.findViewById(R.id.statsButtonRealm)
         statsButtonRealmText = root.findViewById(R.id.statsButtonRealmText)
 
-        statsButtonWorld.setOnClickListener { onStatisticsButtonClick() }
-        statsButtonRealm.setOnClickListener { onStatisticsButtonClick() }
+        statsButtonWorld.setOnClickListener { onStatisticsButtonClick(true) }
+        statsButtonRealm.setOnClickListener { onStatisticsButtonClick(false) }
 
         val mainViewModel =
             activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
@@ -55,20 +53,39 @@ class CharacterFragment : Fragment() {
             characterViewModel.setSelectedCharacter(it)
         })
 
+        val recyclerViewHorizontalDecoration = RecyclerViewHorizontalDecoration(
+            context?.resources?.getDimensionPixelSize(R.dimen.card_view_margin_horizontal),
+            context?.resources?.getDimensionPixelSize(R.dimen.card_view_margin_vertical),
+            context?.resources?.getDimensionPixelSize(R.dimen.card_view_margin_horizontal),
+            context?.resources?.getDimensionPixelSize(R.dimen.card_view_margin_vertical),
+            1
+        )
+
         bestRunsAdapter = BestRunsAdapter(context, listOf())
-        bestRunsRecyclerView = root.findViewById(R.id.bestRunsRecyclerView)
-        bestRunsRecyclerView.adapter = bestRunsAdapter
+        val bestRunsRecyclerView: RecyclerView = root.findViewById(R.id.bestRunsRecyclerView)
+        bestRunsRecyclerView.run {
+            adapter = bestRunsAdapter
+            layoutManager = LinearLayoutManager(context)
+                .apply { orientation = RecyclerView.HORIZONTAL }
+            addItemDecoration(recyclerViewHorizontalDecoration)
+        }
 
         statisticsAdapter = StatisticsAdapter(context, listOf())
-        statisticsRecyclerView = root.findViewById(R.id.statisticsRecyclerView)
-        statisticsRecyclerView.adapter = statisticsAdapter
+        val statisticsRecyclerView: RecyclerView = root.findViewById(R.id.statisticsRecyclerView)
+        statisticsRecyclerView.run {
+            adapter = statisticsAdapter
+            layoutManager = LinearLayoutManager(context)
+                .apply { orientation = RecyclerView.HORIZONTAL }
+            addItemDecoration(recyclerViewHorizontalDecoration)
+        }
 
         observeViewModel(characterViewModel)
 
         return root
     }
 
-    private fun onStatisticsButtonClick() {
+    private fun onStatisticsButtonClick(isWorldButton: Boolean) {
+        if (isWorldButton == worldStats) return
         worldStats = !worldStats
         val worldText: Int?
         val worldBackground: Int?
@@ -83,7 +100,6 @@ class CharacterFragment : Fragment() {
         statsButtonWorldText.setTextColor(worldText!!)
         statsButtonRealm.setCardBackgroundColor(worldText)
         statsButtonRealmText.setTextColor(worldBackground)
-
     }
 
     private fun observeViewModel(characterViewModel: CharacterViewModel) {

@@ -48,7 +48,7 @@ class BestRunsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         )
         Picasso.get()
             .load(DUNGEON_BG.format(Whatever.parseToSlug(bestRun.dungeon)))
-            .resizeDimen(R.dimen.best_run_cardview_width, R.dimen.best_run_cardview_height)
+            .resizeDimen(R.dimen.best_run_card_view_width, R.dimen.best_run_card_view_height)
             .centerCrop(Gravity.CENTER)
             .into(backgroundLayout)
 

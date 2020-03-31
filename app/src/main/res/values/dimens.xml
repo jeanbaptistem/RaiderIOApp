@@ -8,11 +8,12 @@
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
     <dimen name="app_bar_expanded_height">200dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="best_run_cardview_width">125dp</dimen>
-    <dimen name="best_run_cardview_height">200dp</dimen>
+    <dimen name="best_run_card_view_width">125dp</dimen>
+    <dimen name="best_run_card_view_height">200dp</dimen>
     <dimen name="card_corner_radius_button">16dp</dimen>
+    <dimen name="card_view_margin_horizontal">24dp</dimen>
+    <dimen name="card_view_margin_vertical">12dp</dimen>
 
 </resources>
