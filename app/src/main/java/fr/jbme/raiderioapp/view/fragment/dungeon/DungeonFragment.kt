@@ -46,7 +46,7 @@ class DungeonFragment : Fragment() {
 
     private fun observeViewModel(dungeonViewModel: DungeonViewModel) {
         dungeonViewModel.zippedDungeonData.observe(viewLifecycleOwner, Observer {
-            dungeonCardViewAdapter.ranksList = it.first
+            dungeonCardViewAdapter.ranksList = it.first.mythicPlusRanks!!
             dungeonCardViewAdapter.dungeonList = it.second
             dungeonCardViewAdapter.notifyDataSetChanged()
         })

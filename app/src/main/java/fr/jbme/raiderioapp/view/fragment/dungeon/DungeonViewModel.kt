@@ -23,7 +23,7 @@ class DungeonViewModel : ViewModel() {
     }
 
     private val _characterRanksLoading = MutableLiveData<Boolean>()
-    private val characterRanks: LiveData<List<CharacterRanks.Rank>> =
+    private val characterRanks: LiveData<CharacterRanks> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
             loadCharacterRanks(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
         }
@@ -34,7 +34,7 @@ class DungeonViewModel : ViewModel() {
             loadCharacterDungeons(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
         }
 
-    val zippedDungeonData: LiveData<Pair<List<CharacterRanks.Rank>, List<DungeonInfo.BestRun>>> =
+    val zippedDungeonData: LiveData<Pair<CharacterRanks, List<DungeonInfo.BestRun>>> =
         Whatever.zipPair(characterRanks, characterDungeons)
     val zippedDungeonDataLoading: LiveData<Pair<Boolean, Boolean>> =
         Whatever.zipPair(_characterRanksLoading, _characterDungeonsLoading)
@@ -43,12 +43,12 @@ class DungeonViewModel : ViewModel() {
     private fun loadCharacterRanks(
         realm: String,
         name: String
-    ): LiveData<List<CharacterRanks.Rank>> {
-        val characterRanksResult = MutableLiveData<List<CharacterRanks.Rank>>()
+    ): LiveData<CharacterRanks> {
+        val characterRanksResult = MutableLiveData<CharacterRanks>()
         _characterRanksLoading.value = true
         DungeonRepository.fetchRanks(realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                characterRanksResult.value = (result.data as List<CharacterRanks.Rank>)
+                characterRanksResult.value = (result.data as CharacterRanks)
                 _characterRanksLoading.value = false
             }
 
@@ -69,7 +69,7 @@ class DungeonViewModel : ViewModel() {
         DungeonRepository.fetchBlizzardDungeons(realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterDungeonsResult.value =
-                    (result.data as DungeonInfo).bestRuns as List<DungeonInfo.BestRun>?
+                    (result.data as DungeonInfo).bestRuns as List<DungeonInfo.BestRun>
                 _characterDungeonsLoading.value = false
             }
 
