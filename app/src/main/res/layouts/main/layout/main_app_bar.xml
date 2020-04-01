@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,5 +20,34 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/main_host" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_gravity="bottom"
+        android:fadingEdge="none"
+        app:backgroundTint="@color/invisible"
+        app:contentInsetEnd="12dp"
+        app:contentInsetStart="12dp"
+        app:elevation="0dp"
+        app:hideOnScroll="true"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <SearchView
+            style="@android:style/Widget.Material.SearchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bottom_bar_background"
+            android:clickable="true"
+            android:elevation="8dp"
+            android:focusable="true"
+            android:iconifiedByDefault="false"
+            android:inputType="textPersonName"
+            android:queryBackground="@color/invisible"
+            android:queryHint="Search character" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
