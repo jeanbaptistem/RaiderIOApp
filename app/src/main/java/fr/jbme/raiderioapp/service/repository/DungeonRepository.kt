@@ -49,8 +49,13 @@ object DungeonRepository {
             })
     }
 
-    fun fetchScore(realmSlug: String, characterName: String, callback: DataCallback) {
-        raiderIOService?.getCharacterScoreRio(REGION, realmSlug, characterName)
+    fun fetchScore(
+        region: String,
+        realmSlug: String,
+        characterName: String,
+        callback: DataCallback
+    ) {
+        raiderIOService?.getCharacterScoreRio(region, realmSlug, characterName)
             ?.enqueue(object : Callback<CharacterScore> {
                 override fun onFailure(call: Call<CharacterScore>, t: Throwable) {
                     throw t

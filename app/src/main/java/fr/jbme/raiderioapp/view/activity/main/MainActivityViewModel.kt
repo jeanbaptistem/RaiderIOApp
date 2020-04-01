@@ -14,7 +14,6 @@ import fr.jbme.raiderioapp.service.model.blizzard.AccountProfile
 import fr.jbme.raiderioapp.service.model.blizzard.CharacterMedia
 import fr.jbme.raiderioapp.service.repository.MainRepository
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
-import fr.jbme.raiderioapp.utils.Whatever
 import fr.jbme.raiderioapp.utils.network.Result
 import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 import java.util.*
@@ -113,31 +112,10 @@ class MainActivityViewModel : ViewModel() {
         MutableLiveData(true)
     }
 
-    val characterMedia: LiveData<CharacterMedia> =
-        Transformations.switchMap(modelSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.name)
-            val realm = character.realmSlug
-            loadCharacterMedia(realm, name)
-        }
+    private val characterSearchQuery = MutableLiveData<String>()
+    val searchQuery: LiveData<String> = Transformations.distinctUntilChanged(characterSearchQuery)
 
-    private val _characterMediaLoading = MutableLiveData<Boolean>()
-    val characterMediaLoading: LiveData<Boolean>
-        get() = _characterMediaLoading
-
-    private fun loadCharacterMedia(realm: String, name: String): LiveData<CharacterMedia> {
-        val characterMediaResult = MutableLiveData<CharacterMedia>()
-        _characterMediaLoading.value = true
-        MainRepository.fetchCharacterMedia(realm, name, object : DataCallback {
-            override fun onDataLoaded(result: Result.Success<*>) {
-                characterMediaResult.value = result.data as CharacterMedia
-                _characterMediaLoading.value = false
-            }
-
-            override fun onDataNotAvailable(error: Result.Error) {
-                Log.i("Character media error", error.exception.message.toString())
-                _characterMediaLoading.value = false
-            }
-        })
-        return characterMediaResult
+    fun performCharacterSearch(query: String?) {
+        characterSearchQuery.postValue(query)
     }
 }

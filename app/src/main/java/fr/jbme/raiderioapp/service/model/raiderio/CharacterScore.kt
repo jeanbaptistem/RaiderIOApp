@@ -47,17 +47,17 @@ data class CharacterScore(
             @SerializedName("dps")
             val dps: Double?,
             @SerializedName("healer")
-            val healer: Int?,
+            val healer: Double?,
             @SerializedName("spec_0")
             val spec0: Double?,
             @SerializedName("spec_1")
             val spec1: Double?,
             @SerializedName("spec_2")
-            val spec2: Int?,
+            val spec2: Double?,
             @SerializedName("spec_3")
-            val spec3: Int?,
+            val spec3: Double?,
             @SerializedName("tank")
-            val tank: Int?
+            val tank: Double?
         )
     }
 }

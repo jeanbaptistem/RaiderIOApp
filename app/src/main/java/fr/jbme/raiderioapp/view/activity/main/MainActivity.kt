@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private lateinit var customToolbar: CustomToolbar
+    private lateinit var searchBar: SearchView
 
     private val selectedCharacter = MutableLiveData<PopupCharacterItem>()
 
@@ -75,19 +78,42 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        searchBar = findViewById(R.id.searchView)
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchBar.clearFocus()
+                if (navController.currentDestination != navController.graph.findNode(R.id.nav_search)) {
+                    navController.navigate(R.id.nav_search)
+                }
+                mainActivityViewModel.performCharacterSearch(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (navController.currentDestination != navController.graph.findNode(R.id.nav_search)) {
+                    navController.navigate(R.id.nav_search)
+                }
+                mainActivityViewModel.performCharacterSearch(newText)
+                return true
+            }
+        })
+        findViewById<ImageView>(R.id.search_close_btn).setOnClickListener {
+            searchBar.setQuery("", true)
+        }
+
         observeViewModel(mainActivityViewModel)
     }
 
     private fun setupToolbar(customToolbar: CustomToolbar?) {
         customToolbar?.run {
-            setOnBackPressedListener { onBackPressed() }
+            setOnBackPressedListener { navController.navigateUp() }
             setOnHomeButtonClickListener { navController.navigateUp(appBarConfiguration) }
             setOnProfileClickListener { openCharacterSelection(it) }
         }
     }
 
     private fun openCharacterSelection(view: View) {
-        if (popupWindow.isShowing) popupWindow.dismiss()
+        if (popupWindow.isShowing) popupWindow.dismiss() //TODO: fix this
         else {
             popupWindow.run {
                 anchorView = view
@@ -111,9 +137,6 @@ class MainActivity : AppCompatActivity() {
         })
         viewModel.updateSharedPref.observe(this, Observer {})
         viewModel.updateSelectedChar.observe(this, Observer {})
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        viewModel.searchQuery.observe(this, Observer {})
     }
 }

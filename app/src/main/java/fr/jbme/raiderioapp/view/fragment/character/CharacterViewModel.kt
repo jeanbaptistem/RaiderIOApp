@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import fr.jbme.raiderioapp.REGION
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterBestRuns
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterScore
@@ -33,7 +34,7 @@ class CharacterViewModel : ViewModel() {
     private fun loadCharacterScore(realm: String, name: String): LiveData<CharacterScore> {
         val characterDataResult = MutableLiveData<CharacterScore>()
         _characterScoreLoading.value = true
-        DungeonRepository.fetchScore(realm, name, object : DataCallback {
+        DungeonRepository.fetchScore(REGION, realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterDataResult.value = result.data as CharacterScore
                 _characterScoreLoading.value = false

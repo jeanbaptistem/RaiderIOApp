@@ -22,7 +22,7 @@
     <include layout="@layout/main_host" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
+        android:id="@+id/bottom_app_bar"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_gravity="bottom"
@@ -34,19 +34,19 @@
         app:hideOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways">
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             style="@android:style/Widget.Material.SearchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bottom_bar_background"
-            android:clickable="true"
-            android:elevation="8dp"
-            android:focusable="true"
-            android:iconifiedByDefault="false"
-            android:inputType="textPersonName"
-            android:queryBackground="@color/invisible"
-            android:queryHint="Search character" />
+            android:clickable="false"
+            android:focusable="auto"
+            app:elevation="8dp"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@color/invisible"
+            app:queryHint="@string/search_characters" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
 

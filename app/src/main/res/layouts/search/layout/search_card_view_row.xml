@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchItemCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="10dp"
+    app:rippleColor="@color/primaryColor">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/searchItemThumbnailCardView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            app:cardCornerRadius="10dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <fr.jbme.raiderioapp.view.components.CustomLinearLayout
+                android:id="@+id/searchItemThumbnailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </fr.jbme.raiderioapp.view.components.CustomLinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/searchCharacterName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/searchItemThumbnailCardView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Kagdush" />
+
+        <TextView
+            android:id="@+id/searchCharacterClass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryLightColor"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/searchCharacterName"
+            app:layout_constraintTop_toBottomOf="@+id/searchCharacterName"
+            tools:text="Shaman" />
+
+        <TextView
+            android:id="@+id/searchCharacterRegion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/primaryLightColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/searchCharacterName"
+            tools:text="(EU)" />
+
+        <TextView
+            android:id="@+id/searchCharacterRealm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/primaryLightColor"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/searchCharacterRegion"
+            app:layout_constraintStart_toEndOf="@+id/searchCharacterRegion"
+            app:layout_constraintTop_toTopOf="@+id/searchCharacterRegion"
+            tools:text="Ysondre" />
+
+        <TextView
+            android:id="@+id/searchCharacterScoreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/primaryLightColor"
+            app:layout_constraintBottom_toTopOf="@+id/searchCharacterScoreTextView"
+            app:layout_constraintEnd_toEndOf="@+id/searchCharacterScoreTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/searchCharacterScoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchCharacterScoreTitle"
+            tools:text="2,407" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
