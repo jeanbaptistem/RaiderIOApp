@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
+import fr.jbme.raiderioapp.view.utils.OnRecyclerViewItemClickListener
 import kotlinx.android.synthetic.main.search_fragment.*
+
 
 class SearchFragment : Fragment() {
     private val searchViewModel: SearchViewModel by viewModels()
@@ -41,6 +45,24 @@ class SearchFragment : Fragment() {
         searchRecyclerView.run {
             adapter = searchAdapter
             layoutManager = LinearLayoutManager(context)
+            addOnItemTouchListener(OnRecyclerViewItemClickListener(context,
+                this,
+                object :
+                    OnRecyclerViewItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        val selectedItem = searchAdapter.searchList[position]
+                        val bundle = bundleOf(
+                            "region" to selectedItem.realm,
+                            "realm" to selectedItem.realm,
+                            "name" to selectedItem.name,
+                            "thumbnailUrl" to selectedItem.thumbnailUrl
+                        )
+                        findNavController().navigate(R.id.nav_character_page, bundle)
+                    }
+
+                    override fun onLongItemClick(view: View, position: Int) {}
+                }
+            ))
         }
 
         observeViewModel(searchViewModel)

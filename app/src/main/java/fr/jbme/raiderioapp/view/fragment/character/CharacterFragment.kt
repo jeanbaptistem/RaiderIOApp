@@ -16,6 +16,7 @@ import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 import fr.jbme.raiderioapp.view.components.RecyclerViewHorizontalDecoration
 import fr.jbme.raiderioapp.view.fragment.character.bestRuns.BestRunsAdapter
 import fr.jbme.raiderioapp.view.fragment.character.statistics.StatisticsAdapter
@@ -47,12 +48,22 @@ class CharacterFragment : Fragment() {
 
         statsButtonWorld.setOnClickListener { onStatisticsButtonClick(true) }
         statsButtonRealm.setOnClickListener { onStatisticsButtonClick(false) }
-
-        val mainViewModel =
-            activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
-        mainViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            characterViewModel.setSelectedCharacter(it)
-        })
+        if (arguments == null) {
+            val mainViewModel =
+                activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
+            mainViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+                characterViewModel.setSelectedCharacter(it)
+            })
+        } else {
+            val selectedCharacterItem = PopupCharacterItem(
+                1,
+                arguments?.getString("name")!!,
+                arguments?.getString("realm")!!,
+                arguments?.getString("realm")!!,
+                arguments?.getString("thumbnailUrl")!!
+            )
+            characterViewModel.setSelectedCharacter(selectedCharacterItem)
+        }
 
         val recyclerViewHorizontalDecoration = RecyclerViewHorizontalDecoration(
             context?.resources?.getDimensionPixelSize(R.dimen.card_view_margin_horizontal),
