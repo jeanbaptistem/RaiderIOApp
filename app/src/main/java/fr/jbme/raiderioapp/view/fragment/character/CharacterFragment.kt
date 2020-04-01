@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +30,7 @@ class CharacterFragment : Fragment() {
     private lateinit var statsButtonWorldText: TextView
     private lateinit var statsButtonRealm: MaterialCardView
     private lateinit var statsButtonRealmText: TextView
-    private var worldStats = true
+    private val worldStats = MutableLiveData(true)
 
     private val characterViewModel: CharacterViewModel by viewModels()
 
@@ -70,7 +71,7 @@ class CharacterFragment : Fragment() {
             addItemDecoration(recyclerViewHorizontalDecoration)
         }
 
-        statisticsAdapter = StatisticsAdapter(context, listOf())
+        statisticsAdapter = StatisticsAdapter(context, null, worldStats.value)
         val statisticsRecyclerView: RecyclerView = root.findViewById(R.id.statisticsRecyclerView)
         statisticsRecyclerView.run {
             adapter = statisticsAdapter
@@ -85,11 +86,11 @@ class CharacterFragment : Fragment() {
     }
 
     private fun onStatisticsButtonClick(isWorldButton: Boolean) {
-        if (isWorldButton == worldStats) return
-        worldStats = !worldStats
+        if (isWorldButton == worldStats.value) return
+        worldStats.value = isWorldButton
         val worldText: Int?
         val worldBackground: Int?
-        if (worldStats) {
+        if (worldStats.value!!) {
             worldText = context?.getColor(R.color.primaryTextColor)
             worldBackground = context?.getColor(R.color.primaryColor)
         } else {
@@ -123,7 +124,13 @@ class CharacterFragment : Fragment() {
         })
         characterViewModel.characterRanks.observe(viewLifecycleOwner, Observer {
             statisticsAdapter.run {
-                staticsList = it
+                ranks = it
+                notifyDataSetChanged()
+            }
+        })
+        worldStats.observe(viewLifecycleOwner, Observer {
+            statisticsAdapter.run {
+                worldStats = it
                 notifyDataSetChanged()
             }
         })

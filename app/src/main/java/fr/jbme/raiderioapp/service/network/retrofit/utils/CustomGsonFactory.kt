@@ -3,6 +3,7 @@ package fr.jbme.raiderioapp.service.network.retrofit.utils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
+import com.google.gson.JsonObject
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -43,7 +44,7 @@ object CustomGsonFactory {
                     val value = it.value.asJsonObject
                     listOfRanks.add(
                         CharacterRanks.Rank(
-                            it.key,
+                            formatName(it.key, jsonObject),
                             value.get("world").asInt,
                             value.get("region").asInt,
                             value.get("realm").asInt
@@ -69,4 +70,13 @@ object CustomGsonFactory {
                 jsonObject?.get("thumbnail_url")?.asString
             )
         }
+
+    private fun formatName(rankKey: String, character: JsonObject): String {
+        var res = rankKey
+        val _class = character.get("class").asString
+        val faction = character.get("faction").asString
+        res += if (rankKey.contains("class")) "_${_class}" else ""
+        res += if (rankKey.contains("faction")) "_${faction}" else ""
+        return res
+    }
 }

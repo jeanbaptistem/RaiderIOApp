@@ -73,7 +73,7 @@ class CharacterViewModel : ViewModel() {
     }
 
     private val _characterRanksLoading = MutableLiveData<Boolean>()
-    val characterRanks: LiveData<List<CharacterRanks.Rank>> =
+    val characterRanks: LiveData<CharacterRanks> =
         Transformations.switchMap(selectedCharacter) { character ->
             loadCharacterRanks(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
         }
@@ -81,12 +81,12 @@ class CharacterViewModel : ViewModel() {
     private fun loadCharacterRanks(
         realm: String,
         name: String
-    ): LiveData<List<CharacterRanks.Rank>> {
-        val characterRanksResult = MutableLiveData<List<CharacterRanks.Rank>>()
+    ): LiveData<CharacterRanks> {
+        val characterRanksResult = MutableLiveData<CharacterRanks>()
         _characterRanksLoading.value = true
         DungeonRepository.fetchRanks(realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                characterRanksResult.value = result.data as List<CharacterRanks.Rank>
+                characterRanksResult.value = result.data as CharacterRanks
                 _characterRanksLoading.value = false
             }
 

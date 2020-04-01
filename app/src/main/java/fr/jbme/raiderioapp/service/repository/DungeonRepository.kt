@@ -40,7 +40,7 @@ object DungeonRepository {
                     response: Response<CharacterRanks>
                 ) {
                     if (response.isSuccessful) {
-                        callback.onDataLoaded(Result.Success(response.body()?.mythicPlusRanks!!))
+                        callback.onDataLoaded(Result.Success(response.body()!!))
                     } else {
                         val error = NetworkUtils.parseRIOError(response)
                         callback.onDataNotAvailable(Result.Error(error))
