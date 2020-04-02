@@ -12,7 +12,7 @@
         <item name="colorError">@color/errorColor</item>
         <item name="colorOnError">@color/primaryTextColor</item>
 
-        <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
     </style>
 
     <style name="Theme.RaiderIoApp.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />

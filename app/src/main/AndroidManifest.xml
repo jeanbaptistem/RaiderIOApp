@@ -38,7 +38,8 @@
             android:name=".view.activity.main.MainActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RaiderIoApp">
+            android:theme="@style/Theme.RaiderIoApp"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.main.MainActivity" />
