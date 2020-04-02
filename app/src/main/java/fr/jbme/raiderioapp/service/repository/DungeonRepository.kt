@@ -1,6 +1,5 @@
 package fr.jbme.raiderioapp.service.repository
 
-import fr.jbme.raiderioapp.REGION
 import fr.jbme.raiderioapp.service.model.blizzard.DungeonInfo
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterBestRuns
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
@@ -27,8 +26,13 @@ object DungeonRepository {
             RaiderIOService::class.java
         )
 
-    fun fetchRanks(realmSlug: String, characterName: String, callback: DataCallback) {
-        raiderIOService?.getCharacterRanksRio(REGION, realmSlug, characterName)
+    fun fetchRanks(
+        region: String,
+        realmSlug: String,
+        characterName: String,
+        callback: DataCallback
+    ) {
+        raiderIOService?.getCharacterRanksRio(region, realmSlug, characterName)
             ?.enqueue(object :
                 Callback<CharacterRanks> {
                 override fun onFailure(call: Call<CharacterRanks>, t: Throwable) {
@@ -76,8 +80,13 @@ object DungeonRepository {
             })
     }
 
-    fun fetchRioBestRuns(realmSlug: String, characterName: String, callback: DataCallback) {
-        raiderIOService?.getCharacterBestRunsRio(REGION, realmSlug, characterName)
+    fun fetchRioBestRuns(
+        region: String,
+        realmSlug: String,
+        characterName: String,
+        callback: DataCallback
+    ) {
+        raiderIOService?.getCharacterBestRunsRio(region, realmSlug, characterName)
             ?.enqueue(object : Callback<CharacterBestRuns> {
                 override fun onFailure(call: Call<CharacterBestRuns>, t: Throwable) {
                     throw t

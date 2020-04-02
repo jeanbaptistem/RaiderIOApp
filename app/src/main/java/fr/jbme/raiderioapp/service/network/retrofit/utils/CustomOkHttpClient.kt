@@ -10,7 +10,7 @@ object CustomOkHttpClient {
     private val blizInterceptor = BlizzardQueryParamsInterceptor(locale)
     private val tokenInterceptor = BearerTokenInterceptor()
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.HEADERS
+        level = HttpLoggingInterceptor.Level.BASIC
     }
 
     private var client: OkHttpClient? = null

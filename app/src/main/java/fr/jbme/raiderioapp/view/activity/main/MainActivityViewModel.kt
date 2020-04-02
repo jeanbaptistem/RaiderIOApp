@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
 import fr.jbme.raiderioapp.RaiderIOApp
 import fr.jbme.raiderioapp.SELECTED_CHARACTER
 import fr.jbme.raiderioapp.SHARED_PREF_KEY
@@ -32,10 +33,9 @@ class MainActivityViewModel : ViewModel() {
         get() = _profileInfoLoading
 
     private val viewSelectedCharacter = MutableLiveData<PopupCharacterItem>()
-    private val modelSelectedCharacter = Transformations.distinctUntilChanged(viewSelectedCharacter)
 
     val getSelectedCharacter: LiveData<PopupCharacterItem>
-        get() = modelSelectedCharacter
+        get() = viewSelectedCharacter
 
     init {
         _profileInfoLoading.value = true
@@ -58,9 +58,9 @@ class MainActivityViewModel : ViewModel() {
     }
 
     val updateSharedPref: LiveData<Boolean> =
-        Transformations.switchMap(modelSelectedCharacter) { character ->
+        Transformations.switchMap(viewSelectedCharacter) { character ->
             with(sharedPref?.edit()) {
-                this?.putString(SELECTED_CHARACTER, character.asCharString())
+                this?.putString(SELECTED_CHARACTER, Gson().toJson(character))
                 this?.apply()
             }
             MutableLiveData(true)
@@ -98,18 +98,14 @@ class MainActivityViewModel : ViewModel() {
     }
 
     val updateSelectedChar = Transformations.switchMap(toolbarCharactersList) {
+        val sharedPrefCharacter = MutableLiveData<PopupCharacterItem>()
         sharedPref?.let { sharedPref ->
-            sharedPref.getString(SELECTED_CHARACTER, null)?.let {
-                val char = PopupCharacterItem(it)
-                selectedCharacter(toolbarCharactersList.value
-                    ?.firstOrNull { character ->
-                        character.name == char.name &&
-                                character.realmSlug == char.realmSlug
-                    }
-                )
+            sharedPref.getString(SELECTED_CHARACTER, null)?.let { sharedPrefString ->
+                sharedPrefCharacter.value =
+                    Gson().fromJson(sharedPrefString, PopupCharacterItem::class.java)
             }
         }
-        MutableLiveData(true)
+        return@switchMap sharedPrefCharacter
     }
 
     private val characterSearchQuery = MutableLiveData<String>()

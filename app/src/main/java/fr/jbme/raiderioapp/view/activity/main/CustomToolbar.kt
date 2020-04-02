@@ -15,7 +15,6 @@ class CustomToolbar {
 
     private lateinit var homeButton: Button
     private lateinit var toolbarTitle: TextView
-    private lateinit var backButton: Button
 
     fun setCharThumbnail(imgUrl: String?) {
         Picasso.get().load(imgUrl)
@@ -36,9 +35,6 @@ class CustomToolbar {
         homeButton.setOnClickListener(l)
     }
 
-    fun setOnBackPressedListener(l: (View) -> Unit) {
-        backButton.setOnClickListener(l)
-    }
 
     fun setToolbarTitle(title: CharSequence?) {
         toolbarTitle.text = title
@@ -52,7 +48,6 @@ class CustomToolbar {
                 profileButton = layout.findViewById(R.id.toolbarProfileButton)
                 homeButton = layout.findViewById(R.id.toolbarHomeButton)
                 toolbarTitle = layout.findViewById(R.id.toolbarTitle)
-                backButton = layout.findViewById(R.id.toolbarBackButton)
                 this
             }
         }

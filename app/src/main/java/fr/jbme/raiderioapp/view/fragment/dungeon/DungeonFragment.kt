@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
+import fr.jbme.raiderioapp.REGION
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
 import kotlinx.android.synthetic.main.fragment_dungeon.*
 
@@ -37,7 +38,7 @@ class DungeonFragment : Fragment() {
         val mainActivityViewModel =
             activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
         mainActivityViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            dungeonViewModel.selectedCharacter(it)
+            dungeonViewModel.selectedCharacter(it.apply { region = REGION })
         })
 
         observeViewModel(dungeonViewModel)

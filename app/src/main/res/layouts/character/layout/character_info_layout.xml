@@ -35,31 +35,24 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/subThumbnailCradView"
+    <TextView
+        android:id="@+id/charClass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="14dp"
         android:layout_marginTop="50dp"
-        app:cardCornerRadius="8dp"
+        android:background="@drawable/bottom_bar_background"
+        android:elevation="6dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/primaryLightColor"
+        android:textSize="10sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/charThumbnail"
-        app:layout_constraintStart_toStartOf="@+id/charThumbnail"
-        app:layout_constraintTop_toTopOf="@+id/charThumbnail">
-
-        <TextView
-            android:id="@+id/charClass"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="2dp"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/primaryLightColor"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            tools:text="Shaman" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/charThumbnail"
+        tools:text="Shaman" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/charInfoLayout"

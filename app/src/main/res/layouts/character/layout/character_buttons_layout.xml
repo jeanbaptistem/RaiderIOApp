@@ -21,13 +21,16 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="387dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonFavorites"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:enabled="false"
+        android:focusable="true"
         app:icon="@drawable/ic_star_white_40dp"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
@@ -39,13 +42,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/primaryLightColor" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonCompare"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:enabled="false"
+        android:focusable="true"
         app:icon="@drawable/ic_compare_white_40dp"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
@@ -56,13 +62,15 @@
         app:layout_constraintStart_toEndOf="@+id/buttonFavorites"
         app:rippleColor="@color/primaryLightColor" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonWLogs"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
         app:icon="@drawable/ic_format_list_bulleted_white_40dp"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
@@ -73,13 +81,15 @@
         app:layout_constraintStart_toEndOf="@+id/buttonCompare"
         app:rippleColor="@color/primaryLightColor" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonArmory"
         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
         app:icon="@drawable/ic_mark_white_40dp"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
@@ -104,7 +114,7 @@
         app:layout_constraintTop_toTopOf="@+id/buttonFavorites" />
 
     <TextView
-        android:id="@+id/buttontextCompare"
+        android:id="@+id/buttonTextCompare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"

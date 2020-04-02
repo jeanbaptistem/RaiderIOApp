@@ -41,9 +41,9 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bottom_bar_background"
-            android:clickable="false"
-            android:focusable="auto"
-            app:elevation="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:elevation="16dp"
             app:iconifiedByDefault="false"
             app:queryBackground="@color/invisible"
             app:queryHint="@string/search_characters" />

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.REGION
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterBestRuns
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 import fr.jbme.raiderioapp.service.model.raiderio.CharacterScore
@@ -28,13 +27,21 @@ class CharacterViewModel : ViewModel() {
     private val _characterScoreLoading = MutableLiveData<Boolean>()
     val characterScore =
         Transformations.switchMap(selectedCharacter) { character ->
-            loadCharacterScore(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
+            loadCharacterScore(
+                character.region,
+                character.realmSlug,
+                character.name.toLowerCase(Locale.ROOT)
+            )
         }
 
-    private fun loadCharacterScore(realm: String, name: String): LiveData<CharacterScore> {
+    private fun loadCharacterScore(
+        region: String,
+        realm: String,
+        name: String
+    ): LiveData<CharacterScore> {
         val characterDataResult = MutableLiveData<CharacterScore>()
         _characterScoreLoading.value = true
-        DungeonRepository.fetchScore(REGION, realm, name, object : DataCallback {
+        DungeonRepository.fetchScore(region, realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterDataResult.value = result.data as CharacterScore
                 _characterScoreLoading.value = false
@@ -50,16 +57,21 @@ class CharacterViewModel : ViewModel() {
     private val _characterBestRunsLoading = MutableLiveData<Boolean>()
     val characterBestRuns: LiveData<List<CharacterBestRuns.MythicPlusBestRun>> =
         Transformations.switchMap(selectedCharacter) { character ->
-            loadCharacterBestRuns(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
+            loadCharacterBestRuns(
+                character.region,
+                character.realmSlug,
+                character.name.toLowerCase(Locale.ROOT)
+            )
         }
 
     private fun loadCharacterBestRuns(
+        region: String,
         realm: String,
         name: String
     ): LiveData<List<CharacterBestRuns.MythicPlusBestRun>> {
         _characterBestRunsLoading.value = true
         val characterBestRunsResult = MutableLiveData<List<CharacterBestRuns.MythicPlusBestRun>>()
-        DungeonRepository.fetchRioBestRuns(realm, name, object : DataCallback {
+        DungeonRepository.fetchRioBestRuns(region, realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterBestRunsResult.value =
                     result.data as List<CharacterBestRuns.MythicPlusBestRun>
@@ -76,16 +88,21 @@ class CharacterViewModel : ViewModel() {
     private val _characterRanksLoading = MutableLiveData<Boolean>()
     val characterRanks: LiveData<CharacterRanks> =
         Transformations.switchMap(selectedCharacter) { character ->
-            loadCharacterRanks(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
+            loadCharacterRanks(
+                character.region,
+                character.realmSlug,
+                character.name.toLowerCase(Locale.ROOT)
+            )
         }
 
     private fun loadCharacterRanks(
+        region: String,
         realm: String,
         name: String
     ): LiveData<CharacterRanks> {
         val characterRanksResult = MutableLiveData<CharacterRanks>()
         _characterRanksLoading.value = true
-        DungeonRepository.fetchRanks(realm, name, object : DataCallback {
+        DungeonRepository.fetchRanks(region, realm, name, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
                 characterRanksResult.value = result.data as CharacterRanks
                 _characterRanksLoading.value = false

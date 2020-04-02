@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 import fr.jbme.raiderioapp.view.utils.OnRecyclerViewItemClickListener
 import kotlinx.android.synthetic.main.search_fragment.*
 
@@ -51,12 +52,16 @@ class SearchFragment : Fragment() {
                     OnRecyclerViewItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         val selectedItem = searchAdapter.searchList[position]
-                        val bundle = bundleOf(
-                            "region" to selectedItem.realm,
-                            "realm" to selectedItem.realm,
-                            "name" to selectedItem.name,
-                            "thumbnailUrl" to selectedItem.thumbnailUrl
+                        val popupCharacterInt = PopupCharacterItem(
+                            1,
+                            selectedItem.name!!,
+                            selectedItem.realm!!,
+                            selectedItem.realm,
+                            selectedItem.region!!,
+                            selectedItem.thumbnailUrl!!
                         )
+                        val bundle =
+                            bundleOf("search" to bundleOf("character" to popupCharacterInt))
                         findNavController().navigate(R.id.nav_character_page, bundle)
                     }
 

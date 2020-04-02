@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -64,33 +65,38 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Init character popup list
-        popupListAdapter =
-            PopupListAdapter(
-                this,
-                listOf()
-            )
+        popupListAdapter = PopupListAdapter(this, listOf())
         popupWindow = ListPopupWindow(this).apply {
             setAdapter(popupListAdapter)
             setDropDownGravity(Gravity.END)
             setOnItemClickListener { _, _, position, _ ->
                 selectedCharacter.value = popupListAdapter.charList[position]
+                val bundle =
+                    bundleOf("self" to bundleOf("character" to popupListAdapter.charList[position]))
+                navController.navigate(R.id.nav_character_page, bundle)
                 dismiss()
             }
         }
 
         searchBar = findViewById(R.id.searchView)
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
+            override fun onQueryTextSubmit(query: String): Boolean {
                 searchBar.clearFocus()
-                if (navController.currentDestination != navController.graph.findNode(R.id.nav_search)) {
+                if (query.isNotEmpty() && navController.currentDestination != navController.graph.findNode(
+                        R.id.nav_search
+                    )
+                ) {
                     navController.navigate(R.id.nav_search)
                 }
                 mainActivityViewModel.performCharacterSearch(query)
                 return true
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (navController.currentDestination != navController.graph.findNode(R.id.nav_search)) {
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.isNotEmpty() && navController.currentDestination != navController.graph.findNode(
+                        R.id.nav_search
+                    )
+                ) {
                     navController.navigate(R.id.nav_search)
                 }
                 mainActivityViewModel.performCharacterSearch(newText)
@@ -106,7 +112,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupToolbar(customToolbar: CustomToolbar?) {
         customToolbar?.run {
-            setOnBackPressedListener { navController.navigateUp() }
             setOnHomeButtonClickListener { navController.navigateUp(appBarConfiguration) }
             setOnProfileClickListener { openCharacterSelection(it) }
         }
@@ -136,7 +141,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
         viewModel.updateSharedPref.observe(this, Observer {})
-        viewModel.updateSelectedChar.observe(this, Observer {})
+        viewModel.updateSelectedChar.observe(this, Observer {
+            selectedCharacter.value = it
+        })
         viewModel.searchQuery.observe(this, Observer {})
     }
 }

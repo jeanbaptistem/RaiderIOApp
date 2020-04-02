@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
@@ -27,11 +28,20 @@ class CharacterFragment : Fragment() {
     private lateinit var bestRunsAdapter: BestRunsAdapter
     private lateinit var statisticsAdapter: StatisticsAdapter
 
+    private lateinit var buttonFavorites: MaterialButton
+    private lateinit var buttonTextFavorites: TextView
+    private lateinit var buttonCompare: MaterialButton
+    private lateinit var buttonTextCompare: TextView
+
+    private lateinit var bestRunsSeeAll: MaterialButton
+
     private lateinit var statsButtonWorld: MaterialCardView
     private lateinit var statsButtonWorldText: TextView
     private lateinit var statsButtonRealm: MaterialCardView
     private lateinit var statsButtonRealmText: TextView
+
     private val worldStats = MutableLiveData(true)
+    private var isSearch = false
 
     private val characterViewModel: CharacterViewModel by viewModels()
 
@@ -41,6 +51,12 @@ class CharacterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.character_fragment, container, false)
+        buttonFavorites = root.findViewById(R.id.buttonFavorites)
+        buttonTextFavorites = root.findViewById(R.id.buttonTextFavorites)
+        bestRunsSeeAll = root.findViewById(R.id.bestRunsSeeAll)
+        buttonCompare = root.findViewById(R.id.buttonCompare)
+        buttonTextCompare = root.findViewById(R.id.buttonTextCompare)
+
         statsButtonWorld = root.findViewById(R.id.statsButtonWorld)
         statsButtonWorldText = root.findViewById(R.id.statsButtonWorldText)
         statsButtonRealm = root.findViewById(R.id.statsButtonRealm)
@@ -48,22 +64,32 @@ class CharacterFragment : Fragment() {
 
         statsButtonWorld.setOnClickListener { onStatisticsButtonClick(true) }
         statsButtonRealm.setOnClickListener { onStatisticsButtonClick(false) }
-        if (arguments == null) {
-            val mainViewModel =
-                activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
-            mainViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-                characterViewModel.setSelectedCharacter(it)
-            })
-        } else {
-            val selectedCharacterItem = PopupCharacterItem(
-                1,
-                arguments?.getString("name")!!,
-                arguments?.getString("realm")!!,
-                arguments?.getString("realm")!!,
-                arguments?.getString("thumbnailUrl")!!
-            )
-            characterViewModel.setSelectedCharacter(selectedCharacterItem)
+        when {
+            arguments?.getBundle("self") != null -> {
+                isSearch = false
+                val selectedCharacterItem = arguments?.getBundle("self")
+                    ?.getSerializable("character") as PopupCharacterItem
+                characterViewModel.setSelectedCharacter(selectedCharacterItem)
+            }
+            arguments?.getBundle("search") != null -> {
+                isSearch = true
+                val selectedCharacterItem = arguments?.getBundle("search")
+                    ?.getSerializable("character") as PopupCharacterItem
+                characterViewModel.setSelectedCharacter(selectedCharacterItem)
+            }
+            else -> {
+                val mainViewModel =
+                    activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
+                mainViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+                    characterViewModel.setSelectedCharacter(it)
+                })
+            }
         }
+
+        buttonFavorites.isEnabled = isSearch
+        buttonCompare.isEnabled = isSearch
+        changeButtonState(buttonFavorites, buttonTextFavorites, isSearch)
+        changeButtonState(buttonCompare, buttonTextCompare, isSearch)
 
         val recyclerViewHorizontalDecoration = RecyclerViewHorizontalDecoration(
             context?.resources?.getDimensionPixelSize(R.dimen.card_view_margin_horizontal),
@@ -94,6 +120,17 @@ class CharacterFragment : Fragment() {
         observeViewModel(characterViewModel)
 
         return root
+    }
+
+    private fun changeButtonState(button: MaterialButton, buttonText: TextView, state: Boolean) {
+        if (state) {
+            button.setIconTintResource(R.color.primaryTextColor)
+            buttonText.setTextColor(context!!.getColor(R.color.primaryTextColor))
+        } else {
+            button.setIconTintResource(R.color.primaryLightColor)
+            buttonText.setTextColor(context!!.getColor(R.color.primaryLightColor))
+        }
+
     }
 
     private fun onStatisticsButtonClick(isWorldButton: Boolean) {
