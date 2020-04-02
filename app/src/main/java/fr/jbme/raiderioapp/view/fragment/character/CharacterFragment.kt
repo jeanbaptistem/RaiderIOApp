@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -32,6 +34,9 @@ class CharacterFragment : Fragment() {
     private lateinit var buttonTextFavorites: TextView
     private lateinit var buttonCompare: MaterialButton
     private lateinit var buttonTextCompare: TextView
+
+    private lateinit var buttonProgression: MaterialButton
+    private lateinit var buttonArmory: MaterialButton
 
     private lateinit var bestRunsSeeAll: MaterialButton
 
@@ -62,6 +67,9 @@ class CharacterFragment : Fragment() {
         statsButtonRealm = root.findViewById(R.id.statsButtonRealm)
         statsButtonRealmText = root.findViewById(R.id.statsButtonRealmText)
 
+        buttonProgression = root.findViewById(R.id.buttonProgression)
+        buttonArmory = root.findViewById(R.id.buttonArmory)
+
         statsButtonWorld.setOnClickListener { onStatisticsButtonClick(true) }
         statsButtonRealm.setOnClickListener { onStatisticsButtonClick(false) }
         when {
@@ -90,6 +98,12 @@ class CharacterFragment : Fragment() {
         buttonCompare.isEnabled = isSearch
         changeButtonState(buttonFavorites, buttonTextFavorites, isSearch)
         changeButtonState(buttonCompare, buttonTextCompare, isSearch)
+
+        buttonArmory.setOnClickListener {
+            val bundle =
+                bundleOf("character" to characterViewModel.selectedCharacter.value)
+            findNavController().navigate(R.id.nav_armory, bundle)
+        }
 
         val recyclerViewHorizontalDecoration = RecyclerViewHorizontalDecoration(
             context?.resources?.getDimensionPixelSize(R.dimen.card_view_margin_horizontal),

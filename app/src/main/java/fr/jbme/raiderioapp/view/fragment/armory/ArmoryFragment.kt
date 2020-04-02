@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.utils.Quadruple
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 import kotlinx.android.synthetic.main.fragment_armory.*
 
 
@@ -40,11 +41,15 @@ class ArmoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        val characterViewModel =
-            activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
-        characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            armoryViewModel.selectedCharacter(it)
-        })
+        if (arguments?.getSerializable("character") != null) {
+            armoryViewModel.selectedCharacter(arguments?.getSerializable("character") as PopupCharacterItem)
+        } else {
+            val characterViewModel =
+                activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
+            characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+                armoryViewModel.selectedCharacter(it)
+            })
+        }
 
         observeViewModel(armoryViewModel)
         return root

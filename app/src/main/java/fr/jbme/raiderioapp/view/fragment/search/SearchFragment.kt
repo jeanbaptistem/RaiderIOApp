@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
+import fr.jbme.raiderioapp.utils.Whatever
 import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
 import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
 import fr.jbme.raiderioapp.view.utils.OnRecyclerViewItemClickListener
@@ -56,7 +57,7 @@ class SearchFragment : Fragment() {
                             1,
                             selectedItem.name!!,
                             selectedItem.realm!!,
-                            selectedItem.realm,
+                            Whatever.parseToSlug(selectedItem.realm),
                             selectedItem.region!!,
                             selectedItem.thumbnailUrl!!
                         )

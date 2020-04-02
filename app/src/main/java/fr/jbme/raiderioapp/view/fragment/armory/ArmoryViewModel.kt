@@ -25,6 +25,7 @@ class ArmoryViewModel : ViewModel() {
         Transformations.distinctUntilChanged(_viewSelectedCharacter)
 
     fun selectedCharacter(selectedCharName: PopupCharacterItem?) {
+        Log.i("SelectedChar", selectedCharName.toString())
         _viewSelectedCharacter.postValue(selectedCharName)
     }
 
@@ -37,21 +38,18 @@ class ArmoryViewModel : ViewModel() {
     private val _armoryItemInfoLoading = MutableLiveData<Boolean>()
     private val armoryItemData: LiveData<List<ItemInfo>> =
         Transformations.switchMap(characterArmory) { equippedItems ->
-            Log.i("ItemDataTransform", equippedItems.toString())
             loadArmoryItemData(equippedItems)
         }
 
     private val _armoryItemMediaLoading = MutableLiveData<Boolean>()
     private val armoryItemMedia: LiveData<List<ItemMedia>> =
         Transformations.switchMap(characterArmory) { equippedItems ->
-            Log.i("ItemMediaTransform", equippedItems.toString())
             loadArmoryItemMedia(equippedItems)
         }
 
     private val _armoryAzeriteSpellLoading = MutableLiveData<Boolean>()
     private val armoryAzeriteSpell: LiveData<List<ItemMedia>> =
         Transformations.switchMap(characterArmory) { equippedItems ->
-            Log.i("AzeriteSpellTransform", equippedItems.toString())
             loadAzeriteItemMedia(equippedItems)
         }
 

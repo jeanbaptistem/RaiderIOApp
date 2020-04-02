@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import fr.jbme.raiderioapp.R
 import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
@@ -112,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupToolbar(customToolbar: CustomToolbar?) {
         customToolbar?.run {
-            setOnHomeButtonClickListener { navController.navigateUp(appBarConfiguration) }
+            setOnHomeButtonClickListener { navController.navigateUp() }
             setOnProfileClickListener { openCharacterSelection(it) }
         }
     }
