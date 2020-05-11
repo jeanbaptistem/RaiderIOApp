@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Encounters
+import fr.jbme.raiderioapp.service.model.blizzard.RaidInfo
 
 class BossCardViewAdapter(
     val context: Context?,
-    var bosses: List<Encounters>,
+    var bosses: List<RaidInfo.Expansion.Instance.Mode.Progress.Encounter>,
     var raidName: String
 ) : RecyclerView.Adapter<BossHolder>() {
 

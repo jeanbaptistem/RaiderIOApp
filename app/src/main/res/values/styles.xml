@@ -1,25 +1,23 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="Theme.RaiderIoApp" parent="Theme.MaterialComponents">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="colorError">@color/colorWarn</item>
+    <style name="Theme.RaiderIoApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorOnBackground">@color/onBackgroundColor</item>
+        <item name="colorSurface">@color/primaryTextColor</item>
+        <item name="colorOnSurface">@color/primaryLightColor</item>
+        <item name="colorError">@color/errorColor</item>
+        <item name="colorOnError">@color/primaryTextColor</item>
 
-        <item name="android:textColorPrimary">@color/colorText</item>
-        <item name="android:windowBackground">@color/colorBackground</item>
-    </style>
-
-    <style name="Theme.RaiderIoApp.NoActionBar" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
     </style>
 
     <style name="Theme.RaiderIoApp.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
-    <style name="Theme.RaiderIoApp.PopupOverlay" parent="Theme.RaiderIoApp" />
-
-
+    <style name="Theme.RaiderIoApp.PopupOverlay" parent="Theme.RaiderIoApp">
+        <item name="popupMenuStyle">@style/Widget.MaterialComponents.PopupMenu</item>
+    </style>
 </resources>

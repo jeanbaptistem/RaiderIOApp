@@ -1,14 +1,7 @@
 package fr.jbme.raiderioapp.service.network.service
 
 import fr.jbme.raiderioapp.LAST_SEASON_ID
-import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.CharacterEquipment
-import fr.jbme.raiderioapp.service.model.blizzard.characterMedia.CharacterMedia
-import fr.jbme.raiderioapp.service.model.blizzard.characterProfile.CharacterProfile
-import fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.DungeonInfo
-import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
-import fr.jbme.raiderioapp.service.model.blizzard.profileInfo.ProfileInfo
-import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.RaidInfo
+import fr.jbme.raiderioapp.service.model.blizzard.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -19,34 +12,34 @@ interface BlizzardService {
     //User Profile
     @Headers("Namespace: Profile")
     @GET("/profile/user/wow")
-    fun getProfileInfo(): Call<ProfileInfo>
+    fun getProfileInfoBliz(): Call<AccountProfile>
 
 
     //Character Profile
     @Headers("Namespace: Profile")
     @GET("/profile/wow/character/{realmSlug}/{characterName}")
-    fun getCharacterProfile(
+    fun getCharacterProfileBliz(
         @Path("realmSlug") realmSlug: String?,
         @Path("characterName") characterName: String?
     ): Call<CharacterProfile>
 
     @Headers("Namespace: Profile")
     @GET("/profile/wow/character/{realmSlug}/{characterName}/equipment")
-    fun getCharacterEquipment(
+    fun getCharacterEquipmentBliz(
         @Path("realmSlug") realmSlug: String?,
         @Path("characterName") characterName: String?
     ): Call<CharacterEquipment>
 
     @Headers("Namespace: Profile")
     @GET("/profile/wow/character/{realmSlug}/{characterName}/character-media")
-    fun getCharacterMedia(
+    fun getCharacterMediaBliz(
         @Path("realmSlug") realmSlug: String?,
         @Path("characterName") characterName: String?
     ): Call<CharacterMedia>
 
     @Headers("Namespace: Profile")
     @GET("/profile/wow/character/{realmSlug}/{characterName}/encounters/raids")
-    fun getCharacterRaidInfo(
+    fun getCharacterRaidInfoBliz(
         @Path("realmSlug") realmSlug: String?,
         @Path("characterName") characterName: String?
     ): Call<RaidInfo>
@@ -55,13 +48,13 @@ interface BlizzardService {
     //Item Data
     @Headers("Namespace: Static")
     @GET("data/wow/media/item/{itemId}")
-    fun getItemMedia(
+    fun getItemMediaBliz(
         @Path("itemId") itemId: Int?
-    ): Call<Media>
+    ): Call<ItemMedia>
 
     @Headers("Namespace: Static")
     @GET("data/wow/item/{itemId}")
-    fun getItemInfo(
+    fun getItemInfoBliz(
         @Path("itemId") itemId: Int?
     ): Call<ItemInfo>
 
@@ -69,23 +62,23 @@ interface BlizzardService {
     //Spell Data
     @Headers("Namespace: Static")
     @GET("/data/wow/media/spell/{spellId}")
-    fun getSpellMedia(
+    fun getSpellMediaBliz(
         @Path("spellId") spellId: Int?
-    ): Call<Media>
+    ): Call<ItemMedia>
 
 
     //AzeriteEssences Data
     @Headers("Namespace: Static")
     @GET("/data/wow/media/azerite-essence/{azeriteEssenceId}")
-    fun getAzeriteEssenceMedia(
+    fun getAzeriteEssenceMediaBliz(
         @Path("azeriteEssenceId") azeriteEssenceId: Int
-    ): Call<Media>
+    ): Call<ItemMedia>
 
 
     //Dungeons Data
     @Headers("Namespace: Profile")
     @GET("/profile/wow/character/{realmSlug}/{characterName}/mythic-keystone-profile/season/${LAST_SEASON_ID}")
-    fun getCharacterDungeon(
+    fun getCharacterDungeonBliz(
         @Path("realmSlug") realmSlug: String,
         @Path("characterName") characterName: String
     ): Call<DungeonInfo>

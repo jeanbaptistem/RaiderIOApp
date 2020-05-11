@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menu_navigation"
-    app:startDestination="@id/nav_armory">
+    app:startDestination="@id/nav_character_page">
 
     <fragment
         android:id="@+id/nav_armory"
@@ -22,13 +22,15 @@
         android:name="fr.jbme.raiderioapp.view.fragment.raid.RaidFragment"
         android:label="@string/menu_raid"
         tools:layout="@layout/fragment_raid" />
-    <action
-        android:id="@+id/action_global_nav_armory"
-        app:destination="@id/nav_armory" />
-    <action
-        android:id="@+id/action_global_nav_dungeon"
-        app:destination="@id/nav_dungeon" />
-    <action
-        android:id="@+id/action_global_nav_raid"
-        app:destination="@id/nav_raid" />
+
+    <fragment
+        android:id="@+id/nav_character_page"
+        android:name="fr.jbme.raiderioapp.view.fragment.character.CharacterFragment"
+        android:label="@string/title_activity_character_page"
+        tools:layout="@layout/character_fragment" />
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="fr.jbme.raiderioapp.view.fragment.search.SearchFragment"
+        android:label="@string/search_label"
+        tools:layout="@layout/search_fragment" />
 </navigation>

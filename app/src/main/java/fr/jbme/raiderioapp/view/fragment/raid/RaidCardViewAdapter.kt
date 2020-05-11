@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Instances
+import fr.jbme.raiderioapp.service.model.blizzard.RaidInfo
 
 class RaidCardViewAdapter(
     val context: Context?,
-    var instancesList: List<Instances>
+    var instancesList: List<RaidInfo.Expansion.Instance>
 ) : RecyclerView.Adapter<RaidHolder>() {
 
 

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/best_run_card_view_width"
+    android:layout_height="@dimen/best_run_card_view_height"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="18dp"
+    app:cardPreventCornerOverlap="false"
+    app:rippleColor="@color/primaryColor"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="243dp">
+
+    <fr.jbme.raiderioapp.view.components.CustomConstraintLayout
+        android:id="@+id/backgroundLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/onBackgroundColor"
+        android:backgroundTintMode="screen"
+        android:padding="5dp"
+        tools:background="@tools:sample/backgrounds/scenic">
+
+        <TextView
+            android:id="@+id/dungeonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/dungeonScoreLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            tools:text="Atal'Dazar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dungeonScoreLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/dungeonTimeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dungeonName">
+
+            <TextView
+                android:id="@+id/dungeonLevelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAllCaps="true"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/dungeonUpgrade"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="22" />
+
+            <TextView
+                android:id="@+id/scoreTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score"
+                android:textColor="@color/primaryColor"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/scoreTextView"
+                app:layout_constraintStart_toStartOf="@+id/scoreTextView" />
+
+            <TextView
+                android:id="@+id/scoreTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/dungeonLevelTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dungeonLevelTextView"
+                tools:text="230.5" />
+
+            <ImageView
+                android:id="@+id/dungeonUpgrade"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/dungeon_upgrade_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:srcCompat="@drawable/ic_exposure_plus_2_black_24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dungeonTimeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/dungeonAffixesLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dungeonScoreLayout">
+
+            <TextView
+                android:id="@+id/timeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textAlignment="center"
+                android:textColor="@color/primaryColor"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeTitle"
+                tools:text="00:33:43" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dungeonAffixesLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dungeonTimeLayout">
+
+            <TextView
+                android:id="@+id/timeTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Affixes"
+                android:textAlignment="center"
+                android:textColor="@color/primaryColor"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/affixe1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="fitCenter"
+                app:civ_border_width="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/affixe2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeTitle2"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/affixe2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                app:civ_border_width="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/affixe1"
+                app:layout_constraintEnd_toStartOf="@+id/affixe3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/affixe1"
+                app:layout_constraintTop_toTopOf="@+id/affixe1"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/affixe3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                app:civ_border_width="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/affixe2"
+                app:layout_constraintEnd_toStartOf="@+id/affixe4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/affixe2"
+                app:layout_constraintTop_toTopOf="@+id/affixe2"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/affixe4"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                app:civ_border_width="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/affixe3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/affixe3"
+                app:layout_constraintTop_toTopOf="@+id/affixe3"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </fr.jbme.raiderioapp.view.components.CustomConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

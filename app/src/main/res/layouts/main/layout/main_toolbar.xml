@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.CollapsingToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primaryColor"
+    android:fitsSystemWindows="true"
+    android:theme="@style/Theme.RaiderIoApp.AppBarOverlay"
+    app:contentScrim="@color/primaryColor"
+    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/toolbarTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/toolbarCharThumbnail"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="24dp"
+                android:elevation="4dp"
+                android:scaleType="fitCenter"
+                app:civ_border="true"
+                app:civ_border_color="@color/primaryTextColor"
+                app:civ_border_width="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/charName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/charName"
+                tools:srcCompat="@tools:sample/avatars[4]" />
+
+            <TextView
+                android:id="@+id/charName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/space"
+                app:layout_constraintEnd_toStartOf="@+id/toolbarCharThumbnail"
+                app:layout_constraintTop_toTopOf="@+id/space"
+                tools:text="Kagdush" />
+
+            <Button
+                android:id="@+id/toolbarHomeButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                app:icon="@drawable/ic_sort_black_24dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:rippleColor="@color/primaryLightColor" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbarHomeButton"
+                app:layout_constraintEnd_toStartOf="@+id/charName"
+                app:layout_constraintTop_toTopOf="@+id/toolbarHomeButton" />
+
+            <Button
+                android:id="@+id/toolbarProfileButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/space2"
+                app:layout_constraintStart_toStartOf="@+id/space"
+                app:layout_constraintTop_toTopOf="parent"
+                app:rippleColor="@color/primaryLightColor" />
+
+            <Space
+                android:id="@+id/space2"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbarCharThumbnail"
+                app:layout_constraintStart_toEndOf="@+id/toolbarCharThumbnail"
+                app:layout_constraintTop_toTopOf="@+id/toolbarCharThumbnail" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Character page" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.appbar.CollapsingToolbarLayout>

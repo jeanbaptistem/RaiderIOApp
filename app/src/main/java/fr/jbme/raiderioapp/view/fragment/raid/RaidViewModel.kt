@@ -5,38 +5,40 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.service.model.blizzard.raidInfo.Instances
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.service.model.blizzard.RaidInfo
 import fr.jbme.raiderioapp.service.repository.RaidRepository
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
-import fr.jbme.raiderioapp.utils.Whatever
+import fr.jbme.raiderioapp.utils.network.Result
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
+import java.util.*
 
 @Suppress("UNCHECKED_CAST")
 class RaidViewModel : ViewModel() {
 
-    private val _viewSelectedCharacter = MutableLiveData<String>()
+    private val _viewSelectedCharacter = MutableLiveData<PopupCharacterItem>()
     private val _trueSelectedCharacter =
         Transformations.distinctUntilChanged(_viewSelectedCharacter)
 
-    fun selectedCharacter(selectedCharName: String?) {
+    fun selectedCharacter(selectedCharName: PopupCharacterItem) {
         _viewSelectedCharacter.postValue(selectedCharName)
     }
 
     val characterRaidInfoLoading = MutableLiveData<Boolean>()
-    val characterRaidInfo: LiveData<List<Instances>> =
+    val characterRaidInfo: LiveData<List<RaidInfo.Expansion.Instance>> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
-            loadCharacterRaidInfo(realm, name)
+            loadCharacterRaidInfo(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
         }
 
-    private fun loadCharacterRaidInfo(realm: String, name: String): LiveData<List<Instances>> {
-        val characterRaidInfoResult = MutableLiveData<List<Instances>>()
+    private fun loadCharacterRaidInfo(
+        realm: String,
+        name: String
+    ): LiveData<List<RaidInfo.Expansion.Instance>> {
+        val characterRaidInfoResult = MutableLiveData<List<RaidInfo.Expansion.Instance>>()
         characterRaidInfoLoading.value = true
         RaidRepository.fetchRaidInfo(realm, name, object :
             DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                characterRaidInfoResult.value = result.data as List<Instances>
+                characterRaidInfoResult.value = result.data as List<RaidInfo.Expansion.Instance>
                 characterRaidInfoLoading.value = false
             }
 

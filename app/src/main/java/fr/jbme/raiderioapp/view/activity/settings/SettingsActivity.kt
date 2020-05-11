@@ -34,7 +34,7 @@ class SettingsActivity : AppCompatActivity(),
             }
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setBackgroundDrawable(getDrawable(R.color.colorPrimary))
+        supportActionBar?.setBackgroundDrawable(getDrawable(R.color.primaryColor))
 
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener { sharedPreferences, key ->

@@ -5,34 +5,34 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.CharacterEquipment
-import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.EquippedItems
-import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.service.model.blizzard.CharacterEquipment
+import fr.jbme.raiderioapp.service.model.blizzard.ItemInfo
+import fr.jbme.raiderioapp.service.model.blizzard.ItemMedia
 import fr.jbme.raiderioapp.service.repository.ArmoryRepository
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.Quadruple
 import fr.jbme.raiderioapp.utils.Whatever
+import fr.jbme.raiderioapp.utils.network.Result
+import fr.jbme.raiderioapp.view.activity.main.popupWindow.PopupCharacterItem
+import java.util.*
 
 
 @Suppress("UNCHECKED_CAST")
 class ArmoryViewModel : ViewModel() {
 
-    private val _viewSelectedCharacter = MutableLiveData<String>()
+    private val _viewSelectedCharacter = MutableLiveData<PopupCharacterItem>()
     private val _trueSelectedCharacter =
         Transformations.distinctUntilChanged(_viewSelectedCharacter)
 
-    fun selectedCharacter(selectedCharName: String?) {
+    fun selectedCharacter(selectedCharName: PopupCharacterItem?) {
+        Log.i("SelectedChar", selectedCharName.toString())
         _viewSelectedCharacter.postValue(selectedCharName)
     }
 
     private val _characterArmoryLoading = MutableLiveData<Boolean>()
-    private val characterArmory: LiveData<List<EquippedItems>> =
+    private val characterArmory: LiveData<List<CharacterEquipment.EquippedItem>> =
         Transformations.switchMap(_trueSelectedCharacter) { character ->
-            val name = Whatever.parseToSlug(character.split('-')[0])!!
-            val realm = Whatever.parseToSlug(character.split('-')[1])!!
-            loadCharacterArmory(realm, name)
+            loadCharacterArmory(character.realmSlug, character.name.toLowerCase(Locale.ROOT))
         }
 
     private val _armoryItemInfoLoading = MutableLiveData<Boolean>()
@@ -42,18 +42,18 @@ class ArmoryViewModel : ViewModel() {
         }
 
     private val _armoryItemMediaLoading = MutableLiveData<Boolean>()
-    private val armoryItemMedia: LiveData<List<Media>> =
+    private val armoryItemMedia: LiveData<List<ItemMedia>> =
         Transformations.switchMap(characterArmory) { equippedItems ->
             loadArmoryItemMedia(equippedItems)
         }
 
     private val _armoryAzeriteSpellLoading = MutableLiveData<Boolean>()
-    private val armoryAzeriteSpell: LiveData<List<Media>> =
+    private val armoryAzeriteSpell: LiveData<List<ItemMedia>> =
         Transformations.switchMap(characterArmory) { equippedItems ->
             loadAzeriteItemMedia(equippedItems)
         }
 
-    val zippedArmoryLiveData: LiveData<Quadruple<List<EquippedItems>, List<ItemInfo>, List<Media>, List<Media>>> =
+    val zippedArmoryLiveData: LiveData<Quadruple<List<CharacterEquipment.EquippedItem>, List<ItemInfo>, List<ItemMedia>, List<ItemMedia>>> =
         Whatever.zipQuadruple(
             characterArmory,
             armoryItemData,
@@ -69,13 +69,17 @@ class ArmoryViewModel : ViewModel() {
         )
 
 
-    private fun loadCharacterArmory(realm: String, name: String): LiveData<List<EquippedItems>> {
-        val characterEquipmentResult = MutableLiveData<List<EquippedItems>>()
+    private fun loadCharacterArmory(
+        realm: String,
+        name: String
+    ): LiveData<List<CharacterEquipment.EquippedItem>> {
+        val characterEquipmentResult = MutableLiveData<List<CharacterEquipment.EquippedItem>>()
         _characterArmoryLoading.value = true
         ArmoryRepository.fetchCharacterEquipment(realm, name, object :
             DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                characterEquipmentResult.value = (result.data as CharacterEquipment).equipped_items
+                characterEquipmentResult.value =
+                    (result.data as CharacterEquipment).equippedItems as List<CharacterEquipment.EquippedItem>?
                 _characterArmoryLoading.value = false
             }
 
@@ -90,7 +94,7 @@ class ArmoryViewModel : ViewModel() {
         return characterEquipmentResult
     }
 
-    private fun loadArmoryItemData(equippedItems: List<EquippedItems>): LiveData<List<ItemInfo>> {
+    private fun loadArmoryItemData(equippedItems: List<CharacterEquipment.EquippedItem>): LiveData<List<ItemInfo>> {
         val itemDataResult = MutableLiveData<List<ItemInfo>>()
         _armoryItemInfoLoading.value = true
         ArmoryRepository.fetchItemInfo(equippedItems, object :
@@ -108,13 +112,13 @@ class ArmoryViewModel : ViewModel() {
         return itemDataResult
     }
 
-    private fun loadArmoryItemMedia(equippedItems: List<EquippedItems>): LiveData<List<Media>> {
-        val itemMediaResult = MutableLiveData<List<Media>>()
+    private fun loadArmoryItemMedia(equippedItems: List<CharacterEquipment.EquippedItem>): LiveData<List<ItemMedia>> {
+        val itemMediaResult = MutableLiveData<List<ItemMedia>>()
         _armoryItemMediaLoading.value = true
         ArmoryRepository.fetchItemMedia(equippedItems, object :
             DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                itemMediaResult.value = result.data as List<Media>
+                itemMediaResult.value = result.data as List<ItemMedia>
                 _armoryItemMediaLoading.value = false
             }
 
@@ -127,14 +131,12 @@ class ArmoryViewModel : ViewModel() {
         return itemMediaResult
     }
 
-    private fun loadAzeriteItemMedia(equippedItems: List<EquippedItems>): LiveData<List<Media>> {
-        val armoryAzeriteSpellResult = MutableLiveData<List<Media>>()
+    private fun loadAzeriteItemMedia(equippedItems: List<CharacterEquipment.EquippedItem>): LiveData<List<ItemMedia>> {
+        val armoryAzeriteSpellResult = MutableLiveData<List<ItemMedia>>()
         _armoryAzeriteSpellLoading.value = true
-        val azeriteItems =
-            equippedItems.filter { item -> item.azerite_details?.selected_essences != null }
-        ArmoryRepository.fetchAzeriteSpellMedia(azeriteItems, object : DataCallback {
+        ArmoryRepository.fetchAzeriteSpellMedia(equippedItems, object : DataCallback {
             override fun onDataLoaded(result: Result.Success<*>) {
-                armoryAzeriteSpellResult.value = result.data as List<Media>
+                armoryAzeriteSpellResult.value = result.data as List<ItemMedia>
                 _armoryAzeriteSpellLoading.value = false
             }
 

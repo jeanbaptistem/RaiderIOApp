@@ -3,13 +3,12 @@ package fr.jbme.raiderioapp.view.activity.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.jbme.raiderioapp.CLIENT_ID
-import fr.jbme.raiderioapp.CLIENT_SECRET
-import fr.jbme.raiderioapp.service.model.blizzard.login.AccessTokenResponse
-import fr.jbme.raiderioapp.service.model.blizzard.login.TokenCheckResponse
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.BuildConfig
+import fr.jbme.raiderioapp.service.model.login.AccessTokenResponse
+import fr.jbme.raiderioapp.service.model.login.TokenCheckResponse
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardLoginInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardLoginService
+import fr.jbme.raiderioapp.utils.network.Result
 import okhttp3.Credentials
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,7 +51,12 @@ class LoginViewModel : ViewModel() {
         val getLoginWithCode: MutableLiveData<Result<AccessTokenResponse>> by lazy {
             MutableLiveData<Result<AccessTokenResponse>>()
         }
-        blizzardLoginService?.requestAccessToken(Credentials.basic(CLIENT_ID, CLIENT_SECRET), code)
+        blizzardLoginService?.requestAccessToken(
+            Credentials.basic(
+                BuildConfig.CLIENT_ID,
+                BuildConfig.CLIENT_SECRET
+            ), code
+        )
             ?.enqueue(object : Callback<AccessTokenResponse> {
                 override fun onFailure(call: Call<AccessTokenResponse>, t: Throwable) {
                     getLoginWithCode.value = Result.Error(Exception(t.message))

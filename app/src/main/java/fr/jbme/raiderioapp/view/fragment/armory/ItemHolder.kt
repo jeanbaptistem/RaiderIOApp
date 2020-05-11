@@ -7,9 +7,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.EquippedItems
-import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
+import fr.jbme.raiderioapp.service.model.blizzard.CharacterEquipment
+import fr.jbme.raiderioapp.service.model.blizzard.ItemInfo
+import fr.jbme.raiderioapp.service.model.blizzard.ItemMedia
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardService
 
@@ -18,8 +18,6 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         RetrofitBlizzardInstance.retrofitInstance?.create(
             BlizzardService::class.java
         )
-    private val globalParamItem = mapOf("namespace" to "static-eu", "locale" to "fr_FR")
-
     private val itemThumbnail: ImageView = itemView.findViewById(R.id.itemThumbnail)
     private val itemThumbnailCardView: CardView = itemView.findViewById(R.id.itemThumbnailCardView)
     private val itemName: TextView = itemView.findViewById(R.id.itemNameTextView)
@@ -51,22 +49,25 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 "LEGENDARY" -> itemView.context.getColor(R.color.itemQualityLegendary)
                 "ARTIFACT" -> itemView.context.getColor(R.color.itemQualityArtifact)
                 "HEIRLOOM" -> itemView.context.getColor(R.color.itemQualityHeirloom)
-                else -> itemView.context.getColor(R.color.colorPrimary)
+                else -> itemView.context.getColor(R.color.primaryTextColor)
             }
         )
     }
 
-    fun bindItem(equippedItem: EquippedItems?, azeriteEssences: List<Media>?) {
+    fun bindItem(
+        equippedItem: CharacterEquipment.EquippedItem?,
+        azeriteEssences: List<ItemMedia>?
+    ) {
         itemName.text = equippedItem?.name
         ilvlTextView.text = "Ilvl: ${equippedItem?.level?.value}"
         socketLayoutList.forEach { it.visibility = View.GONE }
         socketImageViewList.forEach { it.visibility = View.GONE }
         postGemsTextView.visibility = View.GONE
-        if (equippedItem?.azerite_details?.selected_essences != null) {
+        if (equippedItem?.azeriteDetails?.selectedEssences != null) {
             val color = itemView.context.getColor(R.color.itemQualityArtifact)
-            equippedItem.azerite_details.selected_essences.filter { it.slot == 0 }
+            equippedItem.azeriteDetails.selectedEssences.filter { it?.slot == 0 }
                 .mapIndexed { index, essencePower ->
-                    val essenceId = essencePower.main_spell_tooltip?.spell?.id
+                    val essenceId = essencePower?.mainSpellTooltip?.spell?.id
                     val essenceThumbnail =
                         azeriteEssences?.firstOrNull { media -> media.id == essenceId }
                     //Picasso.get().load(essenceThumbnail?.assets?.first()?.value).into(socketImageViewList[index])
@@ -76,11 +77,11 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                         visibility = View.VISIBLE
                     }
                 }
-        } else if (equippedItem?.azerite_details?.selected_powers != null) {
+        } else if (equippedItem?.azeriteDetails?.selectedPowers != null) {
             val color = itemView.context.getColor(R.color.itemQualityLegendary)
-            equippedItem.azerite_details.selected_powers.filter { it.tier == 4 || it.tier == 3 }
+            equippedItem.azeriteDetails.selectedPowers.filter { it?.tier == 4 || it?.tier == 3 }
                 .mapIndexed { index, power ->
-                    val powerId = power.id
+                    val powerId = power?.id
                     //TODO: add power thumbnail
                     //Picasso.get().load(response.body()?.assets?.first()?.value).into(socketImageViewList[index])
                     socketImageViewList[index].visibility = View.VISIBLE

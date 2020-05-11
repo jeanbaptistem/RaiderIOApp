@@ -1,6 +1,6 @@
 package fr.jbme.raiderioapp.service.repository.callback
 
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.utils.network.Result
 
 interface DataCallback {
     fun onDataLoaded(result: Result.Success<*>)

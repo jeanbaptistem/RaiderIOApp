@@ -1,14 +1,13 @@
 package fr.jbme.raiderioapp.service.repository
 
-import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.CharacterEquipment
-import fr.jbme.raiderioapp.service.model.blizzard.characterEquipment.EquippedItems
-import fr.jbme.raiderioapp.service.model.blizzard.itemInfo.ItemInfo
-import fr.jbme.raiderioapp.service.model.blizzard.itemMedia.Media
-import fr.jbme.raiderioapp.service.model.login.Result
+import fr.jbme.raiderioapp.service.model.blizzard.CharacterEquipment
+import fr.jbme.raiderioapp.service.model.blizzard.ItemInfo
+import fr.jbme.raiderioapp.service.model.blizzard.ItemMedia
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardService
 import fr.jbme.raiderioapp.service.repository.callback.DataCallback
 import fr.jbme.raiderioapp.utils.network.NetworkUtils
+import fr.jbme.raiderioapp.utils.network.Result
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +24,7 @@ object ArmoryRepository {
         characterName: String?,
         callback: DataCallback
     ) {
-        blizzardService?.getCharacterEquipment(realmSlug, characterName)
+        blizzardService?.getCharacterEquipmentBliz(realmSlug, characterName)
             ?.enqueue(object : Callback<CharacterEquipment> {
                 override fun onFailure(call: Call<CharacterEquipment>, t: Throwable) {
                     throw  t
@@ -45,11 +44,11 @@ object ArmoryRepository {
             })
     }
 
-    fun fetchItemInfo(itemList: List<EquippedItems>, callback: DataCallback) {
+    fun fetchItemInfo(itemList: List<CharacterEquipment.EquippedItem>, callback: DataCallback) {
         val tempList = mutableListOf<ItemInfo>()
         itemList.forEach {
-            val itemId = it.item.id
-            blizzardService?.getItemInfo(itemId)
+            val itemId = it.item?.id
+            blizzardService?.getItemInfoBliz(itemId)
                 ?.enqueue(object : Callback<ItemInfo> {
                     override fun onFailure(call: Call<ItemInfo>, t: Throwable) {
                         throw t
@@ -71,19 +70,19 @@ object ArmoryRepository {
         }
     }
 
-    fun fetchItemMedia(itemList: List<EquippedItems>, callback: DataCallback) {
-        val tempList = mutableListOf<Media>()
+    fun fetchItemMedia(itemList: List<CharacterEquipment.EquippedItem>, callback: DataCallback) {
+        val tempList = mutableListOf<ItemMedia>()
         itemList.forEach {
-            val itemId = it.item.id
-            blizzardService?.getItemMedia(itemId)
-                ?.enqueue(object : Callback<Media> {
-                    override fun onFailure(call: Call<Media>, t: Throwable) {
+            val itemId = it.item?.id
+            blizzardService?.getItemMediaBliz(itemId)
+                ?.enqueue(object : Callback<ItemMedia> {
+                    override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
                         throw t
                     }
 
                     override fun onResponse(
-                        call: Call<Media>,
-                        response: Response<Media>
+                        call: Call<ItemMedia>,
+                        response: Response<ItemMedia>
                     ) {
                         if (response.isSuccessful) {
                             tempList.add(response.body()!!)
@@ -99,19 +98,22 @@ object ArmoryRepository {
         }
     }
 
-    fun fetchAzeriteSpellMedia(itemList: List<EquippedItems>, callback: DataCallback) {
-        val tempList = mutableListOf<Media>()
+    fun fetchAzeriteSpellMedia(
+        itemList: List<CharacterEquipment.EquippedItem>,
+        callback: DataCallback
+    ) {
+        val tempList = mutableListOf<ItemMedia>()
         itemList.forEach { equippedItems ->
-            equippedItems.azerite_details?.selected_essences?.forEach {
-                blizzardService?.getAzeriteEssenceMedia(it.essence.id)
-                    ?.enqueue(object : Callback<Media> {
-                        override fun onFailure(call: Call<Media>, t: Throwable) {
+            equippedItems.azeriteDetails?.selectedEssences?.forEach {
+                blizzardService?.getAzeriteEssenceMediaBliz(it?.essence?.id!!)
+                    ?.enqueue(object : Callback<ItemMedia> {
+                        override fun onFailure(call: Call<ItemMedia>, t: Throwable) {
                             throw t
                         }
 
                         override fun onResponse(
-                            call: Call<Media>,
-                            response: Response<Media>
+                            call: Call<ItemMedia>,
+                            response: Response<ItemMedia>
                         ) {
                             if (response.isSuccessful) {
                                 tempList.add(response.body()!!)

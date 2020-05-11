@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/best_run_card_view_width"
+    android:layout_height="@dimen/best_run_card_view_height"
+    app:cardCornerRadius="18dp"
+    app:cardPreventCornerOverlap="false"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="243dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/statisticsMainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/primaryLightColor"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="All\nShamans" />
+
+        <TextView
+            android:id="@+id/statisticsMainScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/primaryColor"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/statisticsMainTitle"
+            app:layout_constraintStart_toStartOf="@+id/statisticsMainTitle"
+            app:layout_constraintTop_toBottomOf="@+id/statisticsMainTitle"
+            tools:text="2,430" />
+
+        <TextView
+            android:id="@+id/statisticsSecondaryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/primaryLightColor"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/statisticsSecondaryScore"
+            app:layout_constraintEnd_toEndOf="@+id/statisticsMainTitle"
+            app:layout_constraintStart_toStartOf="@+id/statisticsMainTitle"
+            tools:text="Horde\nShamans" />
+
+        <TextView
+            android:id="@+id/statisticsSecondaryScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/primaryColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/statisticsSecondaryTitle"
+            app:layout_constraintStart_toStartOf="@+id/statisticsSecondaryTitle"
+            tools:text="1,320" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -3,9 +3,8 @@ package fr.jbme.raiderioapp.service.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import fr.jbme.raiderioapp.CLIENT_ID
-import fr.jbme.raiderioapp.CLIENT_SECRET
-import fr.jbme.raiderioapp.service.model.blizzard.login.AccessTokenResponse
+import fr.jbme.raiderioapp.BuildConfig
+import fr.jbme.raiderioapp.service.model.login.AccessTokenResponse
 import fr.jbme.raiderioapp.service.network.retrofit.RetrofitBlizzardLoginInstance
 import fr.jbme.raiderioapp.service.network.service.BlizzardLoginService
 import okhttp3.Credentials
@@ -14,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Class that handles authentication w/ login credentials and retrieves user information.
+ * Class that handles authentication w/ login credentials and retrieves user information.
  */
 class LoginDataSource {
     private var blizzardLoginService: BlizzardLoginService? =
@@ -25,7 +24,7 @@ class LoginDataSource {
     val accessToken: LiveData<AccessTokenResponse> = _accessToken
 
     fun login(code: String) {
-        val credential: String = Credentials.basic(CLIENT_ID, CLIENT_SECRET)
+        val credential: String = Credentials.basic(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET)
         blizzardLoginService?.requestAccessToken(credential, code)
             ?.enqueue(object : Callback<AccessTokenResponse> {
                 override fun onFailure(call: Call<AccessTokenResponse>, t: Throwable) {

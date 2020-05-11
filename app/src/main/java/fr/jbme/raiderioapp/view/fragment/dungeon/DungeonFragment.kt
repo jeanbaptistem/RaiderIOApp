@@ -11,7 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.view.activity.character.CharacterActivityViewModel
+import fr.jbme.raiderioapp.REGION
+import fr.jbme.raiderioapp.view.activity.main.MainActivityViewModel
 import kotlinx.android.synthetic.main.fragment_dungeon.*
 
 class DungeonFragment : Fragment() {
@@ -34,10 +35,10 @@ class DungeonFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        val characterViewModel =
-            activity?.let { ViewModelProvider(it).get(CharacterActivityViewModel::class.java) }
-        characterViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
-            dungeonViewModel.selectedCharacter(it)
+        val mainActivityViewModel =
+            activity?.let { ViewModelProvider(it).get(MainActivityViewModel::class.java) }
+        mainActivityViewModel?.getSelectedCharacter?.observe(viewLifecycleOwner, Observer {
+            dungeonViewModel.selectedCharacter(it.apply { region = REGION })
         })
 
         observeViewModel(dungeonViewModel)
@@ -46,7 +47,7 @@ class DungeonFragment : Fragment() {
 
     private fun observeViewModel(dungeonViewModel: DungeonViewModel) {
         dungeonViewModel.zippedDungeonData.observe(viewLifecycleOwner, Observer {
-            dungeonCardViewAdapter.ranksList = it.first
+            dungeonCardViewAdapter.ranksList = it.first.mythicPlusRanks!!
             dungeonCardViewAdapter.dungeonList = it.second
             dungeonCardViewAdapter.notifyDataSetChanged()
         })

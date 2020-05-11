@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.jbme.raiderioapp.*
-import fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.BestRuns
+import fr.jbme.raiderioapp.service.model.blizzard.DungeonInfo
 import fr.jbme.raiderioapp.utils.Whatever
 import fr.jbme.raiderioapp.view.components.CustomConstraintLayout
 import java.util.*
@@ -18,7 +18,7 @@ import java.util.*
 @SuppressLint("SetTextI18n")
 class DungeonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val layout: CustomConstraintLayout = itemView.findViewById(R.id.dungeonLayout)
-    private val dungeonLevel: TextView = itemView.findViewById(R.id.dungeonLevel)
+    private val dungeonLevel: TextView = itemView.findViewById(R.id.dungeonLevelTextView)
     private val dungeonName: TextView = itemView.findViewById(R.id.dungeonName)
     private val dungeonDate: TextView = itemView.findViewById(R.id.dungeonDate)
     private val dungeonTime: TextView = itemView.findViewById(R.id.dungeonTime)
@@ -47,16 +47,16 @@ class DungeonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    fun bind(bestRuns: BestRuns) {
-        dungeonLevel.text = "+${bestRuns.keystone_level}"
-        dungeonName.text = bestRuns.dungeon.name
-        dungeonDate.text = "Cleared ${dateFormat.format(Date(bestRuns.completed_timestamp))}"
-        dungeonTime.text = when (bestRuns.is_completed_within_time) {
-            true -> "Timed in ${dateFormat.format(Date(bestRuns.duration))}"
-            false -> "Depleted in ${dateFormat.format(Date(bestRuns.duration))}"
+    fun bind(bestRuns: DungeonInfo.BestRun) {
+        dungeonLevel.text = "+${bestRuns.keystoneLevel}"
+        dungeonName.text = bestRuns.dungeon?.name
+        dungeonDate.text = "Cleared ${dateFormat.format(Date(bestRuns.completedTimestamp!!))}"
+        dungeonTime.text = when (bestRuns.isCompletedWithinTime!!) {
+            true -> "Timed in ${Whatever.formatTime(bestRuns.duration!!.toLong())}"
+            false -> "Depleted in ${Whatever.formatTime(bestRuns.duration!!.toLong())}"
         }
-        bestRuns.keystone_affixes.forEachIndexed { index, affix ->
-            val imgUrl = when (affix.name) {
+        bestRuns.keystoneAffixes?.forEachIndexed { index, affix ->
+            val imgUrl = when (affix?.name) {
                 "Skittish" -> SKITTISH
                 "Volcanic" -> VOLCANIC
                 "Necrotic" -> NECROTIC
@@ -78,7 +78,7 @@ class DungeonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         Picasso.get()
-            .load(DUNGEON_BG.format(Whatever.parseToSlug(bestRuns.dungeon.name)))
+            .load(DUNGEON_BG.format(Whatever.parseToSlug(bestRuns.dungeon?.name)))
             .into(layout)
 
         memberAdapterView.run {

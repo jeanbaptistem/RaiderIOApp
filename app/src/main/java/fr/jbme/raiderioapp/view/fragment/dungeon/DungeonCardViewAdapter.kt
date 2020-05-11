@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.blizzard.dungeonInfo.BestRuns
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Rank
+import fr.jbme.raiderioapp.service.model.blizzard.DungeonInfo
+import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 import fr.jbme.raiderioapp.view.fragment.dungeon.headerRow.HeaderViewHolder
 import fr.jbme.raiderioapp.view.fragment.dungeon.itemRow.DungeonViewHolder
 
 class DungeonCardViewAdapter(
     val context: Context,
-    var dungeonList: List<BestRuns>,
-    var ranksList: List<Rank>
+    var dungeonList: List<DungeonInfo.BestRun>,
+    var ranksList: List<CharacterRanks.Rank>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

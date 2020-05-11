@@ -8,7 +8,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import fr.jbme.raiderioapp.R
-import fr.jbme.raiderioapp.service.model.raiderio.dungeonRanks.Rank
+import fr.jbme.raiderioapp.service.model.raiderio.CharacterRanks
 
 
 class HeaderViewHolder(val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,7 +25,7 @@ class HeaderViewHolder(val context: Context, itemView: View) : RecyclerView.View
             }).attach()
     }
 
-    fun bind(ranksList: List<Rank>) {
+    fun bind(ranksList: List<CharacterRanks.Rank>) {
         adapter.run {
             this.ranksList = ranksList
             notifyDataSetChanged()
